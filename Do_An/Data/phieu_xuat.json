@@ -1,0 +1,76 @@
+[
+  {
+    "maPhieuXuat": "PX0001",
+    "maKho": "KHO001",
+    "maKhachHang": "KH001",
+    "maTaiKhoan": "TK001",
+    "ngayXuat": "2025-03-05",
+    "tongTien": 45000000,
+    "trangThai": "Đã xuất",
+    "chiTiet": [
+      {
+        "maSanPham": "SP0001",
+        "soLuong": 1,
+        "donGia": 35000000
+      },
+      {
+        "maSanPham": "SP0021",
+        "soLuong": 2,
+        "donGia": 5000000
+      }
+    ]
+  },
+  {
+    "maPhieuXuat": "PX0002",
+    "maKho": "KHO001",
+    "maKhachHang": "KH002",
+    "maTaiKhoan": "TK001",
+    "ngayXuat": "2025-03-08",
+    "tongTien": 27400000,
+    "trangThai": "Đã xuất",
+    "chiTiet": [
+      {
+        "maSanPham": "SP0002",
+        "soLuong": 1,
+        "donGia": 25000000
+      },
+      {
+        "maSanPham": "SP0022",
+        "soLuong": 3,
+        "donGia": 800000
+      }
+    ]
+  },
+  {
+    "maPhieuXuat": "PX0003",
+    "maKho": "KHO001",
+    "maKhachHang": "KH005",
+    "maTaiKhoan": "TK002",
+    "ngayXuat": "2026-05-16",
+    "tongTien": 525000000,
+    "trangThai": "Đã xuất",
+    "chiTiet": [
+      {
+        "maSanPham": "SP0001",
+        "soLuong": 15,
+        "donGia": 35000000
+      }
+    ]
+  },
+  {
+    "maPhieuXuat": "PX0004",
+    "maKho": "KHO003",
+    "maKhachHang": "KH001",
+    "maTaiKhoan": "TK002",
+    "ngayXuat": "2026-05-17",
+    "tongTien": 1056000000,
+    "trangThai": "Lưu tạm",
+    "chiTiet": [
+      {
+        "maSanPham": "SP0052",
+        "soLuong": 33,
+        "donGia": 32000000
+      }
+    ]
+  }
+]

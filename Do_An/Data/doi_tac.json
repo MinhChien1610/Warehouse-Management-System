@@ -1,0 +1,116 @@
+{
+  "khachHang": [
+    {
+      "maKhachHang": "KH001",
+      "tenKhachHang": "Nguyen Thi Lan",
+      "soDienThoai": "0941111111",
+      "diaChi": "Quận 1, TP.HCM",
+      "email": "lan.kh001@gmail.com",
+      "trangThai": true
+    },
+    {
+      "maKhachHang": "KH002",
+      "tenKhachHang": "Tran Van Binh",
+      "soDienThoai": "0942222222",
+      "diaChi": "Thủ Đức, TP.HCM",
+      "email": "binh.kh002@gmail.com",
+      "trangThai": true
+    },
+    {
+      "maKhachHang": "KH003",
+      "tenKhachHang": "Le Minh Chau",
+      "soDienThoai": "0943333333",
+      "diaChi": "Bình Thạnh, TP.HCM",
+      "email": "chau.kh003@gmail.com",
+      "trangThai": true
+    },
+    {
+      "maKhachHang": "KH004",
+      "tenKhachHang": "Pham Quoc Dat",
+      "soDienThoai": "0944444444",
+      "diaChi": "Gò Vấp, TP.HCM",
+      "email": "dat.kh004@gmail.com",
+      "trangThai": true
+    },
+    {
+      "maKhachHang": "KH005",
+      "tenKhachHang": "Vo Thu Ha",
+      "soDienThoai": "0945555555",
+      "diaChi": "Tân Phú, TP.HCM",
+      "email": "ha.kh005@gmail.com",
+      "trangThai": true
+    }
+  ],
+  "nhaSanXuat": [
+    {
+      "maNhaSanXuat": "NSX001",
+      "tenNhaSanXuat": "Samsung Việt Nam",
+      "diaChi": "Hà Nội",
+      "soDienThoai": "0901111111",
+      "email": "samsung@gmail.com"
+    },
+    {
+      "maNhaSanXuat": "NSX002",
+      "tenNhaSanXuat": "Apple Việt Nam",
+      "diaChi": "Hồ Chí Minh",
+      "soDienThoai": "0902222222",
+      "email": "apple@gmail.com"
+    },
+    {
+      "maNhaSanXuat": "NSX003",
+      "tenNhaSanXuat": "Oppo Việt Nam",
+      "diaChi": "Hà Nội",
+      "soDienThoai": "0903333333",
+      "email": "oppo@gmail.com"
+    },
+    {
+      "maNhaSanXuat": "NSX004",
+      "tenNhaSanXuat": "Xiaomi Việt Nam",
+      "diaChi": "Hồ Chí Minh",
+      "soDienThoai": "0904444444",
+      "email": "xiaomi@gmail.com"
+    },
+    {
+      "maNhaSanXuat": "NSX005",
+      "tenNhaSanXuat": "Vivo Việt Nam",
+      "diaChi": "Đà Nẵng",
+      "soDienThoai": "0905555555",
+      "email": "vivo@gmail.com"
+    },
+    {
+      "maNhaSanXuat": "NSX006",
+      "tenNhaSanXuat": "Dell Việt Nam",
+      "diaChi": "Hồ Chí Minh",
+      "soDienThoai": "0906666666",
+      "email": "dell@gmail.com"
+    },
+    {
+      "maNhaSanXuat": "NSX007",
+      "tenNhaSanXuat": "HP Việt Nam",
+      "diaChi": "Hà Nội",
+      "soDienThoai": "0907777777",
+      "email": "hp@gmail.com"
+    },
+    {
+      "maNhaSanXuat": "NSX008",
+      "tenNhaSanXuat": "ASUS Việt Nam",
+      "diaChi": "Hồ Chí Minh",
+      "soDienThoai": "0908888888",
+      "email": "asus@gmail.com"
+    },
+    {
+      "maNhaSanXuat": "NSX009",
+      "tenNhaSanXuat": "Lenovo Việt Nam",
+      "diaChi": "Hà Nội",
+      "soDienThoai": "0909999999",
+      "email": "lenovo@gmail.com"
+    },
+    {
+      "maNhaSanXuat": "NSX010",
+      "tenNhaSanXuat": "LG Việt Nam",
+      "diaChi": "Hồ Chí Minh",
+      "soDienThoai": "0910000000",
+      "email": "lg@gmail.com"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "nhanVien": [
+    {
+      "maNhanVien": "NV001",
+      "tenNhanVien": "Nguyen Van Anh",
+      "ngaySinh": "1994-04-12",
+      "email": "anhnv001@gmail.com",
+      "soDienThoai": "0901234567",
+      "trangThai": true
+    },
+    {
+      "maNhanVien": "NV002",
+      "tenNhanVien": "Tran Thi Minh",
+      "ngaySinh": "1996-09-25",
+      "email": "minhtm002@gmail.com",
+      "soDienThoai": "0912345678",
+      "trangThai": true
+    },
+    {
+      "maNhanVien": "NV003",
+      "tenNhanVien": "Le Quang Huy",
+      "ngaySinh": "1993-11-03",
+      "email": "huylq003@gmail.com",
+      "soDienThoai": "0923456789",
+      "trangThai": true
+    }
+  ],
+  "taiKhoan": [
+    {
+      "maTaiKhoan": "TK001",
+      "tenTaiKhoan": "admin01",
+      "matKhau": "Admin@123",
+      "maNhanVien": "NV001",
+      "trangThai": true
+    },
+    {
+      "maTaiKhoan": "TK002",
+      "tenTaiKhoan": "kho01",
+      "matKhau": "Kho@123",
+      "maNhanVien": "NV002",
+      "trangThai": true
+    },
+    {
+      "maTaiKhoan": "TK003",
+      "tenTaiKhoan": "ketoan01",
+      "matKhau": "Ketoan@123",
+      "maNhanVien": "NV003",
+      "trangThai": true
+    }
+  ],
+  "vaiTro": [
+    {
+      "maVaiTro": "VT01",
+      "tenVaiTro": "Admin"
+    },
+    {
+      "maVaiTro": "VT02",
+      "tenVaiTro": "NhanVienKho"
+    },
+    {
+      "maVaiTro": "VT03",
+      "tenVaiTro": "KeToan"
+    }
+  ],
+  "phanQuyen": [
+    {
+      "maTaiKhoan": "TK001",
+      "maVaiTro": "VT01"
+    },
+    {
+      "maTaiKhoan": "TK002",
+      "maVaiTro": "VT02"
+    },
+    {
+      "maTaiKhoan": "TK003",
+      "maVaiTro": "VT03"
+    }
+  ],
+  "phanCongKho": [
+    {
+      "maTaiKhoan": "TK002",
+      "maKho": "KHO001",
+      "trangThai": true
+    },
+    {
+      "maTaiKhoan": "TK003",
+      "maKho": "KHO001",
+      "trangThai": true
+    }
+  ]
+}

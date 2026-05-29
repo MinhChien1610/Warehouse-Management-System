@@ -1,0 +1,470 @@
+{
+  "kho": [
+    {
+      "maKho": "KHO001",
+      "tenKho": "Kho Quan 1",
+      "diaDiem": "Quan 1, TP.HCM",
+      "soDienThoai": "0931111111"
+    },
+    {
+      "maKho": "KHO002",
+      "tenKho": "Kho Thu Duc",
+      "diaDiem": "Thu Duc, TP.HCM",
+      "soDienThoai": "0932222222"
+    },
+    {
+      "maKho": "KHO003",
+      "tenKho": "Kho Binh Thanh",
+      "diaDiem": "Bình Thạnh, TP.HCM",
+      "soDienThoai": "0933333333"
+    },
+    {
+      "maKho": "KHO004",
+      "tenKho": "Kho Go Vap",
+      "diaDiem": "Gò Vấp, TP.HCM",
+      "soDienThoai": "0934444444"
+    },
+    {
+      "maKho": "KHO005",
+      "tenKho": "Kho Tan Phu",
+      "diaDiem": "Tân Phú, TP.HCM",
+      "soDienThoai": "0935555555"
+    }
+  ],
+  "viTriKho": [
+    {
+      "maViTri": "KHO001-A",
+      "maKho": "KHO001",
+      "tenViTri": "Khu A",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO001-B",
+      "maKho": "KHO001",
+      "tenViTri": "Khu B",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO001-C",
+      "maKho": "KHO001",
+      "tenViTri": "Khu C",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO001-D",
+      "maKho": "KHO001",
+      "tenViTri": "Khu D",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO002-A",
+      "maKho": "KHO002",
+      "tenViTri": "Khu A",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO002-B",
+      "maKho": "KHO002",
+      "tenViTri": "Khu B",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO002-C",
+      "maKho": "KHO002",
+      "tenViTri": "Khu C",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO002-D",
+      "maKho": "KHO002",
+      "tenViTri": "Khu D",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO003-A",
+      "maKho": "KHO003",
+      "tenViTri": "Khu A",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO003-B",
+      "maKho": "KHO003",
+      "tenViTri": "Khu B",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO003-C",
+      "maKho": "KHO003",
+      "tenViTri": "Khu C",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO003-D",
+      "maKho": "KHO003",
+      "tenViTri": "Khu D",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO004-A",
+      "maKho": "KHO004",
+      "tenViTri": "Khu A",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO004-B",
+      "maKho": "KHO004",
+      "tenViTri": "Khu B",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO004-C",
+      "maKho": "KHO004",
+      "tenViTri": "Khu C",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO004-D",
+      "maKho": "KHO004",
+      "tenViTri": "Khu D",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO005-A",
+      "maKho": "KHO005",
+      "tenViTri": "Khu A",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO005-B",
+      "maKho": "KHO005",
+      "tenViTri": "Khu B",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO005-C",
+      "maKho": "KHO005",
+      "tenViTri": "Khu C",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    },
+    {
+      "maViTri": "KHO005-D",
+      "maKho": "KHO005",
+      "tenViTri": "Khu D",
+      "ghiChu": "Vị trí lưu hàng trong kho"
+    }
+  ],
+  "tonKho": [
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0001",
+      "soLuongTon": 76,
+      "maViTri": "KHO001-A"
+    },
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0002",
+      "soLuongTon": 11,
+      "maViTri": "KHO001-B"
+    },
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0003",
+      "soLuongTon": 18,
+      "maViTri": "KHO001-C"
+    },
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0011",
+      "soLuongTon": 6,
+      "maViTri": "KHO001-D"
+    },
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0021",
+      "soLuongTon": 34,
+      "maViTri": "KHO001-A"
+    },
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0031",
+      "soLuongTon": 10,
+      "maViTri": "KHO001-B"
+    },
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0041",
+      "soLuongTon": 12,
+      "maViTri": "KHO001-C"
+    },
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0051",
+      "soLuongTon": 5,
+      "maViTri": "KHO001-D"
+    },
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0061",
+      "soLuongTon": 4,
+      "maViTri": "KHO001-A"
+    },
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0071",
+      "soLuongTon": 6,
+      "maViTri": "KHO001-B"
+    },
+    {
+      "maKho": "KHO002",
+      "maSanPham": "SP0004",
+      "soLuongTon": 12,
+      "maViTri": "KHO002-C"
+    },
+    {
+      "maKho": "KHO002",
+      "maSanPham": "SP0005",
+      "soLuongTon": 10,
+      "maViTri": "KHO002-D"
+    },
+    {
+      "maKho": "KHO002",
+      "maSanPham": "SP0012",
+      "soLuongTon": 4,
+      "maViTri": "KHO002-A"
+    },
+    {
+      "maKho": "KHO002",
+      "maSanPham": "SP0025",
+      "soLuongTon": 30,
+      "maViTri": "KHO002-B"
+    },
+    {
+      "maKho": "KHO002",
+      "maSanPham": "SP0034",
+      "soLuongTon": 8,
+      "maViTri": "KHO002-C"
+    },
+    {
+      "maKho": "KHO002",
+      "maSanPham": "SP0043",
+      "soLuongTon": 6,
+      "maViTri": "KHO002-D"
+    },
+    {
+      "maKho": "KHO002",
+      "maSanPham": "SP0053",
+      "soLuongTon": 3,
+      "maViTri": "KHO002-A"
+    },
+    {
+      "maKho": "KHO002",
+      "maSanPham": "SP0063",
+      "soLuongTon": 2,
+      "maViTri": "KHO002-B"
+    },
+    {
+      "maKho": "KHO002",
+      "maSanPham": "SP0073",
+      "soLuongTon": 7,
+      "maViTri": "KHO002-C"
+    },
+    {
+      "maKho": "KHO002",
+      "maSanPham": "SP0080",
+      "soLuongTon": 1,
+      "maViTri": "KHO002-D"
+    },
+    {
+      "maKho": "KHO003",
+      "maSanPham": "SP0006",
+      "soLuongTon": 14,
+      "maViTri": "KHO003-A"
+    },
+    {
+      "maKho": "KHO003",
+      "maSanPham": "SP0007",
+      "soLuongTon": 11,
+      "maViTri": "KHO003-B"
+    },
+    {
+      "maKho": "KHO003",
+      "maSanPham": "SP0015",
+      "soLuongTon": 5,
+      "maViTri": "KHO003-C"
+    },
+    {
+      "maKho": "KHO003",
+      "maSanPham": "SP0028",
+      "soLuongTon": 22,
+      "maViTri": "KHO003-D"
+    },
+    {
+      "maKho": "KHO003",
+      "maSanPham": "SP0036",
+      "soLuongTon": 7,
+      "maViTri": "KHO003-A"
+    },
+    {
+      "maKho": "KHO003",
+      "maSanPham": "SP0045",
+      "soLuongTon": 4,
+      "maViTri": "KHO003-B"
+    },
+    {
+      "maKho": "KHO003",
+      "maSanPham": "SP0056",
+      "soLuongTon": 3,
+      "maViTri": "KHO003-C"
+    },
+    {
+      "maKho": "KHO003",
+      "maSanPham": "SP0065",
+      "soLuongTon": 6,
+      "maViTri": "KHO003-D"
+    },
+    {
+      "maKho": "KHO003",
+      "maSanPham": "SP0075",
+      "soLuongTon": 8,
+      "maViTri": "KHO003-A"
+    },
+    {
+      "maKho": "KHO003",
+      "maSanPham": "SP0030",
+      "soLuongTon": 35,
+      "maViTri": "KHO003-B"
+    },
+    {
+      "maKho": "KHO004",
+      "maSanPham": "SP0008",
+      "soLuongTon": 10,
+      "maViTri": "KHO004-C"
+    },
+    {
+      "maKho": "KHO004",
+      "maSanPham": "SP0009",
+      "soLuongTon": 13,
+      "maViTri": "KHO004-D"
+    },
+    {
+      "maKho": "KHO004",
+      "maSanPham": "SP0018",
+      "soLuongTon": 6,
+      "maViTri": "KHO004-A"
+    },
+    {
+      "maKho": "KHO004",
+      "maSanPham": "SP0022",
+      "soLuongTon": 45,
+      "maViTri": "KHO004-B"
+    },
+    {
+      "maKho": "KHO004",
+      "maSanPham": "SP0038",
+      "soLuongTon": 9,
+      "maViTri": "KHO004-C"
+    },
+    {
+      "maKho": "KHO004",
+      "maSanPham": "SP0048",
+      "soLuongTon": 7,
+      "maViTri": "KHO004-D"
+    },
+    {
+      "maKho": "KHO004",
+      "maSanPham": "SP0058",
+      "soLuongTon": 4,
+      "maViTri": "KHO004-A"
+    },
+    {
+      "maKho": "KHO004",
+      "maSanPham": "SP0068",
+      "soLuongTon": 5,
+      "maViTri": "KHO004-B"
+    },
+    {
+      "maKho": "KHO004",
+      "maSanPham": "SP0078",
+      "soLuongTon": 12,
+      "maViTri": "KHO004-C"
+    },
+    {
+      "maKho": "KHO004",
+      "maSanPham": "SP0040",
+      "soLuongTon": 8,
+      "maViTri": "KHO004-D"
+    },
+    {
+      "maKho": "KHO005",
+      "maSanPham": "SP0010",
+      "soLuongTon": 16,
+      "maViTri": "KHO005-A"
+    },
+    {
+      "maKho": "KHO005",
+      "maSanPham": "SP0019",
+      "soLuongTon": 3,
+      "maViTri": "KHO005-B"
+    },
+    {
+      "maKho": "KHO005",
+      "maSanPham": "SP0026",
+      "soLuongTon": 18,
+      "maViTri": "KHO005-C"
+    },
+    {
+      "maKho": "KHO005",
+      "maSanPham": "SP0039",
+      "soLuongTon": 6,
+      "maViTri": "KHO005-D"
+    },
+    {
+      "maKho": "KHO005",
+      "maSanPham": "SP0049",
+      "soLuongTon": 9,
+      "maViTri": "KHO005-A"
+    },
+    {
+      "maKho": "KHO005",
+      "maSanPham": "SP0059",
+      "soLuongTon": 7,
+      "maViTri": "KHO005-B"
+    },
+    {
+      "maKho": "KHO005",
+      "maSanPham": "SP0069",
+      "soLuongTon": 4,
+      "maViTri": "KHO005-C"
+    },
+    {
+      "maKho": "KHO005",
+      "maSanPham": "SP0079",
+      "soLuongTon": 10,
+      "maViTri": "KHO005-D"
+    },
+    {
+      "maKho": "KHO005",
+      "maSanPham": "SP0023",
+      "soLuongTon": 50,
+      "maViTri": "KHO005-A"
+    },
+    {
+      "maKho": "KHO005",
+      "maSanPham": "SP0014",
+      "soLuongTon": 8,
+      "maViTri": "KHO005-B"
+    },
+    {
+      "maKho": "KHO002",
+      "maSanPham": "SP0028",
+      "soLuongTon": 2,
+      "maViTri": ""
+    },
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0023",
+      "soLuongTon": 6,
+      "maViTri": "KHO001-A"
+    }
+  ]
+}

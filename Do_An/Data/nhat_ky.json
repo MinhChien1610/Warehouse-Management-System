@@ -1,0 +1,209 @@
+[
+  {
+    "maNhatKy": "NK0001",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Đăng nhập",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2025-03-01 08:00:00",
+    "trangThai": "Thành công",
+    "ghiChu": "Admin đăng nhập hệ thống"
+  },
+  {
+    "maNhatKy": "NK0002",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Đăng nhập",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2025-03-01 08:15:00",
+    "trangThai": "Thành công",
+    "ghiChu": "Nhân viên kho đăng nhập hệ thống"
+  },
+  {
+    "maNhatKy": "NK0003",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Thêm phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2025-03-01 09:10:00",
+    "trangThai": "Thành công",
+    "ghiChu": "Tạo phiếu nhập PN0001"
+  },
+  {
+    "maNhatKy": "NK0004",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Thêm phiếu xuất",
+    "doiTuong": "Phiếu xuất",
+    "thoiGian": "2025-03-05 10:30:00",
+    "trangThai": "Thành công",
+    "ghiChu": "Tạo phiếu xuất PX0001"
+  },
+  {
+    "maNhatKy": "NK0005",
+    "maTaiKhoan": "TK003",
+    "hanhDong": "Kiểm kê kho",
+    "doiTuong": "Kiểm kê",
+    "thoiGian": "2025-04-01 14:00:00",
+    "trangThai": "Thành công",
+    "ghiChu": "Tạo phiếu kiểm kê KK0001"
+  },
+  {
+    "maNhatKy": "NK0006",
+    "maTaiKhoan": "TK003",
+    "hanhDong": "Đăng xuất",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2025-04-01 16:45:00",
+    "trangThai": "Thành công",
+    "ghiChu": "Kế toán đăng xuất hệ thống"
+  },
+  {
+    "maNhatKy": "NK0007",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Xóa phiếu xuất",
+    "doiTuong": "Phiếu xuất",
+    "thoiGian": "2026-05-16 20:36:49",
+    "trangThai": "Thành công",
+    "ghiChu": "Xóa phiếu xuất PX0003"
+  },
+  {
+    "maNhatKy": "NK0008",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Thêm phiếu xuất",
+    "doiTuong": "Phiếu xuất",
+    "thoiGian": "2026-05-16 20:50:56",
+    "trangThai": "Thành công",
+    "ghiChu": "Tạo phiếu xuất PX0003"
+  },
+  {
+    "maNhatKy": "NK0009",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Xóa phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-05-16 20:56:48",
+    "trangThai": "Thành công",
+    "ghiChu": "Xóa phiếu nhập PN0001"
+  },
+  {
+    "maNhatKy": "NK0010",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Thêm phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-05-16 20:56:48",
+    "trangThai": "Thành công",
+    "ghiChu": "Tạo phiếu nhập PN0004"
+  },
+  {
+    "maNhatKy": "NK0011",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Lưu tạm phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-05-17 12:32:18",
+    "trangThai": "Thành công",
+    "ghiChu": "Lưu tạm phiếu nhập PN0005"
+  },
+  {
+    "maNhatKy": "NK0012",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Xác nhận phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-05-17 12:40:35",
+    "trangThai": "Thành công",
+    "ghiChu": "Xác nhận phiếu nhập PN0005"
+  },
+  {
+    "maNhatKy": "NK0013",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Lưu tạm phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-05-17 12:40:53",
+    "trangThai": "Thành công",
+    "ghiChu": "Lưu tạm phiếu nhập PN0006"
+  },
+  {
+    "maNhatKy": "NK0014",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Lưu tạm phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-05-17 12:44:24",
+    "trangThai": "Thành công",
+    "ghiChu": "Lưu tạm phiếu nhập PN0007"
+  },
+  {
+    "maNhatKy": "NK0015",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Lưu tạm phiếu xuất",
+    "doiTuong": "Phiếu xuất",
+    "thoiGian": "2026-05-17 12:44:45",
+    "trangThai": "Thành công",
+    "ghiChu": "Lưu tạm phiếu xuất PX0004"
+  },
+  {
+    "maNhatKy": "NK0016",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Xóa phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-05-17 14:45:48",
+    "trangThai": "Thành công",
+    "ghiChu": "Xóa phiếu nhập PN0006"
+  },
+  {
+    "maNhatKy": "NK0017",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Xóa phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-05-17 14:45:52",
+    "trangThai": "Thành công",
+    "ghiChu": "Xóa phiếu nhập PN0007"
+  },
+  {
+    "maNhatKy": "NK0018",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Lưu tạm phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-05-17 15:00:38",
+    "trangThai": "Thành công",
+    "ghiChu": "Lưu tạm phiếu nhập PN0006"
+  },
+  {
+    "maNhatKy": "NK0019",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Xác nhận phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-05-17 15:00:42",
+    "trangThai": "Thành công",
+    "ghiChu": "Xác nhận phiếu nhập PN0006"
+  },
+  {
+    "maNhatKy": "NK0020",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Lưu tạm phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-05-17 16:55:25",
+    "trangThai": "Thành công",
+    "ghiChu": "Lưu tạm phiếu nhập PN0007"
+  },
+  {
+    "maNhatKy": "NK0021",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Xác nhận phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-05-17 16:55:58",
+    "trangThai": "Thành công",
+    "ghiChu": "Xác nhận phiếu nhập PN0007"
+  },
+  {
+    "maNhatKy": "NK0022",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Ngừng kinh doanh sản phẩm",
+    "doiTuong": "Hàng hóa",
+    "thoiGian": "2026-05-17 16:56:27",
+    "trangThai": "Thành công",
+    "ghiChu": "Chuyển sản phẩm SP0005 sang trạng thái Ngừng kinh doanh"
+  },
+  {
+    "maNhatKy": "NK0023",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Lưu tạm phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-05-17 18:47:42",
+    "trangThai": "Thành công",
+    "ghiChu": "Lưu tạm phiếu nhập PN0008"
+  }
+]

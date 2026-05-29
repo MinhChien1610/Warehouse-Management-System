@@ -1,0 +1,71 @@
+[
+  {
+    "maKiemKe": "KK0001",
+    "maKho": "KHO001",
+    "ngayKiemKe": "2025-04-01",
+    "ghiChu": "Kiểm kê đầu tháng",
+    "chiTiet": [
+      {
+        "maSanPham": "SP0001",
+        "soLuongHeThong": 20,
+        "soLuongThucTe": 19
+      },
+      {
+        "maSanPham": "SP0002",
+        "soLuongHeThong": 15,
+        "soLuongThucTe": 15
+      },
+      {
+        "maSanPham": "SP0021",
+        "soLuongHeThong": 40,
+        "soLuongThucTe": 38
+      }
+    ]
+  },
+  {
+    "maKiemKe": "KK0002",
+    "maKho": "KHO002",
+    "ngayKiemKe": "2025-04-01",
+    "ghiChu": "Kiểm kê đầu tháng",
+    "chiTiet": [
+      {
+        "maSanPham": "SP0004",
+        "soLuongHeThong": 12,
+        "soLuongThucTe": 12
+      },
+      {
+        "maSanPham": "SP0005",
+        "soLuongHeThong": 9,
+        "soLuongThucTe": 8
+      },
+      {
+        "maSanPham": "SP0025",
+        "soLuongHeThong": 30,
+        "soLuongThucTe": 29
+      }
+    ]
+  },
+  {
+    "maKiemKe": "KK0003",
+    "maKho": "KHO003",
+    "ngayKiemKe": "2025-04-01",
+    "ghiChu": "Kiểm kê đầu tháng",
+    "chiTiet": [
+      {
+        "maSanPham": "SP0006",
+        "soLuongHeThong": 14,
+        "soLuongThucTe": 14
+      },
+      {
+        "maSanPham": "SP0007",
+        "soLuongHeThong": 11,
+        "soLuongThucTe": 10
+      },
+      {
+        "maSanPham": "SP0028",
+        "soLuongHeThong": 22,
+        "soLuongThucTe": 21
+      }
+    ]
+  }
+]

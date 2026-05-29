@@ -1,0 +1,79 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>7d386e68-4e2f-485c-a0a6-ce2682312969</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>GUI\NhanVienKho\nhanvienkho.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>Do_An</Name>
+    <RootNamespace>Do_An</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Class\" />
+    <Folder Include="CRUD\" />
+    <Folder Include="CRUD\Admin\" />
+    <Folder Include="CRUD\KeToan\" />
+    <Folder Include="CRUD\NhanVienKho\" />
+    <Folder Include="Data\" />
+    <Folder Include="GUI\" />
+    <Folder Include="GUI\Admin\" />
+    <Folder Include="GUI\KeToan\" />
+    <Folder Include="GUI\Login\" />
+    <Folder Include="GUI\Common\" />
+    <Folder Include="GUI\NhanVienKho\" />
+    <Folder Include="Calculator\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\doi_tac.json" />
+    <Content Include="Data\hang_hoa.json" />
+    <Content Include="Data\kho_hang.json" />
+    <Content Include="Data\kiem_ke.json" />
+    <Content Include="Data\nguoi_dung.json" />
+    <Content Include="Data\nhat_ky.json" />
+    <Content Include="Data\phieu_nhap.json" />
+    <Content Include="Data\phieu_xuat.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Calculator\kiemke.py" />
+    <Compile Include="Calculator\phieu.py" />
+    <Compile Include="Calculator\thongke.py" />
+    <Compile Include="Calculator\tonkho.py" />
+    <Compile Include="Class\kiemke.py" />
+    <Compile Include="Class\nhatky.py" />
+    <Compile Include="Class\phieunhap.py" />
+    <Compile Include="Class\kho.py" />
+    <Compile Include="Class\phieuxuat.py" />
+    <Compile Include="Class\sanpham.py" />
+    <Compile Include="Class\tonkho.py" />
+    <Compile Include="CRUD\NhanVienKho\hanghoa.py" />
+    <Compile Include="CRUD\NhanVienKho\khohang.py" />
+    <Compile Include="CRUD\NhanVienKho\nhanvienkho.py" />
+    <Compile Include="CRUD\NhanVienKho\nhatky.py" />
+    <Compile Include="CRUD\NhanVienKho\thongke.py" />
+    <Compile Include="GUI\Common\base.py" />
+    <Compile Include="GUI\KeToan\ketoan.py" />
+    <Compile Include="GUI\Login\login.py" />
+    <Compile Include="GUI\NhanVienKho\nhanvienkho.py" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>

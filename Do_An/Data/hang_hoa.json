@@ -1,0 +1,701 @@
+{
+  "donViTinh": [
+    {
+      "maDonViTinh": "DVT001",
+      "tenDonViTinh": "Chiếc"
+    },
+    {
+      "maDonViTinh": "DVT002",
+      "tenDonViTinh": "Cái"
+    },
+    {
+      "maDonViTinh": "DVT003",
+      "tenDonViTinh": "Hộp"
+    },
+    {
+      "maDonViTinh": "DVT004",
+      "tenDonViTinh": "Thùng"
+    },
+    {
+      "maDonViTinh": "DVT005",
+      "tenDonViTinh": "Cặp"
+    }
+  ],
+  "loaiHang": [
+    {
+      "maLoaiHang": "LH0001",
+      "tenLoaiHang": "Điện thoại"
+    },
+    {
+      "maLoaiHang": "LH0002",
+      "tenLoaiHang": "Laptop"
+    },
+    {
+      "maLoaiHang": "LH0003",
+      "tenLoaiHang": "Phụ kiện"
+    },
+    {
+      "maLoaiHang": "LH0004",
+      "tenLoaiHang": "Máy tính bảng"
+    },
+    {
+      "maLoaiHang": "LH0005",
+      "tenLoaiHang": "Đồng hồ thông minh"
+    },
+    {
+      "maLoaiHang": "LH0006",
+      "tenLoaiHang": "Tivi"
+    },
+    {
+      "maLoaiHang": "LH0007",
+      "tenLoaiHang": "Tủ lạnh"
+    },
+    {
+      "maLoaiHang": "LH0008",
+      "tenLoaiHang": "Máy lạnh"
+    }
+  ],
+  "sanPham": [
+    {
+      "maSanPham": "SP0001",
+      "tenSanPham": "iPhone 15 Pro Max",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0001",
+      "donGia": 35000000,
+      "mucTonToiThieu": 10
+    },
+    {
+      "maSanPham": "SP0002",
+      "tenSanPham": "iPhone 15",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0001",
+      "donGia": 25000000,
+      "mucTonToiThieu": 8
+    },
+    {
+      "maSanPham": "SP0003",
+      "tenSanPham": "Samsung Galaxy S24 Ultra",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0001",
+      "donGia": 30000000,
+      "mucTonToiThieu": 7
+    },
+    {
+      "maSanPham": "SP0004",
+      "tenSanPham": "Samsung Galaxy A55",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0001",
+      "donGia": 10000000,
+      "mucTonToiThieu": 12
+    },
+    {
+      "maSanPham": "SP0005",
+      "tenSanPham": "Oppo Find X6",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0001",
+      "donGia": 18000000,
+      "mucTonToiThieu": 6,
+      "trangThai": "Ngừng kinh doanh"
+    },
+    {
+      "maSanPham": "SP0006",
+      "tenSanPham": "Oppo Reno 11",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0001",
+      "donGia": 9000000,
+      "mucTonToiThieu": 10
+    },
+    {
+      "maSanPham": "SP0007",
+      "tenSanPham": "Xiaomi 14",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0001",
+      "donGia": 15000000,
+      "mucTonToiThieu": 9
+    },
+    {
+      "maSanPham": "SP0008",
+      "tenSanPham": "Vivo X100",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0001",
+      "donGia": 17000000,
+      "mucTonToiThieu": 5
+    },
+    {
+      "maSanPham": "SP0009",
+      "tenSanPham": "Realme GT 5",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0001",
+      "donGia": 12000000,
+      "mucTonToiThieu": 8
+    },
+    {
+      "maSanPham": "SP0010",
+      "tenSanPham": "Nokia G22",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0001",
+      "donGia": 5000000,
+      "mucTonToiThieu": 15
+    },
+    {
+      "maSanPham": "SP0011",
+      "tenSanPham": "Macbook Air M3",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0002",
+      "donGia": 28000000,
+      "mucTonToiThieu": 5
+    },
+    {
+      "maSanPham": "SP0012",
+      "tenSanPham": "Macbook Pro M3",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0002",
+      "donGia": 45000000,
+      "mucTonToiThieu": 4
+    },
+    {
+      "maSanPham": "SP0013",
+      "tenSanPham": "Dell XPS 13",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0002",
+      "donGia": 32000000,
+      "mucTonToiThieu": 6
+    },
+    {
+      "maSanPham": "SP0014",
+      "tenSanPham": "Dell Inspiron 15",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0002",
+      "donGia": 18000000,
+      "mucTonToiThieu": 10
+    },
+    {
+      "maSanPham": "SP0015",
+      "tenSanPham": "HP Pavilion 15",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0002",
+      "donGia": 20000000,
+      "mucTonToiThieu": 7
+    },
+    {
+      "maSanPham": "SP0016",
+      "tenSanPham": "HP Victus 16",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0002",
+      "donGia": 25000000,
+      "mucTonToiThieu": 6
+    },
+    {
+      "maSanPham": "SP0017",
+      "tenSanPham": "ASUS ROG Strix G16",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0002",
+      "donGia": 35000000,
+      "mucTonToiThieu": 4
+    },
+    {
+      "maSanPham": "SP0018",
+      "tenSanPham": "ASUS Vivobook 14",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0002",
+      "donGia": 16000000,
+      "mucTonToiThieu": 8
+    },
+    {
+      "maSanPham": "SP0019",
+      "tenSanPham": "Lenovo ThinkPad X1",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0002",
+      "donGia": 40000000,
+      "mucTonToiThieu": 3
+    },
+    {
+      "maSanPham": "SP0020",
+      "tenSanPham": "Acer Aspire 7",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0002",
+      "donGia": 17000000,
+      "mucTonToiThieu": 9
+    },
+    {
+      "maSanPham": "SP0021",
+      "tenSanPham": "AirPods Pro 2",
+      "maDonViTinh": "DVT003",
+      "maLoaiHang": "LH0003",
+      "donGia": 5000000,
+      "mucTonToiThieu": 15
+    },
+    {
+      "maSanPham": "SP0022",
+      "tenSanPham": "Sạc nhanh 65W",
+      "maDonViTinh": "DVT003",
+      "maLoaiHang": "LH0003",
+      "donGia": 800000,
+      "mucTonToiThieu": 20
+    },
+    {
+      "maSanPham": "SP0023",
+      "tenSanPham": "Ốp lưng iPhone 15",
+      "maDonViTinh": "DVT003",
+      "maLoaiHang": "LH0003",
+      "donGia": 300000,
+      "mucTonToiThieu": 30
+    },
+    {
+      "maSanPham": "SP0024",
+      "tenSanPham": "Chuột Logitech MX",
+      "maDonViTinh": "DVT003",
+      "maLoaiHang": "LH0003",
+      "donGia": 1200000,
+      "mucTonToiThieu": 25
+    },
+    {
+      "maSanPham": "SP0025",
+      "tenSanPham": "Bàn phím cơ AKKO",
+      "maDonViTinh": "DVT003",
+      "maLoaiHang": "LH0003",
+      "donGia": 2200000,
+      "mucTonToiThieu": 20
+    },
+    {
+      "maSanPham": "SP0026",
+      "tenSanPham": "Tai nghe Sony WH-1000XM5",
+      "maDonViTinh": "DVT003",
+      "maLoaiHang": "LH0003",
+      "donGia": 8000000,
+      "mucTonToiThieu": 10
+    },
+    {
+      "maSanPham": "SP0027",
+      "tenSanPham": "Cáp sạc Type C",
+      "maDonViTinh": "DVT003",
+      "maLoaiHang": "LH0003",
+      "donGia": 150000,
+      "mucTonToiThieu": 50
+    },
+    {
+      "maSanPham": "SP0028",
+      "tenSanPham": "Pin dự phòng 20000mAh",
+      "maDonViTinh": "DVT003",
+      "maLoaiHang": "LH0003",
+      "donGia": 600000,
+      "mucTonToiThieu": 18
+    },
+    {
+      "maSanPham": "SP0029",
+      "tenSanPham": "Loa Bluetooth JBL",
+      "maDonViTinh": "DVT003",
+      "maLoaiHang": "LH0003",
+      "donGia": 3000000,
+      "mucTonToiThieu": 12
+    },
+    {
+      "maSanPham": "SP0030",
+      "tenSanPham": "Giá đỡ điện thoại",
+      "maDonViTinh": "DVT003",
+      "maLoaiHang": "LH0003",
+      "donGia": 100000,
+      "mucTonToiThieu": 40
+    },
+    {
+      "maSanPham": "SP0031",
+      "tenSanPham": "iPad Pro M2",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0004",
+      "donGia": 25000000,
+      "mucTonToiThieu": 6
+    },
+    {
+      "maSanPham": "SP0032",
+      "tenSanPham": "iPad Air 5",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0004",
+      "donGia": 17000000,
+      "mucTonToiThieu": 7
+    },
+    {
+      "maSanPham": "SP0033",
+      "tenSanPham": "iPad Gen 10",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0004",
+      "donGia": 12000000,
+      "mucTonToiThieu": 8
+    },
+    {
+      "maSanPham": "SP0034",
+      "tenSanPham": "Samsung Galaxy Tab S9",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0004",
+      "donGia": 21000000,
+      "mucTonToiThieu": 5
+    },
+    {
+      "maSanPham": "SP0035",
+      "tenSanPham": "Samsung Galaxy Tab A9",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0004",
+      "donGia": 6000000,
+      "mucTonToiThieu": 10
+    },
+    {
+      "maSanPham": "SP0036",
+      "tenSanPham": "Xiaomi Pad 6",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0004",
+      "donGia": 9000000,
+      "mucTonToiThieu": 9
+    },
+    {
+      "maSanPham": "SP0037",
+      "tenSanPham": "Huawei MatePad 11",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0004",
+      "donGia": 10000000,
+      "mucTonToiThieu": 7
+    },
+    {
+      "maSanPham": "SP0038",
+      "tenSanPham": "Lenovo Tab P12",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0004",
+      "donGia": 8000000,
+      "mucTonToiThieu": 8
+    },
+    {
+      "maSanPham": "SP0039",
+      "tenSanPham": "Realme Pad 2",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0004",
+      "donGia": 7000000,
+      "mucTonToiThieu": 12
+    },
+    {
+      "maSanPham": "SP0040",
+      "tenSanPham": "Nokia T21",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0004",
+      "donGia": 6500000,
+      "mucTonToiThieu": 11
+    },
+    {
+      "maSanPham": "SP0041",
+      "tenSanPham": "Apple Watch Series 9",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0005",
+      "donGia": 12000000,
+      "mucTonToiThieu": 8
+    },
+    {
+      "maSanPham": "SP0042",
+      "tenSanPham": "Apple Watch SE",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0005",
+      "donGia": 7000000,
+      "mucTonToiThieu": 10
+    },
+    {
+      "maSanPham": "SP0043",
+      "tenSanPham": "Samsung Galaxy Watch 6",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0005",
+      "donGia": 9000000,
+      "mucTonToiThieu": 9
+    },
+    {
+      "maSanPham": "SP0044",
+      "tenSanPham": "Samsung Galaxy Watch 5",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0005",
+      "donGia": 6000000,
+      "mucTonToiThieu": 12
+    },
+    {
+      "maSanPham": "SP0045",
+      "tenSanPham": "Garmin Fenix 7",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0005",
+      "donGia": 11000000,
+      "mucTonToiThieu": 5
+    },
+    {
+      "maSanPham": "SP0046",
+      "tenSanPham": "Garmin Forerunner 255",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0005",
+      "donGia": 8000000,
+      "mucTonToiThieu": 6
+    },
+    {
+      "maSanPham": "SP0047",
+      "tenSanPham": "Xiaomi Watch S1",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0005",
+      "donGia": 3500000,
+      "mucTonToiThieu": 14
+    },
+    {
+      "maSanPham": "SP0048",
+      "tenSanPham": "Amazfit GTR 4",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0005",
+      "donGia": 4000000,
+      "mucTonToiThieu": 13
+    },
+    {
+      "maSanPham": "SP0049",
+      "tenSanPham": "Huawei Watch GT 4",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0005",
+      "donGia": 5000000,
+      "mucTonToiThieu": 10
+    },
+    {
+      "maSanPham": "SP0050",
+      "tenSanPham": "Realme Watch 3",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0005",
+      "donGia": 2000000,
+      "mucTonToiThieu": 20
+    },
+    {
+      "maSanPham": "SP0051",
+      "tenSanPham": "Smart TV Samsung 55 inch 4K",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0006",
+      "donGia": 14000000,
+      "mucTonToiThieu": 5
+    },
+    {
+      "maSanPham": "SP0052",
+      "tenSanPham": "Smart TV LG 65 inch OLED",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0006",
+      "donGia": 32000000,
+      "mucTonToiThieu": 3
+    },
+    {
+      "maSanPham": "SP0053",
+      "tenSanPham": "Smart TV Sony 50 inch 4K",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0006",
+      "donGia": 16000000,
+      "mucTonToiThieu": 4
+    },
+    {
+      "maSanPham": "SP0054",
+      "tenSanPham": "Smart TV TCL 43 inch",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0006",
+      "donGia": 7000000,
+      "mucTonToiThieu": 6
+    },
+    {
+      "maSanPham": "SP0055",
+      "tenSanPham": "Smart TV Casper 55 inch",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0006",
+      "donGia": 9000000,
+      "mucTonToiThieu": 7
+    },
+    {
+      "maSanPham": "SP0056",
+      "tenSanPham": "Smart TV Panasonic 58 inch",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0006",
+      "donGia": 15000000,
+      "mucTonToiThieu": 4
+    },
+    {
+      "maSanPham": "SP0057",
+      "tenSanPham": "Smart TV Sharp 50 inch",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0006",
+      "donGia": 11000000,
+      "mucTonToiThieu": 5
+    },
+    {
+      "maSanPham": "SP0058",
+      "tenSanPham": "Smart TV Xiaomi 65 inch",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0006",
+      "donGia": 13000000,
+      "mucTonToiThieu": 6
+    },
+    {
+      "maSanPham": "SP0059",
+      "tenSanPham": "Smart TV Toshiba 43 inch",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0006",
+      "donGia": 8000000,
+      "mucTonToiThieu": 8
+    },
+    {
+      "maSanPham": "SP0060",
+      "tenSanPham": "Smart TV LG NanoCell 75 inch",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0006",
+      "donGia": 40000000,
+      "mucTonToiThieu": 2
+    },
+    {
+      "maSanPham": "SP0061",
+      "tenSanPham": "Tủ lạnh Panasonic 450L",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0007",
+      "donGia": 18000000,
+      "mucTonToiThieu": 4
+    },
+    {
+      "maSanPham": "SP0062",
+      "tenSanPham": "Tủ lạnh Samsung 380L",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0007",
+      "donGia": 12000000,
+      "mucTonToiThieu": 6
+    },
+    {
+      "maSanPham": "SP0063",
+      "tenSanPham": "Tủ lạnh LG 600L",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0007",
+      "donGia": 25000000,
+      "mucTonToiThieu": 3
+    },
+    {
+      "maSanPham": "SP0064",
+      "tenSanPham": "Tủ lạnh Toshiba 300L",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0007",
+      "donGia": 9000000,
+      "mucTonToiThieu": 8
+    },
+    {
+      "maSanPham": "SP0065",
+      "tenSanPham": "Tủ lạnh Aqua 250L",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0007",
+      "donGia": 7000000,
+      "mucTonToiThieu": 10
+    },
+    {
+      "maSanPham": "SP0066",
+      "tenSanPham": "Tủ lạnh Sharp 400L",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0007",
+      "donGia": 14000000,
+      "mucTonToiThieu": 5
+    },
+    {
+      "maSanPham": "SP0067",
+      "tenSanPham": "Tủ lạnh Hitachi 550L",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0007",
+      "donGia": 30000000,
+      "mucTonToiThieu": 2
+    },
+    {
+      "maSanPham": "SP0068",
+      "tenSanPham": "Tủ lạnh Electrolux 350L",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0007",
+      "donGia": 11000000,
+      "mucTonToiThieu": 7
+    },
+    {
+      "maSanPham": "SP0069",
+      "tenSanPham": "Tủ lạnh Casper 280L",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0007",
+      "donGia": 8000000,
+      "mucTonToiThieu": 9
+    },
+    {
+      "maSanPham": "SP0070",
+      "tenSanPham": "Tủ lạnh Beko 320L",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0007",
+      "donGia": 10000000,
+      "mucTonToiThieu": 6
+    },
+    {
+      "maSanPham": "SP0071",
+      "tenSanPham": "Máy lạnh Daikin 1.5HP",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0008",
+      "donGia": 11000000,
+      "mucTonToiThieu": 6
+    },
+    {
+      "maSanPham": "SP0072",
+      "tenSanPham": "Máy lạnh Panasonic 2HP",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0008",
+      "donGia": 15000000,
+      "mucTonToiThieu": 4
+    },
+    {
+      "maSanPham": "SP0073",
+      "tenSanPham": "Máy lạnh LG 1HP",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0008",
+      "donGia": 9500000,
+      "mucTonToiThieu": 8
+    },
+    {
+      "maSanPham": "SP0074",
+      "tenSanPham": "Máy lạnh Samsung Inverter 1.5HP",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0008",
+      "donGia": 12000000,
+      "mucTonToiThieu": 7
+    },
+    {
+      "maSanPham": "SP0075",
+      "tenSanPham": "Máy lạnh Toshiba 1HP",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0008",
+      "donGia": 9000000,
+      "mucTonToiThieu": 9
+    },
+    {
+      "maSanPham": "SP0076",
+      "tenSanPham": "Máy lạnh Sharp 1.5HP",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0008",
+      "donGia": 10500000,
+      "mucTonToiThieu": 6
+    },
+    {
+      "maSanPham": "SP0077",
+      "tenSanPham": "Máy lạnh Casper 2HP",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0008",
+      "donGia": 13000000,
+      "mucTonToiThieu": 5
+    },
+    {
+      "maSanPham": "SP0078",
+      "tenSanPham": "Máy lạnh Aqua 1HP",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0008",
+      "donGia": 8500000,
+      "mucTonToiThieu": 10
+    },
+    {
+      "maSanPham": "SP0079",
+      "tenSanPham": "Máy lạnh Midea 1.5HP",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0008",
+      "donGia": 10000000,
+      "mucTonToiThieu": 8
+    },
+    {
+      "maSanPham": "SP0080",
+      "tenSanPham": "Máy lạnh Hitachi 2HP",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0008",
+      "donGia": 16000000,
+      "mucTonToiThieu": 3
+    }
+  ]
+}

@@ -145,7 +145,7 @@ The system simulates warehouse operations including product management, stock co
 
 # 👤 Author
 
-**Chiến Lê**
+**Le Thi Minh Chien**
 
 Student Project – Warehouse Management System
 

@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>7d386e68-4e2f-485c-a0a6-ce2682312969</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>GUI\NhanVienKho\nhanvienkho.py</StartupFile>
+    <StartupFile>GUI\Login\login.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -46,6 +46,8 @@
     <Content Include="Data\phieu_xuat.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculator\admin.py" />
+    <Compile Include="Calculator\common.py" />
     <Compile Include="Calculator\kiemke.py" />
     <Compile Include="Calculator\phieu.py" />
     <Compile Include="Calculator\thongke.py" />
@@ -57,11 +59,13 @@
     <Compile Include="Class\phieuxuat.py" />
     <Compile Include="Class\sanpham.py" />
     <Compile Include="Class\tonkho.py" />
+    <Compile Include="CRUD\Admin\admin.py" />
     <Compile Include="CRUD\NhanVienKho\hanghoa.py" />
     <Compile Include="CRUD\NhanVienKho\khohang.py" />
     <Compile Include="CRUD\NhanVienKho\nhanvienkho.py" />
     <Compile Include="CRUD\NhanVienKho\nhatky.py" />
     <Compile Include="CRUD\NhanVienKho\thongke.py" />
+    <Compile Include="GUI\Admin\admin.py" />
     <Compile Include="GUI\Common\base.py" />
     <Compile Include="GUI\KeToan\ketoan.py" />
     <Compile Include="GUI\Login\login.py" />

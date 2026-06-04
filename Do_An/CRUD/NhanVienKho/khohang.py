@@ -11,6 +11,9 @@ from Class.phieunhap import PhieuNhap
 from Class.phieuxuat import PhieuXuat
 from Class.kiemke import KiemKe
 from Calculator.phieu import tinh_tong_tien_chi_tiet
+from Calculator.common import chuyen_so_nguyen
+from Calculator.tonkho import lay_canh_bao_ton_thap as tinh_canh_bao_ton_thap
+from Calculator.tonkho import lap_du_lieu_ton_kho
 
 
 class KhoHang:
@@ -41,11 +44,14 @@ class KhoHang:
         if not os.path.exists(duong_dan):
             return deepcopy(mac_dinh)
 
-        try:
-            with open(duong_dan, "r", encoding="utf-8") as file:
-                return json.load(file)
-        except json.JSONDecodeError:
-            return deepcopy(mac_dinh)
+        for encoding in ["utf-8-sig", "utf-8"]:
+            try:
+                with open(duong_dan, "r", encoding=encoding) as file:
+                    return json.load(file)
+            except json.JSONDecodeError:
+                continue
+
+        return deepcopy(mac_dinh)
 
     def ghi_json(self, ten_file: str, data: Any):
         duong_dan = self.lay_duong_dan_file(ten_file)
@@ -126,26 +132,14 @@ class KhoHang:
     def lay_ton_kho(self):
         kho_data = self.doc_json("kho_hang.json", {})
         hang_data = self.doc_json("hang_hoa.json", {})
+        ket_qua = lap_du_lieu_ton_kho(
+            kho_data.get("tonKho", []),
+            hang_data.get("sanPham", []),
+            kho_data.get("viTriKho", []),
+        )
 
-        san_pham_map = {}
-
-        for san_pham in hang_data.get("sanPham", []):
-            san_pham_map[san_pham.get("maSanPham")] = san_pham
-
-        ket_qua = []
-
-        for ton in kho_data.get("tonKho", []):
-            ma_san_pham = ton.get("maSanPham", "")
-            san_pham = san_pham_map.get(ma_san_pham, {})
-
-            ket_qua.append({
-                "maKho": ton.get("maKho", ""),
-                "maSanPham": ma_san_pham,
-                "tenSanPham": san_pham.get("tenSanPham", ""),
-                "soLuongTon": self.chuyen_so_nguyen(ton.get("soLuongTon", 0)),
-                "mucTonToiThieu": self.chuyen_so_nguyen(san_pham.get("mucTonToiThieu", 0)),
-                "maViTri": ton.get("maViTri", ""),
-            })
+        for ton in ket_qua:
+            ton["maViTri"] = ton.get("viTriHang", "")
 
         return ket_qua
 
@@ -222,15 +216,16 @@ class KhoHang:
         self.ghi_json("kho_hang.json", kho_data)
 
     def lay_canh_bao_ton_thap(self):
-        ket_qua = []
+        kho_data = self.doc_json("kho_hang.json", {})
+        hang_data = self.doc_json("hang_hoa.json", {})
+        ket_qua = tinh_canh_bao_ton_thap(
+            kho_data.get("tonKho", []),
+            hang_data.get("sanPham", []),
+            kho_data.get("viTriKho", []),
+        )
 
-        for ton in self.lay_ton_kho():
-            so_luong_ton = self.chuyen_so_nguyen(ton.get("soLuongTon", 0))
-            muc_toi_thieu = self.chuyen_so_nguyen(ton.get("mucTonToiThieu", 0))
-
-            if so_luong_ton < muc_toi_thieu:
-                ton["canNhapThem"] = muc_toi_thieu - so_luong_ton
-                ket_qua.append(ton)
+        for ton in ket_qua:
+            ton["maViTri"] = ton.get("viTriHang", "")
 
         return ket_qua
 
@@ -617,10 +612,7 @@ class KhoHang:
         return tien_to + str(so_lon_nhat + 1).zfill(4)
 
     def chuyen_so_nguyen(self, value: Any):
-        try:
-            return int(float(value))
-        except (ValueError, TypeError):
-            return 0
+        return chuyen_so_nguyen(value)
 
     def lay_ngay_hien_tai(self):
         return date.today().strftime("%Y-%m-%d")

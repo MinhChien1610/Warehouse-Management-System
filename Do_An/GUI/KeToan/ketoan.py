@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 from Calculator.thongke import thong_ke_tien_theo_ngay
-from Calculator.tonkho import tinh_tong_ton_kho
+from Calculator.tonkho import lap_du_lieu_ton_kho, tinh_tong_ton_kho
 from GUI.Common.base import GiaoDienCoSo
 from GUI.Login.login import hien_thi_login
 
@@ -13,59 +13,24 @@ from GUI.Login.login import hien_thi_login
 # FILE JSON
 # =========================
 def lay_thu_muc_goc():
-    thu_muc = os.path.dirname(os.path.abspath(__file__))
-
-    while True:
-        duong_dan_data = os.path.join(thu_muc, "Data")
-
-        if os.path.exists(duong_dan_data):
-            return thu_muc
-
-        thu_muc_cha = os.path.dirname(thu_muc)
-
-        if thu_muc_cha == thu_muc:
-            return os.path.dirname(os.path.abspath(__file__))
-
-        thu_muc = thu_muc_cha
+    return GiaoDienCoSo.lay_thu_muc_goc()
 
 
 def doc_json(ten_file, mac_dinh=None):
-    cac_duong_dan = [
-        os.path.join(lay_thu_muc_goc(), "Data", ten_file),
-        os.path.join(os.path.dirname(os.path.abspath(__file__)), ten_file),
-    ]
-
-    for duong_dan in cac_duong_dan:
-        if not os.path.exists(duong_dan):
-            continue
-
-        try:
-            with open(duong_dan, "r", encoding="utf-8") as file:
-                return json.load(file)
-        except json.JSONDecodeError:
-            return mac_dinh
-
-    return mac_dinh
+    return GiaoDienCoSo.doc_json(ten_file, mac_dinh)
 
 
 def ghi_json(ten_file, data):
-    thu_muc_data = os.path.join(lay_thu_muc_goc(), "Data")
-
-    if os.path.exists(thu_muc_data):
-        duong_dan = os.path.join(thu_muc_data, ten_file)
-    else:
-        duong_dan = os.path.join(os.path.dirname(os.path.abspath(__file__)), ten_file)
-
-    with open(duong_dan, "w", encoding="utf-8") as file:
-        json.dump(data, file, ensure_ascii=False, indent=2)
+    GiaoDienCoSo.ghi_json(ten_file, data)
 
 
 # =========================
 # GIAO DIỆN KẾ TOÁN
 # =========================
 class GiaoDienKeToan(GiaoDienCoSo):
-    def __init__(self):
+    def __init__(self, tai_khoan_dang_nhap=None):
         super().__init__()
+        self.tai_khoan_dang_nhap = tai_khoan_dang_nhap or {}
         self.ap_dung_theme_ke_toan()
 
         self.root = tk.Tk()
@@ -85,23 +50,6 @@ class GiaoDienKeToan(GiaoDienCoSo):
         self.root.mainloop()
 
     def ap_dung_theme_ke_toan(self):
-        self.mau_nen = "#F8F5F3"
-        self.mau_sidebar = "#B98E7C"
-        self.mau_menu = "#AD806D"
-        self.mau_menu_hover = "#9F725F"
-
-        self.mau_card = "#FFFFFF"
-        self.mau_card_nhe = "#FBF7F5"
-        self.mau_vien = "#E8D8D0"
-
-        self.mau_chu_dam = "#3F241B"
-        self.mau_chu_phu = "#8D6F63"
-
-        self.mau_them = "#7D9D8C"
-        self.mau_sua = "#B98E7C"
-        self.mau_xoa = "#B56B6B"
-        self.mau_thoat = "#6E554C"
-        self.mau_tim_kiem = "#8D6F63"
         self.mau_nhan = "#AD806D"
         self.mau_nhan_nhe = "#FFFAF8"
 
@@ -605,40 +553,11 @@ class GiaoDienKeToan(GiaoDienCoSo):
         du_lieu_kho = doc_json("kho_hang.json", {})
         du_lieu_hang = doc_json("hang_hoa.json", {})
 
-        ton_kho = du_lieu_kho.get("tonKho", [])
-        san_pham = du_lieu_hang.get("sanPham", [])
-
-        san_pham_map = {}
-        for item in san_pham:
-            ma_san_pham = item.get("maSanPham", item.get("maSP", ""))
-            san_pham_map[ma_san_pham] = item
-
-        ket_qua = []
-
-        for item in ton_kho:
-            ma_san_pham = item.get("maSanPham", item.get("maSP", ""))
-            thong_tin_sp = san_pham_map.get(ma_san_pham, {})
-            so_luong = self.chuyen_so(item.get("soLuongTon", item.get("soLuong", 0)))
-            don_gia = self.chuyen_so(thong_tin_sp.get("donGia", item.get("donGia", 0)))
-            muc_ton_toi_thieu = self.chuyen_so(thong_tin_sp.get("mucTonToiThieu", item.get("mucTonToiThieu", 0)))
-
-            if muc_ton_toi_thieu > 0 and so_luong <= muc_ton_toi_thieu:
-                canh_bao = "Tồn thấp"
-            else:
-                canh_bao = "Ổn định"
-
-            ket_qua.append({
-                "maSanPham": ma_san_pham,
-                "tenSanPham": thong_tin_sp.get("tenSanPham", item.get("tenSanPham", "")),
-                "maKho": item.get("maKho", item.get("maCN", "")),
-                "soLuongTon": so_luong,
-                "donGia": don_gia,
-                "giaTriTon": so_luong * don_gia,
-                "mucTonToiThieu": muc_ton_toi_thieu,
-                "canhBao": canh_bao,
-            })
-
-        return ket_qua
+        return lap_du_lieu_ton_kho(
+            du_lieu_kho.get("tonKho", []),
+            du_lieu_hang.get("sanPham", []),
+            du_lieu_kho.get("viTriKho", []),
+        )
 
     def do_du_lieu_ton_kho(self, bang, data):
         self.xoa_du_lieu_bang(bang)
@@ -1597,20 +1516,6 @@ class GiaoDienKeToan(GiaoDienCoSo):
         canvas.bind("<Configure>", ve_lai)
         canvas.after(50, ve_lai)
 
-    def dinh_dang_so_ngan(self, value):
-        so = self.chuyen_so(value)
-
-        if abs(so) >= 1000000000:
-            return f"{so / 1000000000:.1f} tỷ"
-
-        if abs(so) >= 1000000:
-            return f"{so / 1000000:.1f} triệu"
-
-        if abs(so) >= 1000:
-            return f"{so / 1000:.1f} nghìn"
-
-        return self.dinh_dang_so(so)
-
     def rut_gon_chu(self, text, max_len):
         text = str(text)
 
@@ -1825,26 +1730,6 @@ class GiaoDienKeToan(GiaoDienCoSo):
 
         return tong / so_luong
 
-    def chuyen_so(self, value):
-        try:
-            return float(value)
-        except (ValueError, TypeError):
-            return 0
-
-    def dinh_dang_so(self, value):
-        try:
-            so = float(value)
-
-            if so == int(so): 
-                return f"{int(so):,}".replace(",", ".")
-
-            return f"{so:,.2f}".replace(",", ".")
-        except (ValueError, TypeError):
-            return str(value)
-
-    def dinh_dang_tien(self, value):
-        return self.dinh_dang_so(value) + " đ"
-
     def dinh_dang_tien_the(self, value):
         so = self.chuyen_so(value)
         dau = "-" if so < 0 else ""
@@ -1862,6 +1747,13 @@ class GiaoDienKeToan(GiaoDienCoSo):
         return dau + self.dinh_dang_so(so) + " đ"
 
     def tim_tai_khoan_ke_toan(self, data):
+        ma_tai_khoan_hien_tai = self.tai_khoan_dang_nhap.get("maTaiKhoan", "")
+
+        if ma_tai_khoan_hien_tai != "":
+            for tai_khoan in data.get("taiKhoan", []):
+                if tai_khoan.get("maTaiKhoan", "") == ma_tai_khoan_hien_tai:
+                    return tai_khoan
+
         vai_tro_map = {}
 
         for vai_tro in data.get("vaiTro", []):
@@ -1903,8 +1795,8 @@ class GiaoDienKeToan(GiaoDienCoSo):
             hien_thi_login()
 
 
-def hien_thi_ke_toan():
-    app = GiaoDienKeToan()
+def hien_thi_ke_toan(tai_khoan_dang_nhap=None):
+    app = GiaoDienKeToan(tai_khoan_dang_nhap)
     app.chay()
 
 

@@ -1,5 +1,17 @@
+import calendar
+import json
+import os
 import tkinter as tk
+from datetime import date
 from tkinter import ttk, messagebox
+
+from Calculator.common import (
+    chuyen_so,
+    chuyen_so_nguyen,
+    dinh_dang_so,
+    dinh_dang_so_ngan,
+    dinh_dang_tien,
+)
 
 
 class GiaoDienCoSo:
@@ -24,6 +36,53 @@ class GiaoDienCoSo:
         self.mau_xoa = "#B56B6B"
         self.mau_thoat = "#6E554C"
         self.mau_tim_kiem = "#8D6F63"
+
+    # =========================
+    # FILE JSON DUNG CHUNG
+    # =========================
+    @staticmethod
+    def lay_thu_muc_goc():
+        thu_muc = os.path.dirname(os.path.abspath(__file__))
+
+        while True:
+            duong_dan_data = os.path.join(thu_muc, "Data")
+
+            if os.path.exists(duong_dan_data):
+                return thu_muc
+
+            thu_muc_cha = os.path.dirname(thu_muc)
+
+            if thu_muc_cha == thu_muc:
+                return os.path.dirname(os.path.abspath(__file__))
+
+            thu_muc = thu_muc_cha
+
+    @classmethod
+    def lay_duong_dan_data(cls, ten_file):
+        return os.path.join(cls.lay_thu_muc_goc(), "Data", ten_file)
+
+    @classmethod
+    def doc_json(cls, ten_file, mac_dinh=None):
+        duong_dan = cls.lay_duong_dan_data(ten_file)
+
+        if not os.path.exists(duong_dan):
+            return mac_dinh
+
+        for encoding in ["utf-8-sig", "utf-8", "cp1258"]:
+            try:
+                with open(duong_dan, "r", encoding=encoding) as file:
+                    return json.load(file)
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                continue
+
+        return mac_dinh
+
+    @classmethod
+    def ghi_json(cls, ten_file, data):
+        duong_dan = cls.lay_duong_dan_data(ten_file)
+
+        with open(duong_dan, "w", encoding="utf-8") as file:
+            json.dump(data, file, ensure_ascii=False, indent=2)
 
     # =========================
     # STYLE
@@ -183,6 +242,47 @@ class GiaoDienCoSo:
 
         return ben_trong
 
+    def tao_khung_cuon_doc(self, parent, bg=None):
+        if bg is None:
+            bg = self.mau_card
+
+        wrapper = tk.Frame(parent, bg=bg)
+        wrapper.pack(fill="both", expand=True, padx=0, pady=0)
+
+        canvas = tk.Canvas(
+            wrapper,
+            bg=bg,
+            bd=0,
+            highlightthickness=0,
+        )
+        canvas.pack(side="left", fill="both", expand=True)
+
+        scrollbar = ttk.Scrollbar(
+            wrapper,
+            orient="vertical",
+            command=canvas.yview,
+        )
+        scrollbar.pack(side="right", fill="y")
+
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        content = tk.Frame(canvas, bg=bg)
+        window_id = canvas.create_window((0, 0), window=content, anchor="nw")
+
+        def cap_nhat_vung_cuon(event=None):
+            canvas.configure(scrollregion=canvas.bbox("all"))
+            canvas.itemconfigure(window_id, width=canvas.winfo_width())
+
+        def cuon_chuot(event):
+            canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+        content.bind("<Configure>", cap_nhat_vung_cuon)
+        canvas.bind("<Configure>", cap_nhat_vung_cuon)
+        canvas.bind("<Enter>", lambda event: canvas.bind_all("<MouseWheel>", cuon_chuot))
+        canvas.bind("<Leave>", lambda event: canvas.unbind_all("<MouseWheel>"))
+
+        return content
+
     # =========================
     # THANH CÔNG CỤ
     # =========================
@@ -312,6 +412,134 @@ class GiaoDienCoSo:
         return entry
 
     # =========================
+    # LICH CHON NGAY
+    # =========================
+    def mo_lich_chon_ngay(self, entry):
+        hom_nay = date.today()
+        nam_hien_tai = hom_nay.year
+        thang_hien_tai = hom_nay.month
+
+        popup = tk.Toplevel(self.root)
+        popup.title("Chọn ngày")
+        popup.geometry("310x280")
+        popup.configure(bg=self.mau_card)
+        popup.resizable(False, False)
+        popup.transient(self.root)
+        popup.grab_set()
+
+        header = tk.Frame(popup, bg=self.mau_card)
+        header.pack(fill="x", padx=12, pady=(12, 8))
+
+        thang_var = tk.IntVar(value=thang_hien_tai)
+        nam_var = tk.IntVar(value=nam_hien_tai)
+
+        def ve_lich():
+            for widget in grid.winfo_children():
+                widget.destroy()
+
+            thang = thang_var.get()
+            nam = nam_var.get()
+            title.config(text=str(thang).zfill(2) + "/" + str(nam))
+
+            for col, text in enumerate(["T2", "T3", "T4", "T5", "T6", "T7", "CN"]):
+                tk.Label(
+                    grid,
+                    text=text,
+                    bg=self.mau_card,
+                    fg=self.mau_chu_phu,
+                    font=("Segoe UI", 9, "bold"),
+                    width=4,
+                ).grid(row=0, column=col, pady=(0, 4))
+
+            for row_index, tuan in enumerate(calendar.monthcalendar(nam, thang), start=1):
+                for col_index, ngay in enumerate(tuan):
+                    if ngay == 0:
+                        tk.Label(grid, text="", bg=self.mau_card, width=4).grid(row=row_index, column=col_index)
+                        continue
+
+                    def chon_ngay(ngay_chon=ngay):
+                        entry.delete(0, tk.END)
+                        entry.insert(0, f"{nam_var.get()}-{thang_var.get():02d}-{ngay_chon:02d}")
+                        popup.destroy()
+
+                    tk.Button(
+                        grid,
+                        text=str(ngay),
+                        command=chon_ngay,
+                        bg=self.mau_card_nhe,
+                        fg=self.mau_chu_dam,
+                        activebackground="#E8DAD4",
+                        activeforeground=self.mau_chu_dam,
+                        font=("Segoe UI", 9),
+                        bd=0,
+                        width=4,
+                        pady=4,
+                        cursor="hand2",
+                    ).grid(row=row_index, column=col_index, padx=2, pady=2)
+
+        def lui_thang():
+            thang = thang_var.get()
+            nam = nam_var.get()
+
+            if thang == 1:
+                thang_var.set(12)
+                nam_var.set(nam - 1)
+            else:
+                thang_var.set(thang - 1)
+
+            ve_lich()
+
+        def toi_thang():
+            thang = thang_var.get()
+            nam = nam_var.get()
+
+            if thang == 12:
+                thang_var.set(1)
+                nam_var.set(nam + 1)
+            else:
+                thang_var.set(thang + 1)
+
+            ve_lich()
+
+        tk.Button(
+            header,
+            text="<",
+            command=lui_thang,
+            bg=self.mau_sua,
+            fg="white",
+            bd=0,
+            font=("Segoe UI", 11, "bold"),
+            width=4,
+            cursor="hand2",
+        ).pack(side="left")
+
+        title = tk.Label(
+            header,
+            text="",
+            bg=self.mau_card,
+            fg=self.mau_chu_dam,
+            font=("Segoe UI", 11, "bold"),
+        )
+        title.pack(side="left", fill="x", expand=True)
+
+        tk.Button(
+            header,
+            text=">",
+            command=toi_thang,
+            bg=self.mau_sua,
+            fg="white",
+            bd=0,
+            font=("Segoe UI", 11, "bold"),
+            width=4,
+            cursor="hand2",
+        ).pack(side="right")
+
+        grid = tk.Frame(popup, bg=self.mau_card)
+        grid.pack(padx=12, pady=(0, 12))
+
+        ve_lich()
+
+    # =========================
     # BẢNG
     # =========================
     def tao_bang(self, parent, columns, headings, widths, stretch=True):
@@ -393,6 +621,32 @@ class GiaoDienCoSo:
             return ""
 
         return values[0]
+
+    def gan_su_kien_click(self, widget, command):
+        widget.config(cursor="hand2")
+        widget.bind("<Button-1>", lambda event: command())
+
+        for child in widget.winfo_children():
+            child.config(cursor="hand2")
+            child.bind("<Button-1>", lambda event: command())
+
+    # =========================
+    # DINH DANG / CHUYEN DOI SO
+    # =========================
+    def chuyen_so(self, value):
+        return chuyen_so(value)
+
+    def chuyen_so_nguyen(self, value):
+        return chuyen_so_nguyen(value)
+
+    def dinh_dang_so(self, value):
+        return dinh_dang_so(value)
+
+    def dinh_dang_so_ngan(self, value):
+        return dinh_dang_so_ngan(value)
+
+    def dinh_dang_tien(self, value):
+        return dinh_dang_tien(value)
 
     # =========================
     # FORM DÙNG CHUNG
@@ -539,8 +793,3 @@ class GiaoDienCoSo:
             self.mau_thoat,
         ).pack(side="right")
 
-    def bao_chua_lam(self):
-        messagebox.showinfo(
-            "Thông báo",
-            "Chức năng này sẽ được cập nhật sau.",
-        )

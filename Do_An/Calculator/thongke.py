@@ -1,3 +1,6 @@
+from Calculator.common import chuyen_so_nguyen
+
+
 def thong_ke_tien_theo_ngay(danh_sach_phieu, truong_ngay):
     thong_ke = {}
 
@@ -14,10 +17,3 @@ def thong_ke_tien_theo_ngay(danh_sach_phieu, truong_ngay):
         "soNgay": len(thong_ke),
         "tongTien": sum(thong_ke.values()),
     }
-
-
-def chuyen_so_nguyen(value):
-    try:
-        return int(float(value))
-    except (ValueError, TypeError):
-        return 0

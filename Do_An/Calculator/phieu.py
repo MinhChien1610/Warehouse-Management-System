@@ -1,3 +1,6 @@
+from Calculator.common import chuyen_so_nguyen
+
+
 def tinh_tong_tien_chi_tiet(chi_tiet):
     tong = 0
 
@@ -7,10 +10,3 @@ def tinh_tong_tien_chi_tiet(chi_tiet):
         tong += so_luong * don_gia
 
     return tong
-
-
-def chuyen_so_nguyen(value):
-    try:
-        return int(float(value))
-    except (ValueError, TypeError):
-        return 0

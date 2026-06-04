@@ -9,6 +9,7 @@ matplotlib.use("TkAgg")
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
+from Calculator.tonkho import lay_canh_bao_ton_thap
 from GUI.Common.base import GiaoDienCoSo
 from GUI.Login.login import hien_thi_login
 from CRUD.NhanVienKho.nhanvienkho import NghiepVuNhanVienKho
@@ -18,48 +19,24 @@ from CRUD.NhanVienKho.nhanvienkho import NghiepVuNhanVienKho
 # XỬ LÝ FILE JSON
 # =========================
 def lay_thu_muc_goc():
-    thu_muc = os.path.dirname(os.path.abspath(__file__))
-
-    while True:
-        duong_dan_data = os.path.join(thu_muc, "Data")
-
-        if os.path.exists(duong_dan_data):
-            return thu_muc
-
-        thu_muc_cha = os.path.dirname(thu_muc)
-
-        if thu_muc_cha == thu_muc:
-            return os.path.dirname(os.path.abspath(__file__))
-
-        thu_muc = thu_muc_cha
+    return GiaoDienCoSo.lay_thu_muc_goc()
 
 
 def doc_json(ten_file, mac_dinh=None):
-    duong_dan = os.path.join(lay_thu_muc_goc(), "Data", ten_file)
-
-    if not os.path.exists(duong_dan):
-        return mac_dinh
-
-    try:
-        with open(duong_dan, "r", encoding="utf-8") as file:
-            return json.load(file)
-    except json.JSONDecodeError:
-        return mac_dinh
+    return GiaoDienCoSo.doc_json(ten_file, mac_dinh)
 
 
 def ghi_json(ten_file, data):
-    duong_dan = os.path.join(lay_thu_muc_goc(), "Data", ten_file)
-
-    with open(duong_dan, "w", encoding="utf-8") as file:
-        json.dump(data, file, ensure_ascii=False, indent=2)
+    GiaoDienCoSo.ghi_json(ten_file, data)
 
 
 # =========================
 # GIAO DIỆN NHÂN VIÊN KHO
 # =========================
 class GiaoDienNhanVienKho(GiaoDienCoSo):
-    def __init__(self):
+    def __init__(self, tai_khoan_dang_nhap=None):
         super().__init__()
+        self.tai_khoan_dang_nhap = tai_khoan_dang_nhap or {}
 
         self.root = tk.Tk()
         self.root.title("Nhân viên kho")
@@ -73,7 +50,10 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         self.vung_bang_kho = None
         self.man_hinh_kho_hien_tai = "Danh sách kho"
         self.man_hinh_thong_ke_hien_tai = "Tổng quan kho"
-        self.nghiep_vu_kho = NghiepVuNhanVienKho(lay_thu_muc_goc())
+        self.nghiep_vu_kho = NghiepVuNhanVienKho(
+            lay_thu_muc_goc(),
+            self.tai_khoan_dang_nhap.get("maTaiKhoan", None),
+        )
 
         self.cau_hinh_style()
         self.tao_bo_cuc_chinh()
@@ -2181,6 +2161,14 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         return None
 
     def tim_tai_khoan_nhan_vien_kho(self, data):
+        ma_tai_khoan_hien_tai = self.tai_khoan_dang_nhap.get("maTaiKhoan", "")
+
+        if ma_tai_khoan_hien_tai != "":
+            tai_khoan = self.tim_tai_khoan_theo_ma(data, ma_tai_khoan_hien_tai)
+
+            if tai_khoan is not None:
+                return tai_khoan
+
         for phan_quyen in data.get("phanQuyen", []):
             ma_tai_khoan = phan_quyen.get("maTaiKhoan", "")
             ma_vai_tro = phan_quyen.get("maVaiTro", "")
@@ -2259,32 +2247,11 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         kho_data = doc_json("kho_hang.json", {})
         hang_data = doc_json("hang_hoa.json", {})
 
-        danh_sach_ton = kho_data.get("tonKho", [])
-        danh_sach_sp = hang_data.get("sanPham", [])
-        ket_qua = []
-
-        for ton in danh_sach_ton:
-            ma_sp = ton.get("maSanPham", "")
-            san_pham = self.tim_san_pham_theo_ma(danh_sach_sp, ma_sp)
-
-            if san_pham is None:
-                continue
-
-            so_luong_ton = self.chuyen_so(ton.get("soLuongTon", 0))
-            muc_toi_thieu = self.chuyen_so(san_pham.get("mucTonToiThieu", 0))
-
-            if so_luong_ton < muc_toi_thieu:
-                can_nhap = max(0, muc_toi_thieu - so_luong_ton)
-                ket_qua.append({
-                    "maKho": ton.get("maKho", ""),
-                    "maSanPham": ma_sp,
-                    "tenSanPham": san_pham.get("tenSanPham", ""),
-                    "soLuongTon": int(so_luong_ton),
-                    "mucTonToiThieu": int(muc_toi_thieu),
-                    "canNhapThem": int(can_nhap),
-                })
-
-        return ket_qua
+        return lay_canh_bao_ton_thap(
+            kho_data.get("tonKho", []),
+            hang_data.get("sanPham", []),
+            kho_data.get("viTriKho", []),
+        )
 
     def tinh_tong_so_luong_can_nhap(self, danh_sach):
         tong = 0
@@ -2307,36 +2274,6 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
     # =========================
     # HÀM ĐỊNH DẠNG
     # =========================
-    def chuyen_so(self, value):
-        try:
-            return float(value)
-        except (ValueError, TypeError):
-            return 0
-
-    def dinh_dang_so(self, value):
-        try:
-            so = float(value)
-            if so == int(so):
-                return f"{int(so):,}".replace(",", ".")
-            return f"{so:,.2f}".replace(",", ".")
-        except (ValueError, TypeError):
-            return str(value)
-
-    def dinh_dang_so_ngan(self, value):
-        so = self.chuyen_so(value)
-
-        if abs(so) >= 1000000000:
-            return f"{so / 1000000000:.1f} tỷ"
-        if abs(so) >= 1000000:
-            return f"{so / 1000000:.1f} triệu"
-        if abs(so) >= 1000:
-            return f"{so / 1000:.1f} nghìn"
-
-        return self.dinh_dang_so(so)
-
-    def dinh_dang_tien(self, value):
-        return self.dinh_dang_so(value) + " đ"
-
     def rut_gon_chu(self, text, max_len):
         text = str(text)
         if len(text) <= max_len:
@@ -2354,8 +2291,8 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             hien_thi_login()
 
 
-def hien_thi_nhan_vien_kho():
-    app = GiaoDienNhanVienKho()
+def hien_thi_nhan_vien_kho(tai_khoan_dang_nhap=None):
+    app = GiaoDienNhanVienKho(tai_khoan_dang_nhap)
     app.chay()
 
 

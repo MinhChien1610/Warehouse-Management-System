@@ -1,6 +1,10 @@
-import tkinter as tk
+﻿import tkinter as tk
 from tkinter import messagebox
 import ctypes
+import json
+import os
+
+from GUI.Common.base import GiaoDienCoSo
 
 
 # =========================
@@ -84,6 +88,51 @@ def tao_o_nhap(parent, text, is_password=False):
 # =========================
 # XỬ LÝ ĐĂNG NHẬP
 # =========================
+def lay_thu_muc_goc():
+    return GiaoDienCoSo.lay_thu_muc_goc()
+
+
+def doc_json(ten_file, mac_dinh=None):
+    return GiaoDienCoSo.doc_json(ten_file, mac_dinh)
+
+
+def lay_vai_tro_tai_khoan(data, ma_tai_khoan):
+    vai_tro_map = {}
+
+    for vai_tro in data.get("vaiTro", []):
+        vai_tro_map[vai_tro.get("maVaiTro", "")] = vai_tro.get("tenVaiTro", "")
+
+    ket_qua = []
+
+    for phan_quyen in data.get("phanQuyen", []):
+        if phan_quyen.get("maTaiKhoan") == ma_tai_khoan:
+            ket_qua.append(vai_tro_map.get(phan_quyen.get("maVaiTro", ""), ""))
+
+    return ket_qua
+
+
+def dang_nhap_vao_giao_dien(root, tai_khoan, vai_tro):
+    root.destroy()
+    ten_vai_tro = str(vai_tro).strip().lower()
+
+    if ten_vai_tro == "admin":
+        from GUI.Admin.admin import hien_thi_admin
+        hien_thi_admin(tai_khoan)
+        return
+
+    if ten_vai_tro in ["nhanvienkho", "nhân viên kho"]:
+        from GUI.NhanVienKho.nhanvienkho import hien_thi_nhan_vien_kho
+        hien_thi_nhan_vien_kho(tai_khoan)
+        return
+
+    if ten_vai_tro in ["ketoan", "kế toán"]:
+        from GUI.KeToan.ketoan import hien_thi_ke_toan
+        hien_thi_ke_toan(tai_khoan)
+        return
+
+    messagebox.showerror("Lỗi", "Tài khoản chưa được phân quyền giao diện.")
+
+
 def xu_ly_dang_nhap(entry_username, entry_password):
 
     username = entry_username.get().strip()
@@ -96,10 +145,29 @@ def xu_ly_dang_nhap(entry_username, entry_password):
         )
         return
 
-    messagebox.showinfo(
-        "Thông báo",
-        "Đăng nhập thành công!"
-    )
+    data = doc_json("nguoi_dung.json", {})
+
+    for tai_khoan in data.get("taiKhoan", []):
+        dung_ten = tai_khoan.get("tenTaiKhoan", "") == username
+        dung_mat_khau = tai_khoan.get("matKhau", "") == password
+        trang_thai = str(tai_khoan.get("trangThai", "")).strip().lower()
+        dang_hoat_dong = trang_thai in ["true", "1", "hoạt động", "active"]
+
+        if dung_ten and dung_mat_khau:
+            if not dang_hoat_dong:
+                messagebox.showwarning("Thông báo", "Tài khoản đã bị khóa.")
+                return
+
+            vai_tro = lay_vai_tro_tai_khoan(data, tai_khoan.get("maTaiKhoan", ""))
+
+            if len(vai_tro) == 0:
+                messagebox.showerror("Lỗi", "Tài khoản chưa được phân quyền.")
+                return
+
+            dang_nhap_vao_giao_dien(entry_username.winfo_toplevel(), tai_khoan, vai_tro[0])
+            return
+
+    messagebox.showerror("Lỗi", "Tên đăng nhập hoặc mật khẩu không đúng.")
 
 
 # =========================

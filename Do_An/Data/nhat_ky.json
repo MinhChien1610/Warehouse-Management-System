@@ -205,5 +205,23 @@
     "thoiGian": "2026-05-17 18:47:42",
     "trangThai": "Thành công",
     "ghiChu": "Lưu tạm phiếu nhập PN0008"
+  },
+  {
+    "maNhatKy": "NK0024",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Khóa/Mở khóa",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-05 16:42:40",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật trạng thái NV003 thành Đã khóa"
+  },
+  {
+    "maNhatKy": "NK0025",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Khóa/Mở khóa",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-05 16:42:43",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật trạng thái NV003 thành Hoạt động"
   }
 ]

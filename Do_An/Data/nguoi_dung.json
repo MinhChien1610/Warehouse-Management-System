@@ -22,7 +22,7 @@
       "ngaySinh": "1993-11-03",
       "email": "huylq003@gmail.com",
       "soDienThoai": "0923456789",
-      "trangThai": true
+      "trangThai": "Hoạt động"
     }
   ],
   "taiKhoan": [
@@ -45,7 +45,7 @@
       "tenTaiKhoan": "ketoan01",
       "matKhau": "Ketoan@123",
       "maNhanVien": "NV003",
-      "trangThai": true
+      "trangThai": "Hoạt động"
     }
   ],
   "vaiTro": [

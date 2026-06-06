@@ -3,7 +3,7 @@ import json
 import os
 import tkinter as tk
 from datetime import date
-from tkinter import ttk, messagebox
+from tkinter import ttk
 
 from Calculator.common import (
     chuyen_so,
@@ -16,9 +16,12 @@ from Calculator.common import (
 
 class GiaoDienCoSo:
     def __init__(self):
-        # =========================
-        # MÀU SẮC DÙNG CHUNG
-        # =========================
+        self.khoi_tao_mau_sac()
+
+    # =========================
+    # MÀU SẮC DÙNG CHUNG
+    # =========================
+    def khoi_tao_mau_sac(self):
         self.mau_nen = "#F8F5F3"
         self.mau_sidebar = "#B98E7C"
         self.mau_menu = "#AD806D"
@@ -38,10 +41,9 @@ class GiaoDienCoSo:
         self.mau_tim_kiem = "#8D6F63"
 
     # =========================
-    # FILE JSON DUNG CHUNG
+    # FILE JSON DÙNG CHUNG
     # =========================
-    @staticmethod
-    def lay_thu_muc_goc():
+    def lay_thu_muc_goc(self):
         thu_muc = os.path.dirname(os.path.abspath(__file__))
 
         while True:
@@ -57,18 +59,18 @@ class GiaoDienCoSo:
 
             thu_muc = thu_muc_cha
 
-    @classmethod
-    def lay_duong_dan_data(cls, ten_file):
-        return os.path.join(cls.lay_thu_muc_goc(), "Data", ten_file)
+    def lay_duong_dan_data(self, ten_file):
+        return os.path.join(self.lay_thu_muc_goc(), "Data", ten_file)
 
-    @classmethod
-    def doc_json(cls, ten_file, mac_dinh=None):
-        duong_dan = cls.lay_duong_dan_data(ten_file)
+    def doc_json(self, ten_file, mac_dinh=None):
+        duong_dan = self.lay_duong_dan_data(ten_file)
 
         if not os.path.exists(duong_dan):
             return mac_dinh
 
-        for encoding in ["utf-8-sig", "utf-8", "cp1258"]:
+        danh_sach_encoding = ["utf-8-sig", "utf-8", "cp1258"]
+
+        for encoding in danh_sach_encoding:
             try:
                 with open(duong_dan, "r", encoding=encoding) as file:
                     return json.load(file)
@@ -77,9 +79,8 @@ class GiaoDienCoSo:
 
         return mac_dinh
 
-    @classmethod
-    def ghi_json(cls, ten_file, data):
-        duong_dan = cls.lay_duong_dan_data(ten_file)
+    def ghi_json(self, ten_file, data):
+        duong_dan = self.lay_duong_dan_data(ten_file)
 
         with open(duong_dan, "w", encoding="utf-8") as file:
             json.dump(data, file, ensure_ascii=False, indent=2)
@@ -147,6 +148,12 @@ class GiaoDienCoSo:
         for widget in frame.winfo_children():
             widget.destroy()
 
+    def tao_font(self, size, bold=False):
+        if bold:
+            return ("Segoe UI", size, "bold")
+
+        return ("Segoe UI", size)
+
     def tao_label(self, parent, text, size=11, color=None, bold=False, bg=None):
         if color is None:
             color = self.mau_chu_dam
@@ -154,17 +161,12 @@ class GiaoDienCoSo:
         if bg is None:
             bg = self.mau_card
 
-        if bold:
-            font = ("Segoe UI", size, "bold")
-        else:
-            font = ("Segoe UI", size)
-
         label = tk.Label(
             parent,
             text=text,
             bg=bg,
             fg=color,
-            font=font,
+            font=self.tao_font(size, bold),
             anchor="w",
             justify="left",
         )
@@ -381,22 +383,14 @@ class GiaoDienCoSo:
         entry.insert(0, placeholder)
 
         def xu_ly_tim(event=None):
-            tu_khoa = entry.get().strip()
-
-            if tu_khoa == placeholder:
-                tu_khoa = ""
-
+            tu_khoa = self.lay_noi_dung_tim_kiem(entry, placeholder)
             tim_kiem(tu_khoa)
 
-        def focus_in(event):
-            if entry.get() == placeholder:
-                entry.delete(0, tk.END)
-                entry.config(fg=self.mau_chu_dam)
+        def focus_in(event=None):
+            self.xoa_placeholder(entry, placeholder)
 
-        def focus_out(event):
-            if entry.get().strip() == "":
-                entry.insert(0, placeholder)
-                entry.config(fg=self.mau_chu_phu)
+        def focus_out(event=None):
+            self.khoi_phuc_placeholder(entry, placeholder)
 
         self.tao_nut(
             parent,
@@ -411,107 +405,37 @@ class GiaoDienCoSo:
 
         return entry
 
+    def lay_noi_dung_tim_kiem(self, entry, placeholder):
+        tu_khoa = entry.get().strip()
+
+        if tu_khoa == placeholder:
+            return ""
+
+        return tu_khoa
+
+    def xoa_placeholder(self, entry, placeholder):
+        if entry.get() == placeholder:
+            entry.delete(0, tk.END)
+            entry.config(fg=self.mau_chu_dam)
+
+    def khoi_phuc_placeholder(self, entry, placeholder):
+        if entry.get().strip() == "":
+            entry.insert(0, placeholder)
+            entry.config(fg=self.mau_chu_phu)
+
     # =========================
-    # LICH CHON NGAY
+    # LỊCH CHỌN NGÀY
     # =========================
     def mo_lich_chon_ngay(self, entry):
         hom_nay = date.today()
-        nam_hien_tai = hom_nay.year
-        thang_hien_tai = hom_nay.month
 
-        popup = tk.Toplevel(self.root)
-        popup.title("Chọn ngày")
-        popup.geometry("310x280")
-        popup.configure(bg=self.mau_card)
-        popup.resizable(False, False)
-        popup.transient(self.root)
-        popup.grab_set()
+        popup = self.tao_popup_lich()
 
         header = tk.Frame(popup, bg=self.mau_card)
         header.pack(fill="x", padx=12, pady=(12, 8))
 
-        thang_var = tk.IntVar(value=thang_hien_tai)
-        nam_var = tk.IntVar(value=nam_hien_tai)
-
-        def ve_lich():
-            for widget in grid.winfo_children():
-                widget.destroy()
-
-            thang = thang_var.get()
-            nam = nam_var.get()
-            title.config(text=str(thang).zfill(2) + "/" + str(nam))
-
-            for col, text in enumerate(["T2", "T3", "T4", "T5", "T6", "T7", "CN"]):
-                tk.Label(
-                    grid,
-                    text=text,
-                    bg=self.mau_card,
-                    fg=self.mau_chu_phu,
-                    font=("Segoe UI", 9, "bold"),
-                    width=4,
-                ).grid(row=0, column=col, pady=(0, 4))
-
-            for row_index, tuan in enumerate(calendar.monthcalendar(nam, thang), start=1):
-                for col_index, ngay in enumerate(tuan):
-                    if ngay == 0:
-                        tk.Label(grid, text="", bg=self.mau_card, width=4).grid(row=row_index, column=col_index)
-                        continue
-
-                    def chon_ngay(ngay_chon=ngay):
-                        entry.delete(0, tk.END)
-                        entry.insert(0, f"{nam_var.get()}-{thang_var.get():02d}-{ngay_chon:02d}")
-                        popup.destroy()
-
-                    tk.Button(
-                        grid,
-                        text=str(ngay),
-                        command=chon_ngay,
-                        bg=self.mau_card_nhe,
-                        fg=self.mau_chu_dam,
-                        activebackground="#E8DAD4",
-                        activeforeground=self.mau_chu_dam,
-                        font=("Segoe UI", 9),
-                        bd=0,
-                        width=4,
-                        pady=4,
-                        cursor="hand2",
-                    ).grid(row=row_index, column=col_index, padx=2, pady=2)
-
-        def lui_thang():
-            thang = thang_var.get()
-            nam = nam_var.get()
-
-            if thang == 1:
-                thang_var.set(12)
-                nam_var.set(nam - 1)
-            else:
-                thang_var.set(thang - 1)
-
-            ve_lich()
-
-        def toi_thang():
-            thang = thang_var.get()
-            nam = nam_var.get()
-
-            if thang == 12:
-                thang_var.set(1)
-                nam_var.set(nam + 1)
-            else:
-                thang_var.set(thang + 1)
-
-            ve_lich()
-
-        tk.Button(
-            header,
-            text="<",
-            command=lui_thang,
-            bg=self.mau_sua,
-            fg="white",
-            bd=0,
-            font=("Segoe UI", 11, "bold"),
-            width=4,
-            cursor="hand2",
-        ).pack(side="left")
+        thang_var = tk.IntVar(value=hom_nay.month)
+        nam_var = tk.IntVar(value=hom_nay.year)
 
         title = tk.Label(
             header,
@@ -520,24 +444,151 @@ class GiaoDienCoSo:
             fg=self.mau_chu_dam,
             font=("Segoe UI", 11, "bold"),
         )
-        title.pack(side="left", fill="x", expand=True)
 
-        tk.Button(
-            header,
-            text=">",
-            command=toi_thang,
+        grid = tk.Frame(popup, bg=self.mau_card)
+
+        def ve_lich():
+            self.ve_noi_dung_lich(
+                grid,
+                title,
+                thang_var,
+                nam_var,
+                entry,
+                popup,
+            )
+
+        def lui_thang():
+            self.doi_thang_lich(thang_var, nam_var, -1)
+            ve_lich()
+
+        def toi_thang():
+            self.doi_thang_lich(thang_var, nam_var, 1)
+            ve_lich()
+
+        self.tao_nut_doi_thang(header, "<", lui_thang).pack(side="left")
+        title.pack(side="left", fill="x", expand=True)
+        self.tao_nut_doi_thang(header, ">", toi_thang).pack(side="right")
+
+        grid.pack(padx=12, pady=(0, 12))
+
+        ve_lich()
+
+    def tao_popup_lich(self):
+        popup = tk.Toplevel(self.root)
+        popup.title("Chọn ngày")
+        popup.geometry("310x280")
+        popup.configure(bg=self.mau_card)
+        popup.resizable(False, False)
+        popup.transient(self.root)
+        popup.grab_set()
+
+        return popup
+
+    def tao_nut_doi_thang(self, parent, text, command):
+        button = tk.Button(
+            parent,
+            text=text,
+            command=command,
             bg=self.mau_sua,
             fg="white",
             bd=0,
             font=("Segoe UI", 11, "bold"),
             width=4,
             cursor="hand2",
-        ).pack(side="right")
+        )
 
-        grid = tk.Frame(popup, bg=self.mau_card)
-        grid.pack(padx=12, pady=(0, 12))
+        return button
 
-        ve_lich()
+    def doi_thang_lich(self, thang_var, nam_var, huong):
+        thang = thang_var.get()
+        nam = nam_var.get()
+
+        if huong == -1:
+            if thang == 1:
+                thang_var.set(12)
+                nam_var.set(nam - 1)
+            else:
+                thang_var.set(thang - 1)
+
+        if huong == 1:
+            if thang == 12:
+                thang_var.set(1)
+                nam_var.set(nam + 1)
+            else:
+                thang_var.set(thang + 1)
+
+    def ve_noi_dung_lich(self, grid, title, thang_var, nam_var, entry, popup):
+        for widget in grid.winfo_children():
+            widget.destroy()
+
+        thang = thang_var.get()
+        nam = nam_var.get()
+
+        title.config(text=str(thang).zfill(2) + "/" + str(nam))
+
+        self.ve_header_lich(grid)
+        self.ve_cac_ngay_trong_thang(grid, thang, nam, entry, popup)
+
+    def ve_header_lich(self, grid):
+        danh_sach_thu = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
+
+        for col, text in enumerate(danh_sach_thu):
+            tk.Label(
+                grid,
+                text=text,
+                bg=self.mau_card,
+                fg=self.mau_chu_phu,
+                font=("Segoe UI", 9, "bold"),
+                width=4,
+            ).grid(row=0, column=col, pady=(0, 4))
+
+    def ve_cac_ngay_trong_thang(self, grid, thang, nam, entry, popup):
+        lich_thang = calendar.monthcalendar(nam, thang)
+
+        for row_index, tuan in enumerate(lich_thang, start=1):
+            for col_index, ngay in enumerate(tuan):
+                if ngay == 0:
+                    self.tao_o_ngay_rong(grid, row_index, col_index)
+                else:
+                    self.tao_nut_ngay(
+                        grid,
+                        ngay,
+                        row_index,
+                        col_index,
+                        thang,
+                        nam,
+                        entry,
+                        popup,
+                    )
+
+    def tao_o_ngay_rong(self, grid, row_index, col_index):
+        tk.Label(
+            grid,
+            text="",
+            bg=self.mau_card,
+            width=4,
+        ).grid(row=row_index, column=col_index)
+
+    def tao_nut_ngay(self, grid, ngay, row_index, col_index, thang, nam, entry, popup):
+        def chon_ngay():
+            entry.delete(0, tk.END)
+            entry.insert(0, f"{nam}-{thang:02d}-{ngay:02d}")
+            popup.destroy()
+
+        tk.Button(
+            grid,
+            text=str(ngay),
+            command=chon_ngay,
+            bg=self.mau_card_nhe,
+            fg=self.mau_chu_dam,
+            activebackground="#E8DAD4",
+            activeforeground=self.mau_chu_dam,
+            font=("Segoe UI", 9),
+            bd=0,
+            width=4,
+            pady=4,
+            cursor="hand2",
+        ).grid(row=row_index, column=col_index, padx=2, pady=2)
 
     # =========================
     # BẢNG
@@ -576,6 +627,11 @@ class GiaoDienCoSo:
         table_frame.grid_rowconfigure(0, weight=1)
         table_frame.grid_columnconfigure(0, weight=1)
 
+        self.cau_hinh_cot_bang(table, columns, headings, widths, stretch)
+
+        return table
+
+    def cau_hinh_cot_bang(self, table, columns, headings, widths, stretch):
         for index in range(len(columns)):
             table.heading(columns[index], text=headings[index])
             table.column(
@@ -585,8 +641,6 @@ class GiaoDienCoSo:
                 anchor="w",
                 stretch=stretch,
             )
-
-        return table
 
     def do_du_lieu_vao_bang(self, table, danh_sach, cac_cot):
         self.xoa_du_lieu_bang(table)
@@ -631,7 +685,7 @@ class GiaoDienCoSo:
             child.bind("<Button-1>", lambda event: command())
 
     # =========================
-    # DINH DANG / CHUYEN DOI SO
+    # ĐỊNH DẠNG / CHUYỂN ĐỔI SỐ
     # =========================
     def chuyen_so(self, value):
         return chuyen_so(value)
@@ -792,4 +846,3 @@ class GiaoDienCoSo:
             command,
             self.mau_thoat,
         ).pack(side="right")
-

@@ -1,297 +1,399 @@
-﻿import tkinter as tk
+﻿import ctypes
+import tkinter as tk
 from tkinter import messagebox
-import ctypes
-import json
-import os
 
 from GUI.Common.base import GiaoDienCoSo
 
 
-# =========================
-# MÀU GIAO DIỆN
-# =========================
+class GiaoDienLogin(GiaoDienCoSo):
+    def __init__(self):
+        super().__init__()
 
-MAU_NEN = "#F5F1EE"
-MAU_CARD = "white"
+        self.root = tk.Tk()
+        self.root.title("Đăng nhập Hệ thống")
+        self.root.geometry("1100x680")
+        self.root.resizable(False, False)
+        self.root.configure(bg="#F8F5F3")
 
-MAU_CHU_DAM = "#3B2F2F"
-MAU_CHU_PHU = "#8C7B75"
+        self.entry_username = None
+        self.entry_password = None
 
-MAU_LABEL = "#5C4E4E"
+        self.tao_giao_dien()
 
-MAU_INPUT = "#FCFAF8"
-MAU_VIEN = "#E0D8D2"
+    def tao_giao_dien(self):
+        self.canvas = tk.Canvas(self.root, bg="#F8F5F3", highlightthickness=0)
+        self.canvas.pack(fill="both", expand=True)
 
-MAU_NUT = "#C89F8A"
-MAU_NUT_HOVER = "#B98E78"
+        self.ve_nen()
+        self.tao_khung_trai()
+        self.tao_khung_phai()
 
-
-# =========================
-# TẠO LABEL
-# =========================
-def tao_label(parent, text, color, size, bold=False):
-
-    font_style = ("Arial", size)
-
-    if bold:
-        font_style = ("Arial", size, "bold")
-
-    label = tk.Label(
-        parent,
-        text=text,
-        bg=MAU_CARD,
-        fg=color,
-        font=font_style
-    )
-
-    return label
-
-
-# =========================
-# TẠO Ô NHẬP
-# =========================
-def tao_o_nhap(parent, text, is_password=False):
-
-    label = tk.Label(
-        parent,
-        text=text,
-        bg=MAU_CARD,
-        fg=MAU_LABEL,
-        font=("Arial", 10, "bold"),
-        anchor="w"
-    )
-
-    label.pack(fill="x")
-
-    entry = tk.Entry(
-        parent,
-        bg=MAU_INPUT,
-        fg=MAU_CHU_DAM,
-        font=("Arial", 12),
-        bd=0,
-        relief="solid",
-        highlightthickness=1,
-        highlightbackground=MAU_VIEN,
-        highlightcolor=MAU_NUT,
-        show="*" if is_password else ""
-    )
-
-    entry.pack(
-        fill="x",
-        ipady=10,
-        pady=(5, 20)
-    )
-
-    return entry
-
-
-# =========================
-# XỬ LÝ ĐĂNG NHẬP
-# =========================
-def lay_thu_muc_goc():
-    return GiaoDienCoSo.lay_thu_muc_goc()
-
-
-def doc_json(ten_file, mac_dinh=None):
-    return GiaoDienCoSo.doc_json(ten_file, mac_dinh)
-
-
-def lay_vai_tro_tai_khoan(data, ma_tai_khoan):
-    vai_tro_map = {}
-
-    for vai_tro in data.get("vaiTro", []):
-        vai_tro_map[vai_tro.get("maVaiTro", "")] = vai_tro.get("tenVaiTro", "")
-
-    ket_qua = []
-
-    for phan_quyen in data.get("phanQuyen", []):
-        if phan_quyen.get("maTaiKhoan") == ma_tai_khoan:
-            ket_qua.append(vai_tro_map.get(phan_quyen.get("maVaiTro", ""), ""))
-
-    return ket_qua
-
-
-def dang_nhap_vao_giao_dien(root, tai_khoan, vai_tro):
-    root.destroy()
-    ten_vai_tro = str(vai_tro).strip().lower()
-
-    if ten_vai_tro == "admin":
-        from GUI.Admin.admin import hien_thi_admin
-        hien_thi_admin(tai_khoan)
-        return
-
-    if ten_vai_tro in ["nhanvienkho", "nhân viên kho"]:
-        from GUI.NhanVienKho.nhanvienkho import hien_thi_nhan_vien_kho
-        hien_thi_nhan_vien_kho(tai_khoan)
-        return
-
-    if ten_vai_tro in ["ketoan", "kế toán"]:
-        from GUI.KeToan.ketoan import hien_thi_ke_toan
-        hien_thi_ke_toan(tai_khoan)
-        return
-
-    messagebox.showerror("Lỗi", "Tài khoản chưa được phân quyền giao diện.")
-
-
-def xu_ly_dang_nhap(entry_username, entry_password):
-
-    username = entry_username.get().strip()
-    password = entry_password.get().strip()
-
-    if username == "" or password == "":
-        messagebox.showwarning(
-            "Thông báo",
-            "Vui lòng nhập đầy đủ thông tin!"
+    def ve_nen(self):
+        self.canvas.create_rectangle(
+            35, 35, 1065, 645,
+            fill="white",
+            outline="#E8D8D0",
+            width=1,
         )
-        return
 
-    data = doc_json("nguoi_dung.json", {})
+        self.canvas.create_polygon(
+            35, 35,
+            565, 35,
+            515, 645,
+            35, 645,
+            fill="#B98E7C",
+            outline="",
+        )
 
-    for tai_khoan in data.get("taiKhoan", []):
-        dung_ten = tai_khoan.get("tenTaiKhoan", "") == username
-        dung_mat_khau = tai_khoan.get("matKhau", "") == password
-        trang_thai = str(tai_khoan.get("trangThai", "")).strip().lower()
-        dang_hoat_dong = trang_thai in ["true", "1", "hoạt động", "active"]
+        self.canvas.create_arc(
+            -80, 520, 560, 800,
+            start=0,
+            extent=180,
+            fill="#F8EDEA",
+            outline="",
+        )
 
-        if dung_ten and dung_mat_khau:
-            if not dang_hoat_dong:
-                messagebox.showwarning("Thông báo", "Tài khoản đã bị khóa.")
+        self.canvas.create_line(
+            565, 35, 515, 645,
+            fill="#F8F5F3",
+            width=3,
+        )
+
+    def tao_khung_trai(self):
+        self.canvas.create_text(
+            285, 135,
+            text="📦",
+            fill="#FFF4EF",
+            font=("Segoe UI", 66),
+        )
+
+        self.canvas.create_text(
+            285, 285,
+            text="QUẢN LÝ KHO HÀNG",
+            fill="white",
+            font=("Segoe UI", 26, "bold"),
+        )
+
+        self.canvas.create_text(
+            285, 325,
+            text="Warehouse Management System",
+            fill="#FFF4EF",
+            font=("Segoe UI", 13, "bold"),
+        )
+
+        self.canvas.create_line(
+            250, 360, 320, 360,
+            fill="white",
+            width=3,
+        )
+
+        self.tao_the_gioi_thieu(95, 400, "▣", "Nhập - Xuất - Tồn kho")
+        self.tao_the_gioi_thieu(95, 455, "▥", "Thống kê nhanh")
+        self.tao_the_gioi_thieu(95, 510, "🔒", "Phân quyền rõ ràng")
+
+        self.canvas.create_text(
+            280, 595,
+            text="Đơn giản  •  Hiệu quả  •  An toàn",
+            fill="#A97C69",
+            font=("Segoe UI", 12, "bold"),
+        )
+
+    def tao_the_gioi_thieu(self, x, y, icon, text):
+        self.canvas.create_rectangle(
+            x, y, x + 360, y + 42,
+            fill="#C69B8A",
+            outline="",
+        )
+
+        self.canvas.create_text(
+            x + 32, y + 21,
+            text=icon,
+            fill="white",
+            font=("Segoe UI", 16, "bold"),
+        )
+
+        self.canvas.create_text(
+            x + 190, y + 21,
+            text=text,
+            fill="white",
+            font=("Segoe UI", 12, "bold"),
+        )
+
+    def tao_khung_phai(self):
+        form = tk.Frame(self.root, bg="white")
+        form.place(x=665, y=95, width=360, height=500)
+
+        avatar = tk.Frame(
+            form,
+            bg="#FBF7F5",
+            highlightbackground="#E8D8D0",
+            highlightthickness=1,
+            width=100,
+            height=100,
+        )
+        avatar.pack(anchor="center", pady=(0, 24))
+        avatar.pack_propagate(False)
+
+        tk.Label(
+            avatar,
+            text="👤",
+            bg="#FBF7F5",
+            fg="#AD806D",
+            font=("Segoe UI", 42),
+        ).place(relx=0.5, rely=0.5, anchor="center")
+
+        tk.Label(
+            form,
+            text="Đăng nhập",
+            bg="white",
+            fg="#3F241B",
+            font=("Segoe UI", 30, "bold"),
+        ).pack(anchor="center")
+
+        tk.Frame(form, bg="#AD806D", width=50, height=4).pack(pady=(10, 26))
+
+        self.entry_username = self.tao_o_nhap(
+            form,
+            "Tên đăng nhập",
+            "Nhập tên đăng nhập",
+        )
+
+        self.entry_password = self.tao_o_nhap(
+            form,
+            "Mật khẩu",
+            "Nhập mật khẩu",
+            True,
+        )
+
+        self.tao_nut_dang_nhap(form)
+
+        tk.Label(
+            form,
+            text="Tài khoản và mật khẩu được quản trị viên cấp",
+            bg="white",
+            fg="#A0908A",
+            font=("Segoe UI", 9),
+        ).pack(pady=(18, 0))
+
+    def tao_o_nhap(self, parent, label_text, placeholder, la_mat_khau=False):
+        tk.Label(
+            parent,
+            text=label_text,
+            bg="white",
+            fg="#3F241B",
+            font=("Segoe UI", 10, "bold"),
+        ).pack(anchor="w", pady=(0, 6))
+
+        khung = tk.Frame(
+            parent,
+            bg="#FBF7F5",
+            highlightbackground="#E8D8D0",
+            highlightthickness=1,
+        )
+        khung.pack(fill="x", pady=(0, 18))
+
+        icon_text = "🔒" if la_mat_khau else "👤"
+
+        tk.Label(
+            khung,
+            text=icon_text,
+            bg="#FBF7F5",
+            fg="#8D6F63",
+            font=("Segoe UI", 11),
+        ).pack(side="left", padx=(12, 4))
+
+        entry = tk.Entry(
+            khung,
+            bg="#FBF7F5",
+            fg="#8D6F63",
+            font=("Segoe UI", 11),
+            bd=0,
+            show="",
+        )
+        entry.pack(side="left", fill="x", expand=True, ipady=10)
+        entry.insert(0, placeholder)
+
+        if la_mat_khau:
+            self.tao_nut_hien_mat_khau(khung, entry, placeholder)
+
+        entry.bind(
+            "<FocusIn>",
+            lambda event: self.xoa_placeholder(entry, placeholder, la_mat_khau),
+        )
+
+        entry.bind(
+            "<FocusOut>",
+            lambda event: self.khoi_phuc_placeholder(entry, placeholder, la_mat_khau),
+        )
+
+        return entry
+
+    def tao_nut_hien_mat_khau(self, parent, entry, placeholder):
+        trang_thai = {"hien": False}
+
+        def doi_hien_mat_khau():
+            if entry.get() == placeholder:
                 return
 
-            vai_tro = lay_vai_tro_tai_khoan(data, tai_khoan.get("maTaiKhoan", ""))
+            if trang_thai["hien"]:
+                entry.config(show="*")
+                button.config(text="👁")
+                trang_thai["hien"] = False
+            else:
+                entry.config(show="")
+                button.config(text="🙈")
+                trang_thai["hien"] = True
 
-            if len(vai_tro) == 0:
-                messagebox.showerror("Lỗi", "Tài khoản chưa được phân quyền.")
-                return
+        button = tk.Button(
+            parent,
+            text="👁",
+            command=doi_hien_mat_khau,
+            bg="#FBF7F5",
+            fg="#8D6F63",
+            activebackground="#FBF7F5",
+            activeforeground="#3F241B",
+            bd=0,
+            width=4,
+            cursor="hand2",
+        )
+        button.pack(side="right", padx=(0, 8))
 
-            dang_nhap_vao_giao_dien(entry_username.winfo_toplevel(), tai_khoan, vai_tro[0])
+    def xoa_placeholder(self, entry, placeholder, la_mat_khau=False):
+        if entry.get() == placeholder:
+            entry.delete(0, tk.END)
+            entry.config(fg="#3F241B")
+
+            if la_mat_khau:
+                entry.config(show="*")
+
+    def khoi_phuc_placeholder(self, entry, placeholder, la_mat_khau=False):
+        if entry.get().strip() == "":
+            entry.insert(0, placeholder)
+            entry.config(fg="#8D6F63")
+
+            if la_mat_khau:
+                entry.config(show="")
+
+    def tao_nut_dang_nhap(self, parent):
+        button = tk.Button(
+            parent,
+            text="ĐĂNG NHẬP",
+            bg="#AD806D",
+            fg="white",
+            activebackground="#9F725F",
+            activeforeground="white",
+            font=("Segoe UI", 12, "bold"),
+            bd=0,
+            cursor="hand2",
+            command=self.xu_ly_dang_nhap,
+        )
+        button.pack(fill="x", ipady=12, pady=(8, 0))
+
+        self.root.bind("<Return>", lambda event: self.xu_ly_dang_nhap())
+
+    def lay_noi_dung_entry(self, entry, placeholder):
+        noi_dung = entry.get().strip()
+
+        if noi_dung == placeholder:
+            return ""
+
+        return noi_dung
+
+    def xu_ly_dang_nhap(self):
+        username = self.lay_noi_dung_entry(
+            self.entry_username,
+            "Nhập tên đăng nhập",
+        )
+
+        password = self.lay_noi_dung_entry(
+            self.entry_password,
+            "Nhập mật khẩu",
+        )
+
+        if username == "" or password == "":
+            messagebox.showwarning("Thông báo", "Vui lòng nhập đầy đủ thông tin!")
             return
 
-    messagebox.showerror("Lỗi", "Tên đăng nhập hoặc mật khẩu không đúng.")
+        data = self.doc_json("nguoi_dung.json", {})
 
+        for tai_khoan in data.get("taiKhoan", []):
+            dung_ten = tai_khoan.get("tenTaiKhoan", "") == username
+            dung_mat_khau = tai_khoan.get("matKhau", "") == password
 
-# =========================
-# TẠO NÚT ĐĂNG NHẬP
-# =========================
-def tao_nut_dang_nhap(parent, command):
+            if dung_ten and dung_mat_khau:
+                self.kiem_tra_va_mo_giao_dien(data, tai_khoan)
+                return
 
-    button = tk.Button(
-        parent,
-        text="ĐĂNG NHẬP",
-        bg=MAU_NUT,
-        fg="white",
-        activebackground=MAU_NUT_HOVER,
-        activeforeground="white",
-        font=("Arial", 12, "bold"),
-        bd=0,
-        cursor="hand2",
-        command=command
-    )
+        messagebox.showerror("Lỗi", "Tên đăng nhập hoặc mật khẩu không đúng.")
 
-    button.pack(
-        fill="x",
-        ipady=10,
-        pady=(10, 10)
-    )
+    def kiem_tra_va_mo_giao_dien(self, data, tai_khoan):
+        if not self.tai_khoan_dang_hoat_dong(tai_khoan):
+            messagebox.showwarning("Thông báo", "Tài khoản đã bị khóa.")
+            return
 
-    return button
-
-
-# =========================
-# GIAO DIỆN LOGIN
-# =========================
-def hien_thi_login():
-
-    root = tk.Tk()
-
-    root.title("Đăng nhập Hệ thống")
-
-    root.geometry("450x650")
-
-    root.configure(bg=MAU_NEN)
-
-    root.resizable(False, False)
-
-    # =========================
-    # CARD TRẮNG
-    # =========================
-    card = tk.Frame(
-        root,
-        bg=MAU_CARD,
-        padx=40,
-        pady=40,
-        highlightbackground=MAU_VIEN,
-        highlightthickness=1
-    )
-
-    card.place(
-        relx=0.5,
-        rely=0.5,
-        anchor="center",
-        width=380,
-        height=540
-    )
-
-    # =========================
-    # TIÊU ĐỀ
-    # =========================
-    title = tao_label(
-        card,
-        "Đăng nhập",
-        MAU_CHU_DAM,
-        30,
-        True
-    )
-
-    title.pack(pady=(10, 5))
-
-    subtitle = tao_label(
-        card,
-        "Hệ thống quản lý kho hàng",
-        MAU_CHU_PHU,
-        11
-    )
-
-    subtitle.pack(pady=(0, 40))
-
-    # =========================
-    # Ô nhập
-    # =========================
-    entry_username = tao_o_nhap(
-        card,
-        "Tên đăng nhập"
-    )
-
-    entry_password = tao_o_nhap(
-        card,
-        "Mật khẩu",
-        True
-    )
-
-    # =========================
-    # Nút đăng nhập
-    # =========================
-    tao_nut_dang_nhap(
-        card,
-        lambda: xu_ly_dang_nhap(
-            entry_username,
-            entry_password
+        vai_tro = self.lay_vai_tro_tai_khoan(
+            data,
+            tai_khoan.get("maTaiKhoan", ""),
         )
-    )
 
-    # =========================
-    # GHI CHÚ
-    # =========================
-    note = tao_label(
-        card,
-        "Tài khoản và mật khẩu được quản trị viên cấp",
-        "#A0908A",
-        9
-    )
+        if len(vai_tro) == 0:
+            messagebox.showerror("Lỗi", "Tài khoản chưa được phân quyền.")
+            return
 
-    note.pack(pady=(10, 0))
+        self.dang_nhap_vao_giao_dien(tai_khoan, vai_tro[0])
 
-    root.mainloop()
+    def tai_khoan_dang_hoat_dong(self, tai_khoan):
+        trang_thai = str(tai_khoan.get("trangThai", "")).strip().lower()
+
+        return trang_thai in ["true", "1", "hoạt động", "active"]
+
+    def lay_vai_tro_tai_khoan(self, data, ma_tai_khoan):
+        vai_tro_map = {}
+
+        for vai_tro in data.get("vaiTro", []):
+            ma_vai_tro = vai_tro.get("maVaiTro", "")
+            ten_vai_tro = vai_tro.get("tenVaiTro", "")
+            vai_tro_map[ma_vai_tro] = ten_vai_tro
+
+        ket_qua = []
+
+        for phan_quyen in data.get("phanQuyen", []):
+            if phan_quyen.get("maTaiKhoan") == ma_tai_khoan:
+                ma_vai_tro = phan_quyen.get("maVaiTro", "")
+                ket_qua.append(vai_tro_map.get(ma_vai_tro, ""))
+
+        return ket_qua
+
+    def dang_nhap_vao_giao_dien(self, tai_khoan, vai_tro):
+        self.root.destroy()
+
+        ten_vai_tro = str(vai_tro).strip().lower()
+
+        if ten_vai_tro == "admin":
+            from GUI.Admin.admin import hien_thi_admin
+            hien_thi_admin(tai_khoan)
+            return
+
+        if ten_vai_tro in ["nhanvienkho", "nhân viên kho"]:
+            from GUI.NhanVienKho.nhanvienkho import hien_thi_nhan_vien_kho
+            hien_thi_nhan_vien_kho(tai_khoan)
+            return
+
+        if ten_vai_tro in ["ketoan", "kế toán"]:
+            from GUI.KeToan.ketoan import hien_thi_ke_toan
+            hien_thi_ke_toan(tai_khoan)
+            return
+
+        messagebox.showerror("Lỗi", "Tài khoản chưa được phân quyền giao diện.")
+
+    def chay(self):
+        self.root.mainloop()
+
+
+def hien_thi_login():
+    app = GiaoDienLogin()
+    app.chay()
+
 
 try:
     ctypes.windll.shcore.SetProcessDpiAwareness(1)
@@ -299,8 +401,5 @@ except Exception:
     pass
 
 
-# =========================
-# CHẠY CHƯƠNG TRÌNH
-# =========================
 if __name__ == "__main__":
     hien_thi_login()

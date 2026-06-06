@@ -226,3 +226,10 @@ class NghiepVuAdmin:
 
 
 AdminCRUD = NghiepVuAdmin
+
+
+
+#Dạ embe đọc hiểu cái đọc file này hum
+#em còn ch có đọc:))
+#vậy mà dám làm cho nhân viên kho
+#tutu đọc lợi, em chưa có done hết nữa. Nma check mess em...

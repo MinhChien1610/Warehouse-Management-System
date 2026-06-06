@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>7d386e68-4e2f-485c-a0a6-ce2682312969</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>GUI\Login\login.py</StartupFile>
+    <StartupFile>GUI\KeToan\ketoan.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

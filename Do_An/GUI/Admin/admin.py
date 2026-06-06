@@ -18,19 +18,23 @@ from CRUD.Admin.admin import NghiepVuAdmin
 # =========================
 # XỬ LÝ FILE JSON
 # =========================
-base_helper = GiaoDienCoSo()
+def tao_base_helper():
+    return GiaoDienCoSo()
 
 
 def lay_thu_muc_goc():
-    return base_helper.lay_thu_muc_goc()
+    helper = tao_base_helper()
+    return helper.lay_thu_muc_goc()
 
 
 def doc_json(ten_file, mac_dinh=None):
-    return base_helper.doc_json(ten_file, mac_dinh)
+    helper = tao_base_helper()
+    return helper.doc_json(ten_file, mac_dinh)
 
 
 def ghi_json(ten_file, data):
-    base_helper.ghi_json(ten_file, data)
+    helper = tao_base_helper()
+    helper.ghi_json(ten_file, data)
 
 
 # =========================
@@ -47,7 +51,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
         self.root = tk.Tk()
         self.root.title("Admin")
         self.root.geometry("1280x720")
-        self.root.minsize(1180, 660)
+        self.root.minsize(1120, 640)
         self.root.configure(bg=self.mau_nen)
 
         self.danh_sach_menu = []
@@ -62,32 +66,49 @@ class GiaoDienAdmin(GiaoDienCoSo):
 
 
 
+
+
     def khoi_tao_mau_admin(self):
-        # Tone sáng hiện đại, đồng bộ beige/nude của project
-        self.mau_nen = "#FFF8F5"
+        # Lấy màu từ file mẫu, giữ nguyên layout file admin
+        self.mau_nen = "#F8F5F3"
 
-        self.mau_sidebar = "#D7B3A3"
-        self.mau_sidebar_dam = "#8B6251"
-        self.mau_sidebar_nhat = "#F4E7E1"
+        self.mau_sidebar = "#B98E7C"
+        self.mau_sidebar_dam = "#9F725F"
+        self.mau_sidebar_nhat = "#F6EEEA"
 
-        self.mau_menu = "#F4E7E1"
-        self.mau_menu_hover = "#FFFFFF"
-        self.mau_menu_con = "#EED8CE"
-        self.mau_menu_chon = "#8B6251"
+        self.mau_menu = "#AD806D"
+        self.mau_menu_hover = "#9F725F"
+        self.mau_menu_con = "#F1E3DB"
+        self.mau_menu_chon = "#AD806D"
 
         self.mau_card = "#FFFFFF"
-        self.mau_card_nhe = "#FCF8F6"
-        self.mau_vien = "#E6DAD4"
+        self.mau_card_nhe = "#FBF7F5"
+        self.mau_vien = "#E8D8D0"
 
-        self.mau_chu_dam = "#5C3B31"
-        self.mau_chu_phu = "#8D7B74"
+        self.mau_chu_dam = "#3F241B"
+        self.mau_chu_phu = "#8D6F63"
 
-        self.mau_them = "#7BAE8A"
-        self.mau_sua = "#D3A15D"
-        self.mau_xoa = "#D97A7A"
-        self.mau_thoat = "#8B6251"
-        self.mau_tim_kiem = "#8B6251"
+        self.mau_them = "#10B981"
+        self.mau_sua = "#AD806D"
+        self.mau_xoa = "#EF4444"
+        self.mau_thoat = "#9F725F"
+        self.mau_tim_kiem = "#AD806D"
 
+        self.mau_canh_bao = "#F59E0B"
+        self.mau_thanh_cong = "#10B981"
+        self.mau_nguy_hiem = "#DC2626"
+
+        # Giữ tên biến cũ để các hàm trong layout không lỗi
+        self.mau_blue_nhe = "#F6EEEA"
+        self.mau_blue_vien = "#E8D8D0"
+        self.mau_blue_sang = "#D3AC9B"
+
+        self.mau_teal_nhe = self.mau_blue_nhe
+        self.mau_teal_vien = self.mau_blue_vien
+        self.mau_teal_sang = self.mau_blue_sang
+
+        self.mau_xanh_nhe = self.mau_blue_nhe
+        self.mau_xanh_vien = self.mau_blue_vien
 
     def cau_hinh_style(self):
         style = ttk.Style()
@@ -106,7 +127,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
         style.configure(
             "Treeview.Heading",
             font=("Segoe UI", 10, "bold"),
-            background="#F2E7E1",
+            background="#F6EEEA",
             foreground=self.mau_chu_dam,
             padding=9,
             relief="flat",
@@ -114,8 +135,24 @@ class GiaoDienAdmin(GiaoDienCoSo):
 
         style.map(
             "Treeview",
-            background=[("selected", "#E8DAD4")],
+            background=[("selected", "#E8D8D0")],
             foreground=[("selected", self.mau_chu_dam)],
+        )
+
+        style.configure(
+            "Vertical.TScrollbar",
+            background="#D3AC9B",
+            troughcolor="#F8F5F3",
+            bordercolor="#F8F5F3",
+            arrowcolor=self.mau_chu_dam,
+        )
+
+        style.configure(
+            "Horizontal.TScrollbar",
+            background="#D3AC9B",
+            troughcolor="#F8F5F3",
+            bordercolor="#F8F5F3",
+            arrowcolor=self.mau_chu_dam,
         )
 
         style.configure(
@@ -134,7 +171,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
 
         style.map(
             "TNotebook.Tab",
-            background=[("selected", self.mau_thoat)],
+            background=[("selected", self.mau_menu)],
             foreground=[("selected", "white")],
         )
 
@@ -163,6 +200,8 @@ class GiaoDienAdmin(GiaoDienCoSo):
         self.content.pack(side="right", fill="both", expand=True)
 
 
+
+
     def tao_sidebar(self):
         logo = tk.Frame(self.sidebar, bg=self.mau_sidebar)
         logo.pack(fill="x", padx=14, pady=(16, 10))
@@ -175,7 +214,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             bg="#FFFFFF",
             width=46,
             height=46,
-            highlightbackground="#EADBD4",
+            highlightbackground="#D3AC9B",
             highlightthickness=1,
         )
         icon_box.pack(side="left")
@@ -185,7 +224,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             icon_box,
             text="📦",
             bg="#FFFFFF",
-            fg=self.mau_sidebar_dam,
+            fg=self.mau_menu_chon,
             font=("Segoe UI", 19),
         ).place(relx=0.5, rely=0.5, anchor="center")
 
@@ -196,7 +235,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             text_logo,
             text="ADMIN",
             bg=self.mau_sidebar,
-            fg=self.mau_chu_dam,
+            fg="white",
             font=("Segoe UI", 18, "bold"),
         ).pack(anchor="w")
 
@@ -204,14 +243,14 @@ class GiaoDienAdmin(GiaoDienCoSo):
             text_logo,
             text="Warehouse",
             bg=self.mau_sidebar,
-            fg=self.mau_chu_phu,
+            fg="#F6EEEA",
             font=("Segoe UI", 8, "bold"),
         ).pack(anchor="w")
 
         slogan = tk.Frame(
             logo,
-            bg="#F4E7E1",
-            highlightbackground="#EADBD4",
+            bg="#A97C69",
+            highlightbackground="#D3AC9B",
             highlightthickness=1,
         )
         slogan.pack(fill="x", pady=(12, 0))
@@ -219,16 +258,16 @@ class GiaoDienAdmin(GiaoDienCoSo):
         tk.Label(
             slogan,
             text="Quản trị kho hàng",
-            bg="#F4E7E1",
-            fg=self.mau_chu_dam,
+            bg="#A97C69",
+            fg="white",
             font=("Segoe UI", 9, "bold"),
         ).pack(anchor="w", padx=10, pady=(7, 1))
 
         tk.Label(
             slogan,
             text="Theo dõi • Báo cáo",
-            bg="#F4E7E1",
-            fg=self.mau_chu_phu,
+            bg="#A97C69",
+            fg="#F6EEEA",
             font=("Segoe UI", 8),
         ).pack(anchor="w", padx=10, pady=(0, 7))
 
@@ -325,17 +364,22 @@ class GiaoDienAdmin(GiaoDienCoSo):
         bottom = tk.Frame(self.sidebar, bg=self.mau_sidebar)
         bottom.pack(side="bottom", fill="x", padx=12, pady=(6, 12))
 
-        self.tao_nut(bottom, "Đăng xuất", self.dang_xuat, self.mau_thoat).pack(fill="x")
+        self.tao_nut(
+            bottom,
+            "Đăng xuất",
+            self.dang_xuat,
+            self.mau_sidebar_dam,
+        ).pack(fill="x")
 
 
     def tao_nut_menu(self, parent, text, command):
         button = tk.Button(
             parent,
             text=text,
-            bg=self.mau_sidebar_nhat,
-            fg=self.mau_chu_dam,
-            activebackground="#FFFFFF",
-            activeforeground=self.mau_chu_dam,
+            bg=self.mau_menu,
+            fg="white",
+            activebackground=self.mau_menu_hover,
+            activeforeground="white",
             font=("Segoe UI", 9, "bold"),
             bd=0,
             anchor="w",
@@ -372,10 +416,10 @@ class GiaoDienAdmin(GiaoDienCoSo):
         nut_cha = tk.Button(
             khung,
             text=title + "   ▾",
-            bg=self.mau_sidebar_nhat,
-            fg=self.mau_chu_dam,
-            activebackground="#FFFFFF",
-            activeforeground=self.mau_chu_dam,
+            bg=self.mau_menu,
+            fg="white",
+            activebackground=self.mau_menu_hover,
+            activeforeground="white",
             font=("Segoe UI", 9, "bold"),
             bd=0,
             anchor="w",
@@ -393,9 +437,9 @@ class GiaoDienAdmin(GiaoDienCoSo):
                 khung_con,
                 text="      " + text,
                 bg=self.mau_sidebar,
-                fg="#6E554C",
-                activebackground="#FFFFFF",
-                activeforeground=self.mau_chu_dam,
+                fg="#E8D8D0",
+                activebackground=self.mau_menu_hover,
+                activeforeground="white",
                 font=("Segoe UI", 8),
                 bd=0,
                 anchor="w",
@@ -414,13 +458,12 @@ class GiaoDienAdmin(GiaoDienCoSo):
             text = str(nut.cget("text"))
 
             if text.startswith("      "):
-                nut.config(bg=self.mau_sidebar, fg="#6E554C")
+                nut.config(bg=self.mau_sidebar, fg="#E8D8D0")
             else:
-                nut.config(bg=self.mau_sidebar_nhat, fg=self.mau_chu_dam)
+                nut.config(bg=self.mau_menu, fg="white")
 
-        button.config(bg=self.mau_menu_chon, fg="white")
+        button.config(bg=self.mau_menu_hover, fg="white")
         command()
-
 
     def tao_tieu_de_trang(self, parent, title, subtitle):
         self.xoa_noi_dung(parent)
@@ -455,6 +498,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
 
 
 
+
     def tao_user_box(self, parent):
         user_box = tk.Frame(
             parent,
@@ -477,7 +521,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             icon_box,
             text="👤",
             bg=self.mau_card_nhe,
-            fg=self.mau_sidebar_dam,
+            fg=self.mau_menu_chon,
             font=("Segoe UI", 12),
             cursor="hand2",
         ).place(relx=0.5, rely=0.5, anchor="center")
@@ -514,7 +558,6 @@ class GiaoDienAdmin(GiaoDienCoSo):
         return user_box
 
 
-
     def hien_trang_chu(self):
         self.tao_tieu_de_trang(
             self.content,
@@ -528,6 +571,9 @@ class GiaoDienAdmin(GiaoDienCoSo):
         card_row = tk.Frame(body, bg=self.mau_nen)
         card_row.pack(fill="x", pady=(0, 10))
 
+        for column in range(4):
+            card_row.grid_columnconfigure(column, weight=1, uniform="card")
+
         self.tao_the_tong_quan(
             card_row,
             "Nhân viên",
@@ -535,6 +581,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             "Tài khoản nhân sự",
             self.hien_nhan_vien,
             "👥",
+            0,
         )
 
         self.tao_the_tong_quan(
@@ -544,6 +591,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             "Kho đang quản lý",
             self.hien_kho,
             "🏬",
+            1,
         )
 
         self.tao_the_tong_quan(
@@ -553,6 +601,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             "Sản phẩm hệ thống",
             self.hien_hang_hoa,
             "📦",
+            2,
         )
 
         self.tao_the_tong_quan(
@@ -562,6 +611,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             "Sản phẩm cần kiểm tra",
             self.hien_canh_bao_ton_thap,
             "⚠",
+            3,
         )
 
         main = tk.Frame(body, bg=self.mau_nen)
@@ -581,16 +631,21 @@ class GiaoDienAdmin(GiaoDienCoSo):
         self.tao_khu_vuc_theo_doi_admin(right, dung_cuon=False)
 
 
-    def tao_the_tong_quan(self, parent, title, value, desc, command=None, icon_text=""):
+    def tao_the_tong_quan(self, parent, title, value, desc, command=None, icon_text="", column=None):
         card = tk.Frame(
             parent,
             bg=self.mau_card,
             highlightbackground=self.mau_vien,
             highlightthickness=1,
         )
-        card.pack(side="left", fill="both", expand=True, padx=5)
         card.pack_propagate(False)
         card.config(height=122)
+
+        if column is None:
+            column = len(parent.grid_slaves(row=0))
+
+        parent.grid_columnconfigure(column, weight=1)
+        card.grid(row=0, column=column, sticky="nsew", padx=5)
 
         top = tk.Frame(card, bg=self.mau_card)
         top.pack(fill="x", padx=13, pady=(12, 0))
@@ -609,7 +664,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
                 icon,
                 text=icon_text,
                 bg=self.mau_card_nhe,
-                fg=self.mau_sidebar_dam,
+                fg=self.mau_menu_chon,
                 font=("Segoe UI", 11),
             ).place(relx=0.5, rely=0.5, anchor="center")
 
@@ -622,27 +677,30 @@ class GiaoDienAdmin(GiaoDienCoSo):
             self.mau_card,
         ).pack(side="left")
 
-        self.tao_label(
+        value_label = self.tao_label(
             card,
             str(value),
-            23,
-            self.mau_sidebar_dam,
+            21,
+            self.mau_menu_chon,
             True,
             self.mau_card,
-        ).pack(anchor="w", padx=14, pady=(7, 0))
+        )
+        value_label.config(wraplength=210, justify="left")
+        value_label.pack(anchor="w", padx=14, pady=(7, 0))
 
-        self.tao_label(
+        desc_label = self.tao_label(
             card,
             desc,
             8,
             self.mau_chu_phu,
             False,
             self.mau_card,
-        ).pack(anchor="w", padx=14, pady=(1, 10))
+        )
+        desc_label.config(wraplength=210, justify="left")
+        desc_label.pack(anchor="w", padx=14, pady=(1, 10))
 
         if command is not None:
             self.gan_su_kien_click(card, command)
-
 
     def tao_the_thong_ke(self, parent, value, ton_thap, command=None):
         self.tao_the_tong_quan(
@@ -772,10 +830,11 @@ class GiaoDienAdmin(GiaoDienCoSo):
                 toi_thieu = str(item.get("mucTonToiThieu", 0))
                 self.tao_dong_dashboard(low_card, ten, ton + " / " + toi_thieu, True)
 
+
     def tao_o_theo_doi(self, parent, title, desc, value, canh_bao=False):
-        bg = "#FFF8F2" if canh_bao else self.mau_card_nhe
-        border = "#F4C27A" if canh_bao else self.mau_vien
-        value_color = "#C62828" if canh_bao else self.mau_chu_dam
+        bg = "#FFF7ED" if canh_bao else self.mau_card_nhe
+        border = "#F59E0B" if canh_bao else self.mau_vien
+        value_color = "#DC2626" if canh_bao else self.mau_menu_chon
 
         item = tk.Frame(
             parent,
@@ -820,7 +879,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
         row = tk.Frame(parent, bg=self.mau_card_nhe)
         row.pack(fill="x", padx=10, pady=(0, 5))
 
-        fg_right = "#C62828" if canh_bao else self.mau_chu_phu
+        fg_right = "#DC2626" if canh_bao else self.mau_chu_phu
 
         left_label = self.tao_label(
             row,
@@ -903,7 +962,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
                 {"text": "Sửa", "command": self.sua_du_lieu, "color": self.mau_sua},
             ],
             [
-                {"text": "Khóa/Mở nhân viên", "command": self.khoa_mo_nhan_vien, "color": "#956A58"},
+                {"text": "Khóa/Mở nhân viên", "command": self.khoa_mo_nhan_vien, "color": self.mau_sidebar},
             ],
         )
 
@@ -925,8 +984,8 @@ class GiaoDienAdmin(GiaoDienCoSo):
                 {"text": "Sửa", "command": self.sua_du_lieu, "color": self.mau_sua},
             ],
             [
-                {"text": "Khóa/Mở tài khoản", "command": self.khoa_mo_tai_khoan, "color": "#956A58"},
-                {"text": "Reset mật khẩu", "command": self.reset_mat_khau_tai_khoan, "color": "#8D7B74"},
+                {"text": "Khóa/Mở tài khoản", "command": self.khoa_mo_tai_khoan, "color": self.mau_sidebar},
+                {"text": "Reset mật khẩu", "command": self.reset_mat_khau_tai_khoan, "color": "#475569"},
             ],
         )
 
@@ -1039,7 +1098,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
                 {"text": "Sửa", "command": self.sua_du_lieu, "color": self.mau_sua},
             ],
             [
-                {"text": "Cập nhật trạng thái", "command": self.cap_nhat_trang_thai_hang_hoa, "color": "#956A58"},
+                {"text": "Cập nhật trạng thái", "command": self.cap_nhat_trang_thai_hang_hoa, "color": self.mau_sidebar},
             ],
         )
 
@@ -1527,6 +1586,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
 
 
 
+
     def ve_bieu_do_thong_ke(self, parent, data, title, chieu_cao=3.0):
         box = tk.Frame(parent, bg=self.mau_card)
         box.pack(fill="both", expand=True, padx=10, pady=(4, 8))
@@ -1561,7 +1621,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
         fig = Figure(figsize=(5.0, chieu_cao), dpi=100, facecolor=self.mau_card)
         ax = fig.add_subplot(111)
 
-        ax.bar(labels, values, width=0.42, color="#C89F8A")
+        ax.bar(labels, values, width=0.42, color=self.mau_menu)
         ax.tick_params(axis="x", labelrotation=20, labelsize=8)
         ax.tick_params(axis="y", labelsize=8)
         ax.grid(axis="y", linestyle="--", alpha=0.18)
@@ -1692,7 +1752,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             command=lambda: self.mo_lich_chon_ngay(entry_tu_ngay),
             bg=self.mau_sua,
             fg="white",
-            activebackground="#A97C69",
+            activebackground=self.mau_menu_hover,
             activeforeground="white",
             font=("Segoe UI", 9, "bold"),
             bd=0,
@@ -1720,7 +1780,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             command=lambda: self.mo_lich_chon_ngay(entry_den_ngay),
             bg=self.mau_sua,
             fg="white",
-            activebackground="#A97C69",
+            activebackground=self.mau_menu_hover,
             activeforeground="white",
             font=("Segoe UI", 9, "bold"),
             bd=0,
@@ -1791,7 +1851,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             filter_bar,
             "Làm mới",
             self.hien_nhat_ky_thao_tac,
-            "#8D7B74",
+            "#475569",
         ).pack(side="left")
 
         entry_tim.bind("<Return>", loc_nhat_ky)
@@ -2401,4 +2461,3 @@ def hien_thi_admin(tai_khoan_dang_nhap=None):
 
 if __name__ == "__main__":
     hien_thi_admin()
-

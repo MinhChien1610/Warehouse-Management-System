@@ -117,6 +117,7 @@ pip install -r requirements.txt
 ### 4. Run the application
 
 ```bash
+cd Do_An
 python main.py
 ```
 
@@ -124,6 +125,14 @@ or
 
 ```bash
 F5 (Visual Studio)
+```
+
+### Demo accounts
+
+```text
+Admin: admin01 / Admin@123
+Warehouse staff: kho01 / Kho@123
+Accountant: ketoan01 / Ketoan@123
 ```
 
 ---

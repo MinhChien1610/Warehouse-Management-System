@@ -1,4 +1,4 @@
-﻿{
+{
   "donViTinh": [
     {
       "maDonViTinh": "DVT001",
@@ -95,7 +95,7 @@
       "maLoaiHang": "LH0001",
       "donGia": 18000000,
       "mucTonToiThieu": 6,
-      "trangThai": "Hoạt động"
+      "trangThai": "Ngừng kinh doanh"
     },
     {
       "maSanPham": "SP0006",
@@ -111,7 +111,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0001",
       "donGia": 15000000,
-      "mucTonToiThieu": 9
+      "mucTonToiThieu": 9,
+      "trangThai": "Ngừng kinh doanh"
     },
     {
       "maSanPham": "SP0008",

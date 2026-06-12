@@ -67,78 +67,11 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
 
     def khoi_tao_mau_nhan_vien_kho(self):
-        self.mau_nen = "#FFF8F5"
-        self.mau_sidebar = "#D7B3A3"
-        self.mau_sidebar_dam = "#8B6251"
-        self.mau_sidebar_nhat = "#F4E7E1"
-
-        self.mau_menu = "#F4E7E1"
-        self.mau_menu_hover = "#FFFFFF"
-        self.mau_menu_con = "#EED8CE"
-        self.mau_menu_chon = "#8B6251"
-
-        self.mau_card = "#FFFFFF"
-        self.mau_card_nhe = "#FCF8F6"
-        self.mau_vien = "#E6DAD4"
-
-        self.mau_chu_dam = "#5C3B31"
-        self.mau_chu_phu = "#8D7B74"
-
-        self.mau_them = "#7BAE8A"
-        self.mau_sua = "#D3A15D"
-        self.mau_xoa = "#D97A7A"
-        self.mau_thoat = "#8B6251"
-        self.mau_tim_kiem = "#8B6251"
+        self.khoi_tao_mau_sac()
 
 
     def cau_hinh_style(self):
-        style = ttk.Style()
-        style.theme_use("clam")
-
-        style.configure(
-            "Treeview",
-            font=("Segoe UI", 10),
-            rowheight=38,
-            background="white",
-            fieldbackground="white",
-            foreground=self.mau_chu_dam,
-            borderwidth=0,
-        )
-
-        style.configure(
-            "Treeview.Heading",
-            font=("Segoe UI", 10, "bold"),
-            background="#F2E7E1",
-            foreground=self.mau_chu_dam,
-            padding=8,
-            relief="flat",
-        )
-
-        style.map(
-            "Treeview",
-            background=[("selected", "#E8DAD4")],
-            foreground=[("selected", self.mau_chu_dam)],
-        )
-
-        style.configure(
-            "TNotebook",
-            background=self.mau_nen,
-            borderwidth=0,
-        )
-
-        style.configure(
-            "TNotebook.Tab",
-            background=self.mau_card_nhe,
-            foreground=self.mau_chu_dam,
-            padding=(16, 8),
-            font=("Segoe UI", 10, "bold"),
-        )
-
-        style.map(
-            "TNotebook.Tab",
-            background=[("selected", self.mau_thoat)],
-            foreground=[("selected", "white")],
-        )
+        super().cau_hinh_style()
 
     def chay(self):
         self.root.mainloop()
@@ -172,10 +105,10 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
         icon_box = tk.Frame(
             top_logo,
-            bg="#FFFFFF",
+            bg=self.mau_card,
             width=46,
             height=46,
-            highlightbackground="#EADBD4",
+            highlightbackground=self.mau_vien,
             highlightthickness=1,
         )
         icon_box.pack(side="left")
@@ -184,7 +117,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         tk.Label(
             icon_box,
             text="📦",
-            bg="#FFFFFF",
+            bg=self.mau_card,
             fg=self.mau_sidebar_dam,
             font=("Segoe UI", 19),
         ).place(relx=0.5, rely=0.5, anchor="center")
@@ -210,8 +143,8 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
         slogan = tk.Frame(
             logo,
-            bg="#F4E7E1",
-            highlightbackground="#EADBD4",
+            bg=self.mau_sidebar_nhat,
+            highlightbackground=self.mau_vien,
             highlightthickness=1,
         )
         slogan.pack(fill="x", pady=(12, 0))
@@ -219,15 +152,15 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         tk.Label(
             slogan,
             text="Nghiệp vụ kho hàng",
-            bg="#F4E7E1",
+            bg=self.mau_sidebar_nhat,
             fg=self.mau_chu_dam,
-            font=("Segoe UI", 9, "bold"),
+            font=("Segoe UI", 10, "bold"),
         ).pack(anchor="w", padx=10, pady=(7, 1))
 
         tk.Label(
             slogan,
             text="Nhập • Xuất • Tồn",
-            bg="#F4E7E1",
+            bg=self.mau_sidebar_nhat,
             fg=self.mau_chu_phu,
             font=("Segoe UI", 8),
         ).pack(anchor="w", padx=10, pady=(0, 7))
@@ -322,19 +255,19 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             text=text,
             bg=self.mau_sidebar_nhat,
             fg=self.mau_chu_dam,
-            activebackground="#FFFFFF",
+            activebackground=self.mau_menu_hover,
             activeforeground=self.mau_chu_dam,
             font=("Segoe UI", 9, "bold"),
             bd=0,
             anchor="w",
             padx=14,
-            pady=8,
+            pady=12,
             cursor="hand2",
             relief="flat",
         )
 
         button.config(command=lambda: self.chon_menu(button, command))
-        button.pack(fill="x", pady=(0, 7))
+        button.pack(fill="x", pady=(0, 10))
 
         self.danh_sach_menu.append(button)
         return button
@@ -342,7 +275,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
     def tao_menu_xo_sidebar(self, parent, title, danh_sach_con):
         khung = tk.Frame(parent, bg=self.mau_sidebar)
-        khung.pack(fill="x", pady=(0, 7))
+        khung.pack(fill="x", pady=(0, 10))
 
         khung_con = tk.Frame(khung, bg=self.mau_sidebar)
         dang_mo = {"value": False}
@@ -362,13 +295,13 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             text=title + "   ▾",
             bg=self.mau_sidebar_nhat,
             fg=self.mau_chu_dam,
-            activebackground="#FFFFFF",
+            activebackground=self.mau_menu_hover,
             activeforeground=self.mau_chu_dam,
-            font=("Segoe UI", 9, "bold"),
+            font=("Segoe UI", 10, "bold"),
             bd=0,
             anchor="w",
             padx=14,
-            pady=8,
+            pady=12,
             cursor="hand2",
             relief="flat",
             command=toggle_menu,
@@ -381,19 +314,19 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
                 khung_con,
                 text="      " + text,
                 bg=self.mau_sidebar,
-                fg="#8B6251",
-                activebackground="#FFFFFF",
+                fg=self.mau_sidebar_nhat,
+                activebackground=self.mau_menu_hover,
                 activeforeground=self.mau_chu_dam,
-                font=("Segoe UI", 8),
+                font=("Segoe UI", 9),
                 bd=0,
                 anchor="w",
                 padx=14,
-                pady=4,
+                pady=7,
                 cursor="hand2",
                 relief="flat",
             )
             nut_con.config(command=lambda btn=nut_con, cmd=command: self.chon_menu(btn, cmd))
-            nut_con.pack(fill="x", pady=(1, 1))
+            nut_con.pack(fill="x", pady=(2, 2))
             self.danh_sach_menu.append(nut_con)
 
 
@@ -402,7 +335,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             text = str(nut.cget("text"))
 
             if text.startswith("      "):
-                nut.config(bg=self.mau_sidebar, fg="#8B6251")
+                nut.config(bg=self.mau_sidebar, fg=self.mau_sidebar_nhat)
             else:
                 nut.config(bg=self.mau_sidebar_nhat, fg=self.mau_chu_dam)
 
@@ -715,7 +648,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             row,
             right_text,
             9,
-            "#C62828",
+            self.mau_nguy_hiem,
             True,
             self.mau_card_nhe,
         ).pack(side="right", padx=8, pady=6)
@@ -962,9 +895,9 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
                 "Nhập mã phiếu nhập, nhà sản xuất hoặc kho cần tìm...",
                 self.tim_kiem_phieu_nhap,
                 buttons=[
-                    {"text": "Thêm", "command": lambda: self.mo_form_nhap_xuat_kho("nhap"), "color": "#7BAE8A"},
-                    {"text": "Sửa", "command": self.sua_phieu_nhap_da_chon, "color": "#D3A15D"},
-                    {"text": "Xóa", "command": self.xoa_phieu_nhap_luu_tam_da_chon, "color": "#D97A7A"},
+                    {"text": "Thêm", "command": lambda: self.mo_form_nhap_xuat_kho("nhap"), "color": self.mau_them},
+                    {"text": "Sửa", "command": self.sua_phieu_nhap_da_chon, "color": self.mau_sua},
+                    {"text": "Xóa", "command": self.xoa_phieu_nhap_luu_tam_da_chon, "color": self.mau_xoa},
                 ],
             )
         elif tab == 2:
@@ -973,9 +906,9 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
                 "Nhập mã phiếu xuất, khách hàng hoặc kho cần tìm...",
                 self.tim_kiem_phieu_xuat,
                 buttons=[
-                    {"text": "Thêm", "command": lambda: self.mo_form_nhap_xuat_kho("xuat"), "color": "#7BAE8A"},
-                    {"text": "Sửa", "command": self.sua_phieu_xuat_da_chon, "color": "#D3A15D"},
-                    {"text": "Xóa", "command": self.xoa_phieu_xuat_luu_tam_da_chon, "color": "#D97A7A"},
+                    {"text": "Thêm", "command": lambda: self.mo_form_nhap_xuat_kho("xuat"), "color": self.mau_them},
+                    {"text": "Sửa", "command": self.sua_phieu_xuat_da_chon, "color": self.mau_sua},
+                    {"text": "Xóa", "command": self.xoa_phieu_xuat_luu_tam_da_chon, "color": self.mau_xoa},
                 ],
             )
         elif tab == 3:
@@ -991,8 +924,8 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
                 "Nhập mã kiểm kê, mã kho hoặc ghi chú cần tìm...",
                 self.tim_kiem_kiem_kho,
                 buttons=[
-                    {"text": "Thêm", "command": self.mo_form_kiem_kho, "color": "#7BAE8A"},
-                    {"text": "Sửa", "command": self.sua_kiem_ke_da_chon, "color": "#D3A15D"},
+                    {"text": "Thêm", "command": self.mo_form_kiem_kho, "color": self.mau_them},
+                    {"text": "Sửa", "command": self.sua_kiem_ke_da_chon, "color": self.mau_sua},
                 ],
             )
 
@@ -1153,9 +1086,9 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             "Nhập mã sản phẩm, tên sản phẩm hoặc loại hàng cần tìm...",
             self.tim_kiem_hang_hoa,
             buttons=[
-                {"text": "Thêm", "command": self.them_hang_hoa, "color": "#7BAE8A"},
-                {"text": "Sửa", "command": self.sua_hang_hoa, "color": "#D3A15D"},
-                {"text": "Ngừng kinh doanh", "command": self.ngung_kinh_doanh_hang_hoa, "color": "#D97A7A"},
+                {"text": "Thêm", "command": self.them_hang_hoa, "color": self.mau_them},
+                {"text": "Sửa", "command": self.sua_hang_hoa, "color": self.mau_sua},
+                {"text": "Ngừng kinh doanh", "command": self.ngung_kinh_doanh_hang_hoa, "color": self.mau_xoa},
             ],
         )
 
@@ -1330,8 +1263,8 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             except ValueError as loi:
                 messagebox.showerror("Lỗi nghiệp vụ", str(loi))
 
-        self.tao_nut(form["bottom"], "Lưu", luu, "#7BAE8A").pack(side="right", padx=(8, 0))
-        self.tao_nut(form["bottom"], "Hủy", form["window"].destroy, "#8B6251").pack(side="right")
+        self.tao_nut(form["bottom"], "Lưu", luu, self.mau_them).pack(side="right", padx=(8, 0))
+        self.tao_nut(form["bottom"], "Hủy", form["window"].destroy, self.mau_thoat).pack(side="right")
 
     # =========================
     # FORM NHẬP / XUẤT KHO NHIỀU SẢN PHẨM
@@ -1550,7 +1483,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             khung_nut_dong,
             "Tạo dòng sản phẩm",
             tao_cac_dong_chi_tiet,
-            "#D3A15D",
+            self.mau_sua,
         ).pack(side="left")
 
         if la_sua:
@@ -1665,9 +1598,9 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             except ValueError as loi:
                 messagebox.showerror("Lỗi nghiệp vụ", str(loi))
 
-        self.tao_nut(form["bottom"], "Lưu", lambda: luu_phieu(False), "#7BAE8A").pack(side="right", padx=(8, 0))
-        self.tao_nut(form["bottom"], "Lưu tạm", lambda: luu_phieu(True), "#D3A15D").pack(side="right", padx=(8, 0))
-        self.tao_nut(form["bottom"], "Hủy", form["window"].destroy, "#8B6251").pack(side="right")
+        self.tao_nut(form["bottom"], "Lưu", lambda: luu_phieu(False), self.mau_them).pack(side="right", padx=(8, 0))
+        self.tao_nut(form["bottom"], "Lưu tạm", lambda: luu_phieu(True), self.mau_sua).pack(side="right", padx=(8, 0))
+        self.tao_nut(form["bottom"], "Hủy", form["window"].destroy, self.mau_thoat).pack(side="right")
 
     # =========================
     # SỬA / XÓA PHIẾU LƯU TẠM
@@ -1809,8 +1742,8 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             except ValueError as loi:
                 messagebox.showerror("Lỗi nghiệp vụ", str(loi))
 
-        self.tao_nut(form["bottom"], "Lưu", luu, "#7BAE8A").pack(side="right", padx=(8, 0))
-        self.tao_nut(form["bottom"], "Hủy", form["window"].destroy, "#8B6251").pack(side="right")
+        self.tao_nut(form["bottom"], "Lưu", luu, self.mau_them).pack(side="right", padx=(8, 0))
+        self.tao_nut(form["bottom"], "Hủy", form["window"].destroy, self.mau_thoat).pack(side="right")
 
     def sua_kiem_ke_da_chon(self):
         phieu = self.lay_phieu_da_chon(self.bang_kiem_kho, "kiem_ke.json", "maKiemKe")
@@ -2189,7 +2122,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         labels_ngan = [self.rut_gon_chu(label, 10) for label in labels]
         x = list(range(len(labels_ngan)))
 
-        bars = ax.bar(x, values, color="#C89F8A", width=0.38)
+        bars = ax.bar(x, values, color=self.mau_menu_chon, width=0.38)
 
         ax.set_xticks(x)
         ax.set_xticklabels(labels_ngan, rotation=0, ha="center")
@@ -2292,12 +2225,12 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
         if tai_khoan.get("trangThai") is True:
             status_text = "ĐANG HOẠT ĐỘNG"
-            status_bg = "#E8F5E9"
-            status_fg = "#2E7D32"
+            status_bg = self.mau_sidebar_nhat
+            status_fg = self.mau_thanh_cong
         else:
             status_text = "ĐÃ KHÓA"
-            status_bg = "#FFEBEE"
-            status_fg = "#C62828"
+            status_bg = self.mau_card_nhe
+            status_fg = self.mau_nguy_hiem
 
         tk.Label(
             left,
@@ -2335,7 +2268,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         self.tao_label(info_inner, "Thông tin cá nhân", 16, self.mau_chu_dam, True).pack(anchor="w", pady=(0, 12))
 
         if nhan_vien is None:
-            self.tao_label(info_inner, "Không có dữ liệu nhân viên liên kết", 11, "#C62828").pack(anchor="w")
+            self.tao_label(info_inner, "Không có dữ liệu nhân viên liên kết", 11, self.mau_nguy_hiem).pack(anchor="w")
             return
 
         self.tao_dong_thong_tin(info_inner, "Mã nhân viên", nhan_vien.get("maNhanVien", ""))
@@ -2424,14 +2357,14 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
                 mat_khau_moi_entry.get(),
                 xac_nhan_entry.get(),
             ),
-            "#7BAE8A",
+            self.mau_them,
         ).pack(side="right", padx=(8, 0))
 
         self.tao_nut(
             khung_nut,
             "Hủy",
             self.hien_tai_khoan,
-            "#8B6251",
+            self.mau_thoat,
         ).pack(side="right")
 
     def tao_o_mat_khau(self, parent, label_text, co_nut_mat):
@@ -2546,7 +2479,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             bottom,
             "Thoát",
             self.hien_trang_chu,
-            "#8B6251",
+            self.mau_thoat,
         ).pack(side="right")
 
     def tao_dong_thong_tin(self, parent, label_text, value_text):

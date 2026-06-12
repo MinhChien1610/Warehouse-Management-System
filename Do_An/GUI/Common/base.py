@@ -25,34 +25,48 @@ class GiaoDienCoSo:
 
 
     def khoi_tao_mau_sac(self):
-        # Theme xanh dương hiện đại dùng chung cho toàn bộ hệ thống
-        self.mau_nen = "#F8FAFC"
+        # Theme xanh cobalt dùng chung cho toàn bộ hệ thống
+        self.mau_nen = "#F3F8FF"
 
-        self.mau_sidebar = "#1E3A8A"
-        self.mau_sidebar_dam = "#172554"
-        self.mau_sidebar_nhat = "#DBEAFE"
+        self.mau_sidebar = "#123F78"
+        self.mau_sidebar_dam = "#0B2D5C"
+        self.mau_sidebar_nhat = "#DCEBFF"
 
-        self.mau_menu = "#2563EB"
-        self.mau_menu_hover = "#3B82F6"
-        self.mau_menu_con = "#BFDBFE"
-        self.mau_menu_chon = "#1D4ED8"
+        self.mau_menu = "#1D5FAF"
+        self.mau_menu_hover = "#2A74D4"
+        self.mau_menu_con = "#BFD9FF"
+        self.mau_menu_chon = "#0F4C93"
 
         self.mau_card = "#FFFFFF"
-        self.mau_card_nhe = "#F8FAFC"
-        self.mau_vien = "#E2E8F0"
+        self.mau_card_nhe = "#F6FAFF"
+        self.mau_vien = "#C7DAF5"
 
-        self.mau_chu_dam = "#0F172A"
-        self.mau_chu_phu = "#64748B"
+        self.mau_chu_dam = "#17324D"
+        self.mau_chu_phu = "#5C7188"
 
         self.mau_them = "#10B981"
-        self.mau_sua = "#2563EB"
+        self.mau_sua = "#2F80ED"
         self.mau_xoa = "#EF4444"
-        self.mau_thoat = "#475569"
-        self.mau_tim_kiem = "#2563EB"
+        self.mau_thoat = "#49657F"
+        self.mau_tim_kiem = "#2F80ED"
 
         self.mau_canh_bao = "#F59E0B"
         self.mau_thanh_cong = "#10B981"
         self.mau_nguy_hiem = "#EF4444"
+
+        self.mau_blue_nhe = self.mau_sidebar_nhat
+        self.mau_blue_vien = self.mau_vien
+        self.mau_blue_sang = "#91BDF2"
+
+        self.mau_teal_nhe = self.mau_sidebar_nhat
+        self.mau_teal_vien = self.mau_vien
+        self.mau_teal_sang = "#91BDF2"
+
+        self.mau_xanh_nhe = self.mau_sidebar_nhat
+        self.mau_xanh_vien = self.mau_vien
+
+        self.mau_nhan = self.mau_menu_chon
+        self.mau_nhan_nhe = self.mau_sidebar_nhat
 
     def lay_thu_muc_goc(self):
         thu_muc = os.path.dirname(os.path.abspath(__file__))
@@ -123,7 +137,7 @@ class GiaoDienCoSo:
         style.configure(
             "Treeview.Heading",
             font=("Segoe UI", 10, "bold"),
-            background="#DBEAFE",
+            background=self.mau_sidebar_nhat,
             foreground=self.mau_chu_dam,
             padding=9,
             relief="flat",
@@ -131,23 +145,23 @@ class GiaoDienCoSo:
 
         style.map(
             "Treeview",
-            background=[("selected", "#BFDBFE")],
+            background=[("selected", self.mau_menu_con)],
             foreground=[("selected", self.mau_chu_dam)],
         )
 
         style.configure(
             "Vertical.TScrollbar",
-            background="#CBD5E1",
-            troughcolor="#F8FAFC",
-            bordercolor="#F8FAFC",
+            background=self.mau_blue_sang,
+            troughcolor=self.mau_nen,
+            bordercolor=self.mau_nen,
             arrowcolor=self.mau_chu_dam,
         )
 
         style.configure(
             "Horizontal.TScrollbar",
-            background="#CBD5E1",
-            troughcolor="#F8FAFC",
-            bordercolor="#F8FAFC",
+            background=self.mau_blue_sang,
+            troughcolor=self.mau_nen,
+            bordercolor=self.mau_nen,
             arrowcolor=self.mau_chu_dam,
         )
 
@@ -245,25 +259,25 @@ class GiaoDienCoSo:
             return "#059669"
 
         if bg == self.mau_sua:
-            return "#1D4ED8"
+            return "#164D9A"
 
         if bg == self.mau_xoa:
             return "#DC2626"
 
         if bg == self.mau_thoat:
-            return "#334155"
+            return "#344E68"
 
         if bg == self.mau_tim_kiem:
-            return "#1D4ED8"
+            return "#164D9A"
 
         if bg == self.mau_menu:
-            return "#1D4ED8"
+            return "#2A74D4"
 
         if bg == self.mau_menu_chon:
-            return "#1E40AF"
+            return "#0B2D5C"
 
         if bg == self.mau_sidebar_dam:
-            return "#0F1E4D"
+            return "#123F78"
 
         return bg
 
@@ -642,7 +656,7 @@ class GiaoDienCoSo:
             command=chon_ngay,
             bg=self.mau_card_nhe,
             fg=self.mau_chu_dam,
-            activebackground="#BFDBFE",
+            activebackground=self.mau_menu_con,
             activeforeground=self.mau_chu_dam,
             font=("Segoe UI", 9),
             bd=0,

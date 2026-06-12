@@ -54,85 +54,14 @@ class GiaoDienKeToan(GiaoDienCoSo):
 
 
     def cau_hinh_style(self):
-        style = ttk.Style()
-        style.theme_use("clam")
-
-        style.configure(
-            "Treeview",
-            font=("Segoe UI", 10),
-            rowheight=38,
-            background="white",
-            fieldbackground="white",
-            foreground=self.mau_chu_dam,
-            borderwidth=0,
-        )
-
-        style.configure(
-            "Treeview.Heading",
-            font=("Segoe UI", 10, "bold"),
-            background="#F2E7E1",
-            foreground=self.mau_chu_dam,
-            padding=8,
-            relief="flat",
-        )
-
-        style.map(
-            "Treeview",
-            background=[("selected", "#E8DAD4")],
-            foreground=[("selected", self.mau_chu_dam)],
-        )
-
-        style.configure(
-            "TNotebook",
-            background=self.mau_nen,
-            borderwidth=0,
-        )
-
-        style.configure(
-            "TNotebook.Tab",
-            background=self.mau_card_nhe,
-            foreground=self.mau_chu_dam,
-            padding=(16, 8),
-            font=("Segoe UI", 10, "bold"),
-        )
-
-        style.map(
-            "TNotebook.Tab",
-            background=[("selected", self.mau_thoat)],
-            foreground=[("selected", "white")],
-        )
+        super().cau_hinh_style()
 
     def chay(self):
         self.root.mainloop()
 
 
     def ap_dung_theme_ke_toan(self):
-        self.mau_nen = "#FFF8F5"
-
-        self.mau_sidebar = "#D7B3A3"
-        self.mau_sidebar_dam = "#8B6251"
-        self.mau_sidebar_nhat = "#F4E7E1"
-
-        self.mau_menu = "#F4E7E1"
-        self.mau_menu_hover = "#FFFFFF"
-        self.mau_menu_con = "#EED8CE"
-        self.mau_menu_chon = "#8B6251"
-
-        self.mau_card = "#FFFFFF"
-        self.mau_card_nhe = "#FCF8F6"
-        self.mau_vien = "#E6DAD4"
-
-        self.mau_chu_dam = "#5C3B31"
-        self.mau_chu_phu = "#8D7B74"
-
-        self.mau_them = "#7BAE8A"
-        self.mau_sua = "#D3A15D"
-        self.mau_xoa = "#D97A7A"
-        self.mau_thoat = "#8B6251"
-        self.mau_tim_kiem = "#8B6251"
-
-        self.mau_nhan = "#8B6251"
-        self.mau_nhan_nhe = "#FFF8F2"
+        self.khoi_tao_mau_sac()
 
 
     def tao_bo_cuc_chinh(self):
@@ -160,10 +89,10 @@ class GiaoDienKeToan(GiaoDienCoSo):
 
         icon_box = tk.Frame(
             top_logo,
-            bg="#FFFFFF",
+            bg=self.mau_card,
             width=46,
             height=46,
-            highlightbackground="#EADBD4",
+            highlightbackground=self.mau_vien,
             highlightthickness=1,
         )
         icon_box.pack(side="left")
@@ -172,7 +101,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
         tk.Label(
             icon_box,
             text="💰",
-            bg="#FFFFFF",
+            bg=self.mau_card,
             fg=self.mau_sidebar_dam,
             font=("Segoe UI", 18),
         ).place(relx=0.5, rely=0.5, anchor="center")
@@ -198,8 +127,8 @@ class GiaoDienKeToan(GiaoDienCoSo):
 
         slogan = tk.Frame(
             logo,
-            bg="#F4E7E1",
-            highlightbackground="#EADBD4",
+            bg=self.mau_sidebar_nhat,
+            highlightbackground=self.mau_vien,
             highlightthickness=1,
         )
         slogan.pack(fill="x", pady=(12, 0))
@@ -207,15 +136,15 @@ class GiaoDienKeToan(GiaoDienCoSo):
         tk.Label(
             slogan,
             text="Chứng từ kho hàng",
-            bg="#F4E7E1",
+            bg=self.mau_sidebar_nhat,
             fg=self.mau_chu_dam,
-            font=("Segoe UI", 9, "bold"),
+            font=("Segoe UI", 10, "bold"),
         ).pack(anchor="w", padx=10, pady=(7, 1))
 
         tk.Label(
             slogan,
             text="Nhập • Xuất • Doanh thu",
-            bg="#F4E7E1",
+            bg=self.mau_sidebar_nhat,
             fg=self.mau_chu_phu,
             font=("Segoe UI", 8),
         ).pack(anchor="w", padx=10, pady=(0, 7))
@@ -301,19 +230,19 @@ class GiaoDienKeToan(GiaoDienCoSo):
             text=text,
             bg=self.mau_sidebar_nhat,
             fg=self.mau_chu_dam,
-            activebackground="#FFFFFF",
+            activebackground=self.mau_menu_hover,
             activeforeground=self.mau_chu_dam,
             font=("Segoe UI", 9, "bold"),
             bd=0,
             anchor="w",
             padx=14,
-            pady=8,
+            pady=12,
             cursor="hand2",
             relief="flat",
         )
 
         button.config(command=lambda: self.chon_menu(button, command))
-        button.pack(fill="x", pady=(0, 7))
+        button.pack(fill="x", pady=(0, 10))
 
         self.danh_sach_menu_cha.append(button)
         return button
@@ -321,7 +250,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
 
     def tao_menu_xo(self, parent, title, danh_sach_con):
         khung = tk.Frame(parent, bg=self.mau_sidebar)
-        khung.pack(fill="x", pady=(0, 7))
+        khung.pack(fill="x", pady=(0, 10))
 
         body = tk.Frame(khung, bg=self.mau_sidebar)
         trang_thai = {"dang_mo": False}
@@ -331,13 +260,13 @@ class GiaoDienKeToan(GiaoDienCoSo):
             text=title + "   ▾",
             bg=self.mau_sidebar_nhat,
             fg=self.mau_chu_dam,
-            activebackground="#FFFFFF",
+            activebackground=self.mau_menu_hover,
             activeforeground=self.mau_chu_dam,
-            font=("Segoe UI", 9, "bold"),
+            font=("Segoe UI", 10, "bold"),
             bd=0,
             anchor="w",
             padx=14,
-            pady=8,
+            pady=12,
             cursor="hand2",
             relief="flat",
         )
@@ -361,19 +290,19 @@ class GiaoDienKeToan(GiaoDienCoSo):
                 body,
                 text="      " + text,
                 bg=self.mau_sidebar,
-                fg="#8B6251",
-                activebackground="#FFFFFF",
+                fg=self.mau_sidebar_nhat,
+                activebackground=self.mau_menu_hover,
                 activeforeground=self.mau_chu_dam,
-                font=("Segoe UI", 8),
+                font=("Segoe UI", 9),
                 bd=0,
                 anchor="w",
                 padx=14,
-                pady=4,
+                pady=7,
                 cursor="hand2",
                 relief="flat",
             )
             nut_con.config(command=lambda btn=nut_con, cmd=command: self.chon_menu(btn, cmd))
-            nut_con.pack(fill="x", pady=(1, 1))
+            nut_con.pack(fill="x", pady=(2, 2))
             self.danh_sach_menu_cha.append(nut_con)
 
 
@@ -382,7 +311,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
             text = str(nut.cget("text"))
 
             if text.startswith("      "):
-                nut.config(bg=self.mau_sidebar, fg="#8B6251")
+                nut.config(bg=self.mau_sidebar, fg=self.mau_sidebar_nhat)
             else:
                 nut.config(bg=self.mau_sidebar_nhat, fg=self.mau_chu_dam)
 
@@ -979,7 +908,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
                 body,
                 "Không tìm thấy tài khoản kế toán.",
                 size=13,
-                color="#C62828",
+                color=self.mau_nguy_hiem,
                 bold=True,
             ).pack(anchor="w", padx=22, pady=22)
             return
@@ -1040,12 +969,12 @@ class GiaoDienKeToan(GiaoDienCoSo):
 
         if tai_khoan.get("trangThai") is True:
             status_text = "ĐANG HOẠT ĐỘNG"
-            status_bg = "#E8F5E9"
-            status_fg = "#2E7D32"
+            status_bg = self.mau_sidebar_nhat
+            status_fg = self.mau_thanh_cong
         else:
             status_text = "ĐÃ KHÓA"
-            status_bg = "#FFEBEE"
-            status_fg = "#C62828"
+            status_bg = self.mau_card_nhe
+            status_fg = self.mau_nguy_hiem
 
         tk.Label(
             left,
@@ -1099,7 +1028,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
                 info_inner,
                 "Không có dữ liệu nhân viên liên kết",
                 size=11,
-                color="#C62828",
+                color=self.mau_nguy_hiem,
             ).pack(anchor="w")
             return
 
@@ -1404,7 +1333,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
         item = tk.Frame(
             parent,
             bg=self.mau_nhan_nhe,
-            highlightbackground="#F4C27A",
+            highlightbackground=self.mau_canh_bao,
             highlightthickness=1,
         )
         item.pack(fill="x", padx=16, pady=(0, 8))
@@ -1658,8 +1587,8 @@ class GiaoDienKeToan(GiaoDienCoSo):
             khoang = max(18, vung_ve / max(so_cot, 1))
             rong_cot = min(42, max(8, int(khoang * 0.46)))
 
-            canvas.create_line(le_trai, 20, le_trai, y_goc, fill="#E6DAD4")
-            canvas.create_line(le_trai, y_goc, chieu_rong - 18, y_goc, fill="#E6DAD4")
+            canvas.create_line(le_trai, 20, le_trai, y_goc, fill=self.mau_vien)
+            canvas.create_line(le_trai, y_goc, chieu_rong - 18, y_goc, fill=self.mau_vien)
 
             for index in range(so_cot):
                 value = self.chuyen_so(values[index])
@@ -1675,7 +1604,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
                     y1,
                     x2,
                     y2,
-                    fill="#C89F8A",
+                    fill=self.mau_menu_chon,
                     outline="",
                 )
 
@@ -1748,7 +1677,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
 
             so_luong = self.dinh_dang_so(item.get("soLuongTon", 0))
             toi_thieu = self.dinh_dang_so(item.get("mucTonToiThieu", 0))
-            self.tao_label(row, so_luong + " / " + toi_thieu, size=9, color="#C53030", bold=True, bg=self.mau_card_nhe).pack(side="right", padx=(0, 10), pady=7)
+            self.tao_label(row, so_luong + " / " + toi_thieu, size=9, color=self.mau_nguy_hiem, bold=True, bg=self.mau_card_nhe).pack(side="right", padx=(0, 10), pady=7)
 
     def tao_bang_nhat_ky_ke_toan(self, parent):
         card = tk.Frame(parent, bg=self.mau_card, highlightbackground=self.mau_vien, highlightthickness=1)

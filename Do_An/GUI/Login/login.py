@@ -13,7 +13,7 @@ class GiaoDienLogin(GiaoDienCoSo):
         self.root.title("Đăng nhập Hệ thống")
         self.root.geometry("1100x680")
         self.root.resizable(False, False)
-        self.root.configure(bg="#F8F5F3")
+        self.root.configure(bg=self.mau_nen)
 
         self.entry_username = None
         self.entry_password = None
@@ -21,7 +21,7 @@ class GiaoDienLogin(GiaoDienCoSo):
         self.tao_giao_dien()
 
     def tao_giao_dien(self):
-        self.canvas = tk.Canvas(self.root, bg="#F8F5F3", highlightthickness=0)
+        self.canvas = tk.Canvas(self.root, bg=self.mau_nen, highlightthickness=0)
         self.canvas.pack(fill="both", expand=True)
 
         self.ve_nen()
@@ -31,8 +31,8 @@ class GiaoDienLogin(GiaoDienCoSo):
     def ve_nen(self):
         self.canvas.create_rectangle(
             35, 35, 1065, 645,
-            fill="white",
-            outline="#E8D8D0",
+            fill=self.mau_card,
+            outline=self.mau_vien,
             width=1,
         )
 
@@ -41,7 +41,7 @@ class GiaoDienLogin(GiaoDienCoSo):
             565, 35,
             515, 645,
             35, 645,
-            fill="#B98E7C",
+            fill=self.mau_sidebar,
             outline="",
         )
 
@@ -49,13 +49,13 @@ class GiaoDienLogin(GiaoDienCoSo):
             -80, 520, 560, 800,
             start=0,
             extent=180,
-            fill="#F8EDEA",
+            fill=self.mau_sidebar_nhat,
             outline="",
         )
 
         self.canvas.create_line(
             565, 35, 515, 645,
-            fill="#F8F5F3",
+            fill=self.mau_nen,
             width=3,
         )
 
@@ -63,7 +63,7 @@ class GiaoDienLogin(GiaoDienCoSo):
         self.canvas.create_text(
             285, 135,
             text="📦",
-            fill="#FFF4EF",
+            fill=self.mau_sidebar_nhat,
             font=("Segoe UI", 66),
         )
 
@@ -77,7 +77,7 @@ class GiaoDienLogin(GiaoDienCoSo):
         self.canvas.create_text(
             285, 325,
             text="Warehouse Management System",
-            fill="#FFF4EF",
+            fill=self.mau_sidebar_nhat,
             font=("Segoe UI", 13, "bold"),
         )
 
@@ -94,14 +94,14 @@ class GiaoDienLogin(GiaoDienCoSo):
         self.canvas.create_text(
             280, 595,
             text="Đơn giản  •  Hiệu quả  •  An toàn",
-            fill="#A97C69",
+            fill=self.mau_sidebar_dam,
             font=("Segoe UI", 12, "bold"),
         )
 
     def tao_the_gioi_thieu(self, x, y, icon, text):
         self.canvas.create_rectangle(
             x, y, x + 360, y + 42,
-            fill="#C69B8A",
+            fill=self.mau_menu_hover,
             outline="",
         )
 
@@ -125,8 +125,8 @@ class GiaoDienLogin(GiaoDienCoSo):
 
         avatar = tk.Frame(
             form,
-            bg="#FBF7F5",
-            highlightbackground="#E8D8D0",
+            bg=self.mau_card_nhe,
+            highlightbackground=self.mau_vien,
             highlightthickness=1,
             width=100,
             height=100,
@@ -137,8 +137,8 @@ class GiaoDienLogin(GiaoDienCoSo):
         tk.Label(
             avatar,
             text="👤",
-            bg="#FBF7F5",
-            fg="#AD806D",
+            bg=self.mau_card_nhe,
+            fg=self.mau_menu_chon,
             font=("Segoe UI", 42),
         ).place(relx=0.5, rely=0.5, anchor="center")
 
@@ -146,11 +146,11 @@ class GiaoDienLogin(GiaoDienCoSo):
             form,
             text="Đăng nhập",
             bg="white",
-            fg="#3F241B",
+            fg=self.mau_chu_dam,
             font=("Segoe UI", 30, "bold"),
         ).pack(anchor="center")
 
-        tk.Frame(form, bg="#AD806D", width=50, height=4).pack(pady=(10, 26))
+        tk.Frame(form, bg=self.mau_menu_chon, width=50, height=4).pack(pady=(10, 26))
 
         self.entry_username = self.tao_o_nhap(
             form,
@@ -171,7 +171,7 @@ class GiaoDienLogin(GiaoDienCoSo):
             form,
             text="Tài khoản và mật khẩu được quản trị viên cấp",
             bg="white",
-            fg="#A0908A",
+            fg=self.mau_chu_phu,
             font=("Segoe UI", 9),
         ).pack(pady=(18, 0))
 
@@ -180,14 +180,14 @@ class GiaoDienLogin(GiaoDienCoSo):
             parent,
             text=label_text,
             bg="white",
-            fg="#3F241B",
+            fg=self.mau_chu_dam,
             font=("Segoe UI", 10, "bold"),
         ).pack(anchor="w", pady=(0, 6))
 
         khung = tk.Frame(
             parent,
-            bg="#FBF7F5",
-            highlightbackground="#E8D8D0",
+            bg=self.mau_card_nhe,
+            highlightbackground=self.mau_vien,
             highlightthickness=1,
         )
         khung.pack(fill="x", pady=(0, 18))
@@ -197,15 +197,15 @@ class GiaoDienLogin(GiaoDienCoSo):
         tk.Label(
             khung,
             text=icon_text,
-            bg="#FBF7F5",
-            fg="#8D6F63",
+            bg=self.mau_card_nhe,
+            fg=self.mau_chu_phu,
             font=("Segoe UI", 11),
         ).pack(side="left", padx=(12, 4))
 
         entry = tk.Entry(
             khung,
-            bg="#FBF7F5",
-            fg="#8D6F63",
+            bg=self.mau_card_nhe,
+            fg=self.mau_chu_phu,
             font=("Segoe UI", 11),
             bd=0,
             show="",
@@ -248,10 +248,10 @@ class GiaoDienLogin(GiaoDienCoSo):
             parent,
             text="👁",
             command=doi_hien_mat_khau,
-            bg="#FBF7F5",
-            fg="#8D6F63",
-            activebackground="#FBF7F5",
-            activeforeground="#3F241B",
+            bg=self.mau_card_nhe,
+            fg=self.mau_chu_phu,
+            activebackground=self.mau_card_nhe,
+            activeforeground=self.mau_chu_dam,
             bd=0,
             width=4,
             cursor="hand2",
@@ -261,7 +261,7 @@ class GiaoDienLogin(GiaoDienCoSo):
     def xoa_placeholder(self, entry, placeholder, la_mat_khau=False):
         if entry.get() == placeholder:
             entry.delete(0, tk.END)
-            entry.config(fg="#3F241B")
+            entry.config(fg=self.mau_chu_dam)
 
             if la_mat_khau:
                 entry.config(show="*")
@@ -269,7 +269,7 @@ class GiaoDienLogin(GiaoDienCoSo):
     def khoi_phuc_placeholder(self, entry, placeholder, la_mat_khau=False):
         if entry.get().strip() == "":
             entry.insert(0, placeholder)
-            entry.config(fg="#8D6F63")
+            entry.config(fg=self.mau_chu_phu)
 
             if la_mat_khau:
                 entry.config(show="")
@@ -278,9 +278,9 @@ class GiaoDienLogin(GiaoDienCoSo):
         button = tk.Button(
             parent,
             text="ĐĂNG NHẬP",
-            bg="#AD806D",
+            bg=self.mau_menu_chon,
             fg="white",
-            activebackground="#9F725F",
+            activebackground=self.mau_sidebar_dam,
             activeforeground="white",
             font=("Segoe UI", 12, "bold"),
             bd=0,

@@ -77,16 +77,33 @@ def dinh_dang_doanh_thu_kho(data):
     return ket_qua
 
 
-def lay_doanh_thu_theo_kho(danh_sach_phieu_xuat):
+def lay_doanh_thu_theo_kho(danh_sach_phieu_xuat, danh_sach_kho=None):
     thong_ke = {}
 
+    for kho in danh_sach_kho or []:
+        ma_kho = kho.get("maKho", "")
+
+        if ma_kho != "":
+            thong_ke[ma_kho] = {
+                "maKho": ma_kho,
+                "tenKho": kho.get("tenKho", ""),
+                "soPhieu": 0,
+                "tongDoanhThu": 0,
+            }
+
     for item in danh_sach_phieu_xuat:
+        trang_thai = str(item.get("trangThai", "")).strip().lower()
+
+        if trang_thai in ["đã hủy", "da huy", "hủy", "huy"]:
+            continue
+
         ma_kho = item.get("maKho", "Không rõ")
         tong_tien = chuyen_so(item.get("tongTien", 0))
 
         if ma_kho not in thong_ke:
             thong_ke[ma_kho] = {
                 "maKho": ma_kho,
+                "tenKho": "",
                 "soPhieu": 0,
                 "tongDoanhThu": 0,
             }

@@ -1,9 +1,10 @@
 import calendar
 import json
 import os
+import re
 import tkinter as tk
-from datetime import date
-from tkinter import ttk
+from datetime import date, datetime
+from tkinter import ttk, messagebox
 
 from Calculator.common import (
     chuyen_so,
@@ -778,6 +779,142 @@ class GiaoDienCoSo:
         return dinh_dang_tien(value)
 
     # =========================
+    # RÀNG BUỘC DỮ LIỆU DÙNG CHUNG
+    # =========================
+    def bat_buoc_nhap(self, value, label):
+        value = str(value).strip()
+
+        if value == "":
+            raise ValueError("Vui lòng nhập " + str(label).lower() + ".")
+
+        return value
+
+    def kiem_tra_chi_chu(self, value, label, bat_buoc=True):
+        value = str(value).strip()
+
+        if value == "":
+            if bat_buoc:
+                raise ValueError("Vui lòng nhập " + str(label).lower() + ".")
+            return value
+
+        for ky_tu in value:
+            if not (ky_tu.isalpha() or ky_tu.isspace()):
+                raise ValueError(str(label) + " chỉ được nhập chữ.")
+
+        return value
+
+    def kiem_tra_chi_so(self, value, label, bat_buoc=True, gia_tri_nho_nhat=None):
+        value = str(value).strip()
+
+        if value == "":
+            if bat_buoc:
+                raise ValueError("Vui lòng nhập " + str(label).lower() + ".")
+            return 0
+
+        if not value.isdigit():
+            raise ValueError(str(label) + " chỉ được nhập số.")
+
+        so = int(value)
+
+        if gia_tri_nho_nhat is not None and so < gia_tri_nho_nhat:
+            raise ValueError(str(label) + " phải lớn hơn hoặc bằng " + str(gia_tri_nho_nhat) + ".")
+
+        return so
+
+    def kiem_tra_so_dien_thoai(self, value, label="Số điện thoại", bat_buoc=False):
+        value = str(value).strip()
+
+        if value == "":
+            if bat_buoc:
+                raise ValueError("Vui lòng nhập " + str(label).lower() + ".")
+            return value
+
+        if not re.fullmatch(r"0\d{9}", value):
+            raise ValueError(str(label) + " phải bắt đầu bằng 0 và đúng 10 số.")
+
+        return value
+
+    def kiem_tra_email_gmail(self, value, label="Email", bat_buoc=False):
+        value = str(value).strip()
+
+        if value == "":
+            if bat_buoc:
+                raise ValueError("Vui lòng nhập " + str(label).lower() + ".")
+            return value
+
+        if not re.fullmatch(r"[A-Za-z0-9._%+-]+@gmail\.com", value):
+            raise ValueError(str(label) + " phải đúng định dạng và có đuôi @gmail.com.")
+
+        return value
+
+    def kiem_tra_ngay(self, value, label="Ngày", bat_buoc=False):
+        value = str(value).strip()
+
+        if value == "":
+            if bat_buoc:
+                raise ValueError("Vui lòng nhập " + str(label).lower() + ".")
+            return value
+
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+            raise ValueError(str(label) + " phải đúng định dạng yyyy-mm-dd.")
+
+        try:
+            datetime.strptime(value, "%Y-%m-%d")
+        except ValueError:
+            raise ValueError(str(label) + " không hợp lệ.")
+
+        return value
+
+    def gan_rang_buoc_chi_nhap_so(self, entry, label):
+        def kiem_tra(event=None):
+            value = entry.get()
+
+            if value == "":
+                return
+
+            if value.isdigit():
+                return
+
+            value_moi = "".join(ky_tu for ky_tu in value if ky_tu.isdigit())
+            entry.delete(0, tk.END)
+            entry.insert(0, value_moi)
+            messagebox.showwarning("Dữ liệu không hợp lệ", str(label) + " chỉ được nhập số.")
+
+        entry.bind("<KeyRelease>", kiem_tra)
+        entry.bind("<FocusOut>", kiem_tra)
+        return entry
+
+    def gan_rang_buoc_ngay(self, entry, label, placeholder=""):
+        def kiem_tra(event=None):
+            value = entry.get().strip()
+
+            if value == "" or value == placeholder:
+                return
+
+            try:
+                self.kiem_tra_ngay(value, label, False)
+            except ValueError as loi:
+                messagebox.showwarning("Dữ liệu không hợp lệ", str(loi))
+
+        entry.bind("<FocusOut>", kiem_tra, add="+")
+        return entry
+
+    # =========================
+    # TÍNH TOÁN DÙNG CHUNG
+    # =========================
+    def tinh_tong_hang_hoa_hien_co(self, danh_sach_ton=None):
+        if danh_sach_ton is None:
+            kho_data = self.doc_json("kho_hang.json", {})
+            danh_sach_ton = kho_data.get("tonKho", [])
+
+        tong = 0
+
+        for ton in danh_sach_ton:
+            tong += self.chuyen_so_nguyen(ton.get("soLuongTon", 0))
+
+        return int(tong)
+
+    # =========================
     # FORM DÙNG CHUNG
     # =========================
     def tao_cua_so_form(self, title, width, height, parent=None):
@@ -874,6 +1011,107 @@ class GiaoDienCoSo:
             huy,
             self.mau_thoat,
         ).pack(side="right")
+
+    def tao_dong_thong_tin(self, parent, label_text, value_text):
+        row = tk.Frame(parent, bg=self.mau_card)
+        row.pack(side="left", fill="x", expand=True, pady=3)
+
+        self.tao_label(row, label_text + ":", 10, self.mau_chu_phu, True).pack(side="left")
+        self.tao_label(row, str(value_text), 10, self.mau_chu_dam).pack(side="left", padx=(8, 0))
+
+    def mo_chi_tiet_phieu(self, phieu, loai):
+        if loai == "nhap":
+            title = "Chi tiết phiếu nhập " + phieu.get("maPhieuNhap", "")
+            ma_phieu = phieu.get("maPhieuNhap", "")
+            ngay = phieu.get("ngayNhap", "")
+            doi_tac_label = "Nhà sản xuất"
+            doi_tac_value = phieu.get("maNhaSanXuat", "")
+        elif loai == "xuat":
+            title = "Chi tiết phiếu xuất " + phieu.get("maPhieuXuat", "")
+            ma_phieu = phieu.get("maPhieuXuat", "")
+            ngay = phieu.get("ngayXuat", "")
+            doi_tac_label = "Khách hàng"
+            doi_tac_value = phieu.get("maKhachHang", "")
+        else:
+            title = "Chi tiết phiếu kiểm kho " + phieu.get("maKiemKe", "")
+            ma_phieu = phieu.get("maKiemKe", "")
+            ngay = phieu.get("ngayKiemKe", "")
+            doi_tac_label = "Ghi chú"
+            doi_tac_value = phieu.get("ghiChu", "")
+
+        form = self.tao_cua_so_form(title, 880, 620)
+        khung = form["body"]
+
+        thong_tin = self.tao_card(khung)
+        thong_tin.pack(fill="x", pady=(0, 12))
+
+        dong_1 = tk.Frame(thong_tin, bg=self.mau_card)
+        dong_1.pack(fill="x", padx=14, pady=(12, 4))
+        self.tao_dong_thong_tin(dong_1, "Mã phiếu", ma_phieu)
+        self.tao_dong_thong_tin(dong_1, "Kho", phieu.get("maKho", ""))
+
+        dong_2 = tk.Frame(thong_tin, bg=self.mau_card)
+        dong_2.pack(fill="x", padx=14, pady=(0, 4))
+        self.tao_dong_thong_tin(dong_2, "Ngày", ngay)
+        self.tao_dong_thong_tin(dong_2, "Trạng thái", phieu.get("trangThai", ""))
+
+        dong_3 = tk.Frame(thong_tin, bg=self.mau_card)
+        dong_3.pack(fill="x", padx=14, pady=(0, 12))
+        self.tao_dong_thong_tin(dong_3, doi_tac_label, doi_tac_value)
+        if loai in ["nhap", "xuat"]:
+            self.tao_dong_thong_tin(dong_3, "Tổng tiền", self.dinh_dang_tien(phieu.get("tongTien", 0)))
+
+        chi_tiet = self.chuan_bi_chi_tiet_phieu(phieu, loai)
+
+        if loai == "kiem":
+            cot = ("maSanPham", "tenSanPham", "soLuongHeThong", "soLuongThucTe", "chenhLech")
+            tieu_de = ("Mã SP", "Tên sản phẩm", "SL hệ thống", "SL thực tế", "Chênh lệch")
+            do_rong = (120, 360, 130, 130, 130)
+        else:
+            cot = ("maSanPham", "tenSanPham", "soLuong", "donGia", "thanhTien", "maViTri")
+            tieu_de = ("Mã SP", "Tên sản phẩm", "Số lượng", "Đơn giá", "Thành tiền", "Vị trí")
+            do_rong = (120, 330, 110, 140, 150, 120)
+
+        bang = self.tao_bang(khung, cot, tieu_de, do_rong)
+        self.do_du_lieu_vao_bang(bang, chi_tiet, cot)
+
+        self.tao_nut(form["bottom"], "Đóng", form["window"].destroy, self.mau_thoat).pack(side="right")
+
+    def chuan_bi_chi_tiet_phieu(self, phieu, loai):
+        ket_qua = []
+
+        for item in phieu.get("chiTiet", []):
+            ma_san_pham = item.get("maSanPham", "")
+            san_pham = self.tim_san_pham_theo_ma_chung(ma_san_pham)
+            ten_san_pham = ""
+
+            if san_pham is not None:
+                ten_san_pham = san_pham.get("tenSanPham", "")
+
+            dong = dict(item)
+            dong["tenSanPham"] = ten_san_pham
+
+            if loai == "kiem":
+                he_thong = self.chuyen_so(item.get("soLuongHeThong", 0))
+                thuc_te = self.chuyen_so(item.get("soLuongThucTe", 0))
+                dong["chenhLech"] = int(thuc_te - he_thong)
+            else:
+                so_luong = self.chuyen_so(item.get("soLuong", 0))
+                don_gia = self.chuyen_so(item.get("donGia", 0))
+                dong["thanhTien"] = self.dinh_dang_tien(so_luong * don_gia)
+
+            ket_qua.append(dong)
+
+        return ket_qua
+
+    def tim_san_pham_theo_ma_chung(self, ma_san_pham):
+        data = self.doc_json("hang_hoa.json", {})
+
+        for san_pham in data.get("sanPham", []):
+            if san_pham.get("maSanPham", "") == ma_san_pham:
+                return san_pham
+
+        return None
 
     def tao_danh_sach_chon(self, danh_sach, ma_key, ten_key):
         ket_qua = []

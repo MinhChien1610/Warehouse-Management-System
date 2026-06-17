@@ -82,20 +82,50 @@ class KhoHang:
 
         return ""
 
+    def lay_danh_sach_ma_kho_duoc_phan_cong(self):
+        data = self.doc_json("nguoi_dung.json", {})
+        danh_sach = []
+
+        for phan_cong in data.get("phanCongKho", []):
+            dung_tai_khoan = phan_cong.get("maTaiKhoan") == self.ma_tai_khoan
+            dang_hoat_dong = phan_cong.get("trangThai") is True
+
+            if dung_tai_khoan and dang_hoat_dong:
+                ma_kho = phan_cong.get("maKho", "")
+                if ma_kho != "" and ma_kho not in danh_sach:
+                    danh_sach.append(ma_kho)
+
+        return danh_sach
+
+    def loc_theo_kho_duoc_phan_cong(self, danh_sach, truong_kho="maKho"):
+        danh_sach_ma_kho = self.lay_danh_sach_ma_kho_duoc_phan_cong()
+
+        if len(danh_sach_ma_kho) == 0:
+            return []
+
+        return [
+            item
+            for item in danh_sach
+            if item.get(truong_kho, "") in danh_sach_ma_kho
+        ]
+
     # =========================
     # DANH MỤC
     # =========================
 
     def lay_danh_sach_kho(self):
         data = self.doc_json("kho_hang.json", {})
-        return data.get("kho", [])
+        return self.loc_theo_kho_duoc_phan_cong(data.get("kho", []))
 
     def lay_danh_sach_vi_tri(self, ma_kho: str = ""):
         data = self.doc_json("kho_hang.json", {})
         danh_sach = data.get("viTriKho", [])
 
         if ma_kho == "":
-            return danh_sach
+            return self.loc_theo_kho_duoc_phan_cong(danh_sach)
+
+        if ma_kho not in self.lay_danh_sach_ma_kho_duoc_phan_cong():
+            return []
 
         return [item for item in danh_sach if item.get("maKho") == ma_kho]
 
@@ -118,6 +148,18 @@ class KhoHang:
 
         return None
 
+    def la_san_pham_dang_kinh_doanh(self, san_pham):
+        trang_thai = str(san_pham.get("trangThai", "")).strip().lower()
+        return trang_thai not in [
+            "ngừng kinh doanh",
+            "ngung kinh doanh",
+            "đã ngừng",
+            "da ngung",
+            "false",
+            "0",
+            "inactive",
+        ]
+
     # =========================
     # HÀNG HÓA
     # =========================
@@ -133,9 +175,9 @@ class KhoHang:
         kho_data = self.doc_json("kho_hang.json", {})
         hang_data = self.doc_json("hang_hoa.json", {})
         ket_qua = lap_du_lieu_ton_kho(
-            kho_data.get("tonKho", []),
+            self.loc_theo_kho_duoc_phan_cong(kho_data.get("tonKho", [])),
             hang_data.get("sanPham", []),
-            kho_data.get("viTriKho", []),
+            self.loc_theo_kho_duoc_phan_cong(kho_data.get("viTriKho", [])),
         )
 
         for ton in ket_qua:
@@ -219,9 +261,9 @@ class KhoHang:
         kho_data = self.doc_json("kho_hang.json", {})
         hang_data = self.doc_json("hang_hoa.json", {})
         ket_qua = tinh_canh_bao_ton_thap(
-            kho_data.get("tonKho", []),
+            self.loc_theo_kho_duoc_phan_cong(kho_data.get("tonKho", [])),
             hang_data.get("sanPham", []),
-            kho_data.get("viTriKho", []),
+            self.loc_theo_kho_duoc_phan_cong(kho_data.get("viTriKho", [])),
         )
 
         for ton in ket_qua:
@@ -255,7 +297,7 @@ class KhoHang:
             self.ma_tai_khoan,
             ngay_nhap or self.lay_ngay_hien_tai(),
             self.tinh_tong_tien(chi_tiet_chuan),
-            "L?u t?m" if luu_tam else "?? nh?p",
+            "Lưu tạm" if luu_tam else "Đã nhập",
             chi_tiet_chuan,
         ).to_dict()
 
@@ -360,7 +402,7 @@ class KhoHang:
             self.ma_tai_khoan,
             ngay_xuat or self.lay_ngay_hien_tai(),
             self.tinh_tong_tien(chi_tiet_chuan),
-            "L?u t?m" if luu_tam else "?? xu?t",
+            "Lưu tạm" if luu_tam else "Đã xuất",
             chi_tiet_chuan,
         ).to_dict()
 
@@ -456,6 +498,7 @@ class KhoHang:
         return trang_thai in [
             "lưu tạm",
             "luu tam",
+            "l?u t?m",
             "chưa xác nhận",
             "chua xac nhan",
         ]
@@ -466,6 +509,7 @@ class KhoHang:
         chi_tiet: List[Dict[str, Any]],
         ghi_chu: str = "",
         ngay_kiem_ke=None,
+        luu_tam: bool = False,
     ):
         self.kiem_tra_kho_ton_tai(ma_kho)
 
@@ -484,18 +528,21 @@ class KhoHang:
             ghi_chu,
             chi_tiet_chuan,
         ).to_dict()
+        phieu["trangThai"] = "Lưu tạm" if luu_tam else "Đã kiểm kê"
 
         data.append(phieu)
         self.ghi_json("kiem_ke.json", data)
 
-        for item in chi_tiet_chuan:
-            self.dat_lai_ton_kho(
-                ma_kho,
-                item.get("maSanPham", ""),
-                self.chuyen_so_nguyen(item.get("soLuongThucTe", 0)),
-            )
+        if not luu_tam:
+            for item in chi_tiet_chuan:
+                self.dat_lai_ton_kho(
+                    ma_kho,
+                    item.get("maSanPham", ""),
+                    self.chuyen_so_nguyen(item.get("soLuongThucTe", 0)),
+                )
 
-        self.ghi_nhat_ky("Kiểm kê kho", "Kiểm kê", "Tạo phiếu kiểm kê " + ma_phieu)
+        hanh_dong = "Lưu tạm kiểm kê" if luu_tam else "Kiểm kê kho"
+        self.ghi_nhat_ky(hanh_dong, "Kiểm kê", "Tạo phiếu kiểm kê " + ma_phieu)
 
         return phieu
 
@@ -525,8 +572,10 @@ class KhoHang:
             raise ValueError("Mã kho không tồn tại: " + ma_kho)
 
     def kiem_tra_san_pham_ton_tai(self, ma_san_pham: str):
-        if self.tim_san_pham(ma_san_pham) is None:
+        san_pham = self.tim_san_pham(ma_san_pham)
+        if san_pham is None:
             raise ValueError("Mã sản phẩm không tồn tại: " + ma_san_pham)
+        return san_pham
 
     def kiem_tra_chi_tiet_hang(self, chi_tiet: List[Dict[str, Any]]):
         if len(chi_tiet) == 0:
@@ -546,26 +595,64 @@ class KhoHang:
             if don_gia <= 0:
                 raise ValueError("Đơn giá phải lớn hơn 0.")
 
-            self.kiem_tra_san_pham_ton_tai(ma_san_pham)
+            san_pham = self.kiem_tra_san_pham_ton_tai(ma_san_pham)
+
+            if not self.la_san_pham_dang_kinh_doanh(san_pham):
+                raise ValueError("Sản phẩm " + ma_san_pham + " đã ngừng kinh doanh, không thể chọn vào phiếu.")
 
     # =========================
     # CHUẨN HÓA DỮ LIỆU
     # =========================
 
     def chuan_hoa_chi_tiet(self, chi_tiet: List[Dict[str, Any]]):
-        ket_qua = []
+        ket_qua_map = {}
 
         for item in chi_tiet:
+            ma_san_pham = item.get("maSanPham", "")
+            so_luong = self.chuyen_so_nguyen(item.get("soLuong", 0))
+
+            if ma_san_pham in ket_qua_map:
+                ket_qua_map[ma_san_pham]["soLuong"] += so_luong
+                continue
+
             dong = {
-                "maSanPham": item.get("maSanPham", ""),
-                "soLuong": self.chuyen_so_nguyen(item.get("soLuong", 0)),
+                "maSanPham": ma_san_pham,
+                "soLuong": so_luong,
                 "donGia": self.chuyen_so_nguyen(item.get("donGia", 0)),
             }
 
             if item.get("maViTri", "") != "":
                 dong["maViTri"] = item.get("maViTri", "")
 
-            ket_qua.append(dong)
+            ket_qua_map[ma_san_pham] = dong
+
+        return list(ket_qua_map.values())
+
+    def chuan_hoa_chi_tiet_kiem_ke(self, ma_kho: str, chi_tiet: List[Dict[str, Any]]):
+        ket_qua = []
+        san_pham_da_chon = set()
+
+        for item in chi_tiet:
+            ma_san_pham = item.get("maSanPham", "")
+            so_luong_thuc_te = self.chuyen_so_nguyen(item.get("soLuongThucTe", 0))
+
+            if ma_san_pham == "":
+                raise ValueError("Vui lòng chọn sản phẩm kiểm kê.")
+
+            if so_luong_thuc_te < 0:
+                raise ValueError("Số lượng thực tế không được âm.")
+
+            if ma_san_pham in san_pham_da_chon:
+                raise ValueError("Sản phẩm " + ma_san_pham + " bị trùng trong phiếu kiểm kê.")
+
+            san_pham_da_chon.add(ma_san_pham)
+            self.kiem_tra_san_pham_ton_tai(ma_san_pham)
+
+            ket_qua.append({
+                "maSanPham": ma_san_pham,
+                "soLuongHeThong": self.lay_so_luong_ton(ma_kho, ma_san_pham),
+                "soLuongThucTe": so_luong_thuc_te,
+            })
 
         return ket_qua
 

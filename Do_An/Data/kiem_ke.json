@@ -36,14 +36,15 @@
       {
         "maSanPham": "SP0005",
         "soLuongHeThong": 9,
-        "soLuongThucTe": 8
+        "soLuongThucTe": 0
       },
       {
         "maSanPham": "SP0025",
         "soLuongHeThong": 30,
         "soLuongThucTe": 29
       }
-    ]
+    ],
+    "trangThai": "Đã kiểm kê"
   },
   {
     "maKiemKe": "KK0003",
@@ -67,5 +68,84 @@
         "soLuongThucTe": 21
       }
     ]
+  },
+  {
+    "maKiemKe": "KK0004",
+    "maKho": "KHO001",
+    "ngayKiemKe": "2026-06-12",
+    "ghiChu": "Kiểm kê cuối tháng",
+    "chiTiet": [
+      {
+        "maSanPham": "SP0001",
+        "soLuongHeThong": 76,
+        "soLuongThucTe": 76
+      },
+      {
+        "maSanPham": "SP0002",
+        "soLuongHeThong": 11,
+        "soLuongThucTe": 11
+      },
+      {
+        "maSanPham": "SP0003",
+        "soLuongHeThong": 18,
+        "soLuongThucTe": 18
+      },
+      {
+        "maSanPham": "SP0011",
+        "soLuongHeThong": 6,
+        "soLuongThucTe": 6
+      },
+      {
+        "maSanPham": "SP0021",
+        "soLuongHeThong": 34,
+        "soLuongThucTe": 34
+      },
+      {
+        "maSanPham": "SP0031",
+        "soLuongHeThong": 16,
+        "soLuongThucTe": 16
+      },
+      {
+        "maSanPham": "SP0041",
+        "soLuongHeThong": 12,
+        "soLuongThucTe": 12
+      },
+      {
+        "maSanPham": "SP0051",
+        "soLuongHeThong": 9,
+        "soLuongThucTe": 0
+      },
+      {
+        "maSanPham": "SP0061",
+        "soLuongHeThong": 4,
+        "soLuongThucTe": 4
+      },
+      {
+        "maSanPham": "SP0071",
+        "soLuongHeThong": 6,
+        "soLuongThucTe": 6
+      },
+      {
+        "maSanPham": "SP0023",
+        "soLuongHeThong": 6,
+        "soLuongThucTe": 6
+      },
+      {
+        "maSanPham": "SP0056",
+        "soLuongHeThong": 3,
+        "soLuongThucTe": 3
+      },
+      {
+        "maSanPham": "SP0070",
+        "soLuongHeThong": 3,
+        "soLuongThucTe": 3
+      },
+      {
+        "maSanPham": "SP0047",
+        "soLuongHeThong": 2,
+        "soLuongThucTe": 2
+      }
+    ],
+    "trangThai": "Đã kiểm kê"
   }
 ]

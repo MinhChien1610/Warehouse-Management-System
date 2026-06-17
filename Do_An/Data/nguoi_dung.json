@@ -14,7 +14,7 @@
       "ngaySinh": "1996-09-25",
       "email": "minhtm002@gmail.com",
       "soDienThoai": "0912345678",
-      "trangThai": true
+      "trangThai": "True"
     },
     {
       "maNhanVien": "NV003",
@@ -23,6 +23,14 @@
       "email": "huylq003@gmail.com",
       "soDienThoai": "0923456789",
       "trangThai": "Hoạt động"
+    },
+    {
+      "tenNhanVien": "Le Minh Chien",
+      "ngaySinh": "2006-10-16",
+      "soDienThoai": "0705011417",
+      "email": "lethiminhchien07@gmail.com",
+      "trangThai": "Hoạt động",
+      "maNhanVien": "NV004"
     }
   ],
   "taiKhoan": [

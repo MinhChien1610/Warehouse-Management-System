@@ -223,5 +223,302 @@
     "thoiGian": "2026-06-05 16:42:43",
     "trangThai": "Thành công",
     "ghiChu": "Cập nhật trạng thái NV003 thành Hoạt động"
+  },
+  {
+    "maNhatKy": "NK0026",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin tạo phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-06-12 22:46:23",
+    "trangThai": "Thành công",
+    "ghiChu": "Tạo phiếu nhập PN0010"
+  },
+  {
+    "maNhatKy": "NK0027",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Kiểm kê kho",
+    "doiTuong": "Kiểm kê",
+    "thoiGian": "2026-06-12 22:47:59",
+    "trangThai": "Thành công",
+    "ghiChu": "Tạo phiếu kiểm kê KK0004"
+  },
+  {
+    "maNhatKy": "NK0028",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Xóa phiếu kiểm kê",
+    "doiTuong": "Kiểm kê",
+    "thoiGian": "2026-06-12 22:48:14",
+    "trangThai": "Thành công",
+    "ghiChu": "Xóa phiếu kiểm kê KK0004"
+  },
+  {
+    "maNhatKy": "NK0029",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Kiểm kê kho",
+    "doiTuong": "Kiểm kê",
+    "thoiGian": "2026-06-12 22:48:15",
+    "trangThai": "Thành công",
+    "ghiChu": "Tạo phiếu kiểm kê KK0004"
+  },
+  {
+    "maNhatKy": "NK0030",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin hủy phiếu xuất",
+    "doiTuong": "Phiếu xuất",
+    "thoiGian": "2026-06-12 23:08:14",
+    "trangThai": "Thành công",
+    "ghiChu": "Hủy phiếu xuất PX0001"
+  },
+  {
+    "maNhatKy": "NK0031",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin ngừng kinh doanh sản phẩm",
+    "doiTuong": "Hàng hóa",
+    "thoiGian": "2026-06-12 23:08:30",
+    "trangThai": "Thành công",
+    "ghiChu": "Ngừng kinh doanh SP0005"
+  },
+  {
+    "maNhatKy": "NK0032",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin thêm Kho",
+    "doiTuong": "Kho",
+    "thoiGian": "2026-06-12 23:12:50",
+    "trangThai": "Thành công",
+    "ghiChu": "Thêm KHO006"
+  },
+  {
+    "maNhatKy": "NK0033",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin xóa Kho",
+    "doiTuong": "Kho",
+    "thoiGian": "2026-06-12 23:12:56",
+    "trangThai": "Thành công",
+    "ghiChu": "Xóa KHO006"
+  },
+  {
+    "maNhatKy": "NK0034",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin sửa kiểm kê",
+    "doiTuong": "Kiểm kê",
+    "thoiGian": "2026-06-12 23:13:27",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật phiếu kiểm kê KK0002"
+  },
+  {
+    "maNhatKy": "NK0035",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin đổi trạng thái sản phẩm",
+    "doiTuong": "Hàng hóa",
+    "thoiGian": "2026-06-12 23:13:49",
+    "trangThai": "Thành công",
+    "ghiChu": "Đổi trạng thái SP0005 thành Hoạt động"
+  },
+  {
+    "maNhatKy": "NK0036",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin đổi trạng thái sản phẩm",
+    "doiTuong": "Hàng hóa",
+    "thoiGian": "2026-06-12 23:13:54",
+    "trangThai": "Thành công",
+    "ghiChu": "Đổi trạng thái SP0007 thành Hoạt động"
+  },
+  {
+    "maNhatKy": "NK0037",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin sửa kiểm kê",
+    "doiTuong": "Kiểm kê",
+    "thoiGian": "2026-06-12 23:15:47",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật phiếu kiểm kê KK0004"
+  },
+  {
+    "maNhatKy": "NK0038",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin sửa Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-12 23:18:40",
+    "trangThai": "Thành công",
+    "ghiChu": "Sửa NV002"
+  },
+  {
+    "maNhatKy": "NK0039",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin sửa Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-12 23:18:46",
+    "trangThai": "Thành công",
+    "ghiChu": "Sửa NV002"
+  },
+  {
+    "maNhatKy": "NK0040",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin thêm sản phẩm",
+    "doiTuong": "Hàng hóa",
+    "thoiGian": "2026-06-12 23:24:42",
+    "trangThai": "Thành công",
+    "ghiChu": "Tạo sản phẩm SP0081"
+  },
+  {
+    "maNhatKy": "NK0041",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin sửa sản phẩm",
+    "doiTuong": "Hàng hóa",
+    "thoiGian": "2026-06-12 23:26:02",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật sản phẩm SP0081"
+  },
+  {
+    "maNhatKy": "NK0042",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin sửa sản phẩm",
+    "doiTuong": "Hàng hóa",
+    "thoiGian": "2026-06-12 23:26:12",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật sản phẩm SP0081"
+  },
+  {
+    "maNhatKy": "NK0043",
+    "maTaiKhoan": "TK002",
+    "hanhDong": "Thêm phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-06-12 23:38:06",
+    "trangThai": "Thành công",
+    "ghiChu": "Thêm phiếu nhập PN0011"
+  },
+  {
+    "maNhatKy": "NK0044",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin thêm Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-12 23:42:08",
+    "trangThai": "Thành công",
+    "ghiChu": "Thêm NV004"
+  },
+  {
+    "maNhatKy": "NK0045",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin sửa Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-12 23:42:24",
+    "trangThai": "Thành công",
+    "ghiChu": "Sửa NV004"
+  },
+  {
+    "maNhatKy": "NK0046",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin sửa Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-12 23:47:50",
+    "trangThai": "Thành công",
+    "ghiChu": "Sửa NV004"
+  },
+  {
+    "maNhatKy": "NK0047",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin sửa Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-12 23:48:09",
+    "trangThai": "Thành công",
+    "ghiChu": "Sửa NV004"
+  },
+  {
+    "maNhatKy": "NK0048",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin sửa Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-12 23:48:17",
+    "trangThai": "Thành công",
+    "ghiChu": "Sửa NV004"
+  },
+  {
+    "maNhatKy": "NK0049",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin đổi trạng thái sản phẩm",
+    "doiTuong": "Hàng hóa",
+    "thoiGian": "2026-06-13 00:07:58",
+    "trangThai": "Thành công",
+    "ghiChu": "Đổi trạng thái SP0081 thành Ngừng kinh doanh"
+  },
+  {
+    "maNhatKy": "NK0050",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin đổi trạng thái sản phẩm",
+    "doiTuong": "Hàng hóa",
+    "thoiGian": "2026-06-13 00:08:03",
+    "trangThai": "Thành công",
+    "ghiChu": "Đổi trạng thái SP0076 thành Ngừng kinh doanh"
+  },
+  {
+    "maNhatKy": "NK0051",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin đổi trạng thái sản phẩm",
+    "doiTuong": "Hàng hóa",
+    "thoiGian": "2026-06-13 00:08:09",
+    "trangThai": "Thành công",
+    "ghiChu": "Đổi trạng thái SP0076 thành Hoạt động"
+  },
+  {
+    "maNhatKy": "NK0052",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin đổi trạng thái sản phẩm",
+    "doiTuong": "Hàng hóa",
+    "thoiGian": "2026-06-13 00:08:16",
+    "trangThai": "Thành công",
+    "ghiChu": "Đổi trạng thái SP0081 thành Hoạt động"
+  },
+  {
+    "maNhatKy": "NK0053",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin đổi trạng thái sản phẩm",
+    "doiTuong": "Hàng hóa",
+    "thoiGian": "2026-06-13 00:08:46",
+    "trangThai": "Thành công",
+    "ghiChu": "Đổi trạng thái SP0045 thành Ngừng kinh doanh"
+  },
+  {
+    "maNhatKy": "NK0054",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin hủy phiếu xuất",
+    "doiTuong": "Phiếu xuất",
+    "thoiGian": "2026-06-17 15:50:15",
+    "trangThai": "Thành công",
+    "ghiChu": "Hủy phiếu xuất PX0004"
+  },
+  {
+    "maNhatKy": "NK0055",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin đổi trạng thái sản phẩm",
+    "doiTuong": "Hàng hóa",
+    "thoiGian": "2026-06-17 15:50:40",
+    "trangThai": "Thành công",
+    "ghiChu": "Đổi trạng thái SP0045 thành Hoạt động"
+  },
+  {
+    "maNhatKy": "NK0056",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin đổi trạng thái sản phẩm",
+    "doiTuong": "Hàng hóa",
+    "thoiGian": "2026-06-17 15:50:44",
+    "trangThai": "Thành công",
+    "ghiChu": "Đổi trạng thái SP0016 thành Ngừng kinh doanh"
+  },
+  {
+    "maNhatKy": "NK0057",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin đổi trạng thái sản phẩm",
+    "doiTuong": "Hàng hóa",
+    "thoiGian": "2026-06-17 15:50:49",
+    "trangThai": "Thành công",
+    "ghiChu": "Đổi trạng thái SP0016 thành Hoạt động"
+  },
+  {
+    "maNhatKy": "NK0058",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin thêm Loại hàng",
+    "doiTuong": "Loại hàng",
+    "thoiGian": "2026-06-17 16:02:08",
+    "trangThai": "Thành công",
+    "ghiChu": "Thêm LH0009"
   }
 ]

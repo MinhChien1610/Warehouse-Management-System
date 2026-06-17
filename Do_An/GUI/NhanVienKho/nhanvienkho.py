@@ -1,5 +1,3 @@
-import json
-import os
 import tkinter as tk
 from tkinter import ttk, messagebox
 
@@ -38,16 +36,10 @@ def ghi_json(ten_file, data):
 class GiaoDienNhanVienKho(GiaoDienCoSo):
     def __init__(self, tai_khoan_dang_nhap=None):
         super().__init__()
-        self.khoi_tao_mau_nhan_vien_kho()
-
+        self.ten_vai_tro = "Nhân viên kho"
         self.tai_khoan_dang_nhap = tai_khoan_dang_nhap or {}
 
-        self.root = tk.Tk()
-        self.root.title("Nhân viên kho")
-        self.root.geometry("1280x720")
-        self.root.minsize(1120, 640)
-        self.root.configure(bg=self.mau_nen)
-
+        self.root = self.tao_cua_so_chinh("Nhân viên kho")
         self.danh_sach_menu = []
         self.notebook_kho = None
         self.toolbar_kho_area = None
@@ -65,287 +57,96 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         self.hien_trang_chu()
 
 
-    def khoi_tao_mau_nhan_vien_kho(self):
-        self.khoi_tao_mau_sac()
 
-
-    def cau_hinh_style(self):
-        super().cau_hinh_style()
 
     def chay(self):
         self.root.mainloop()
+
+
+    def tao_sidebar(self):
+        self.tao_sidebar_chung(
+            "KHO",
+            "Warehouse Staff",
+            "Nghiệp vụ kho hàng",
+            "Nhập • Xuất • Tồn",
+            self.lay_menu_nhan_vien_kho(),
+            self.dang_xuat,
+        )
+
+    def lay_menu_nhan_vien_kho(self):
+        return [
+            {
+                "title": "🏠  Trang chủ",
+                "command": self.hien_trang_chu,
+            },
+            {
+                "title": "🏬  Kho hàng",
+                "children": [
+                    ("Nhập kho", self.hien_phieu_nhap),
+                    ("Xuất kho", self.hien_phieu_xuat),
+                    ("Tồn kho", self.hien_ton_kho),
+                    ("Kiểm kho", self.hien_kiem_kho),
+                ],
+            },
+            {
+                "title": "📦  Hàng hóa",
+                "command": self.hien_hang_hoa,
+            },
+            {
+                "title": "📝  Lịch sử",
+                "command": self.hien_lich_su,
+            },
+            {
+                "title": "📊  Thống kê",
+                "children": [
+                    ("Tổng quan kho", self.hien_thong_ke_tong_quan),
+                    ("Nhập theo ngày", self.hien_thong_ke_nhap_ngay),
+                    ("Xuất theo ngày", self.hien_thong_ke_xuat_ngay),
+                    ("Cảnh báo tồn thấp", self.hien_thong_ke_canh_bao),
+                ],
+            },
+            {
+                "title": "👤  Tài khoản",
+                "children": [
+                    ("Thông tin tài khoản", self.hien_tai_khoan),
+                    ("Đổi mật khẩu", self.hien_doi_mat_khau),
+                ],
+            },
+        ]
+
+    def lay_ten_nguoi_dung_hien_tai(self):
+        data = doc_json("nguoi_dung.json", {})
+        tai_khoan = self.tim_tai_khoan_nhan_vien_kho(data)
+
+        if tai_khoan is None:
+            return "Nhân viên kho"
+
+        nhan_vien = self.tim_nhan_vien_theo_ma(
+            data,
+            tai_khoan.get("maNhanVien", ""),
+        )
+
+        if nhan_vien is None:
+            return "Nhân viên kho"
+
+        return nhan_vien.get("tenNhanVien", "Nhân viên kho")
 
     # =========================
     # BỐ CỤC CHÍNH
     # =========================
 
-    def tao_bo_cuc_chinh(self):
-        self.sidebar = tk.Frame(
-            self.root,
-            bg=self.mau_sidebar,
-            width=238,
-        )
-        self.sidebar.pack(side="left", fill="y")
-        self.sidebar.pack_propagate(False)
-
-        self.content = tk.Frame(
-            self.root,
-            bg=self.mau_nen,
-        )
-        self.content.pack(side="right", fill="both", expand=True)
 
 
-    def tao_sidebar(self):
-        logo = tk.Frame(self.sidebar, bg=self.mau_sidebar)
-        logo.pack(fill="x", padx=14, pady=(16, 10))
 
-        top_logo = tk.Frame(logo, bg=self.mau_sidebar)
-        top_logo.pack(fill="x")
-
-        icon_box = tk.Frame(
-            top_logo,
-            bg=self.mau_card,
-            width=46,
-            height=46,
-            highlightbackground=self.mau_vien,
-            highlightthickness=1,
-        )
-        icon_box.pack(side="left")
-        icon_box.pack_propagate(False)
-
-        tk.Label(
-            icon_box,
-            text="📦",
-            bg=self.mau_card,
-            fg=self.mau_sidebar_dam,
-            font=("Segoe UI", 19),
-        ).place(relx=0.5, rely=0.5, anchor="center")
-
-        text_logo = tk.Frame(top_logo, bg=self.mau_sidebar)
-        text_logo.pack(side="left", padx=(10, 0))
-
-        tk.Label(
-            text_logo,
-            text="KHO",
-            bg=self.mau_sidebar,
-            fg=self.mau_chu_dam,
-            font=("Segoe UI", 18, "bold"),
-        ).pack(anchor="w")
-
-        tk.Label(
-            text_logo,
-            text="Warehouse Staff",
-            bg=self.mau_sidebar,
-            fg=self.mau_chu_phu,
-            font=("Segoe UI", 8, "bold"),
-        ).pack(anchor="w")
-
-        slogan = tk.Frame(
-            logo,
-            bg=self.mau_sidebar_nhat,
-            highlightbackground=self.mau_vien,
-            highlightthickness=1,
-        )
-        slogan.pack(fill="x", pady=(12, 0))
-
-        tk.Label(
-            slogan,
-            text="Nghiệp vụ kho hàng",
-            bg=self.mau_sidebar_nhat,
-            fg=self.mau_chu_dam,
-            font=("Segoe UI", 10, "bold"),
-        ).pack(anchor="w", padx=10, pady=(7, 1))
-
-        tk.Label(
-            slogan,
-            text="Nhập • Xuất • Tồn",
-            bg=self.mau_sidebar_nhat,
-            fg=self.mau_chu_phu,
-            font=("Segoe UI", 8),
-        ).pack(anchor="w", padx=10, pady=(0, 7))
-
-        vung_menu = tk.Frame(self.sidebar, bg=self.mau_sidebar)
-        vung_menu.pack(fill="both", expand=True, padx=10, pady=(0, 6))
-
-        canvas_menu = tk.Canvas(
-            vung_menu,
-            bg=self.mau_sidebar,
-            bd=0,
-            highlightthickness=0,
-        )
-        canvas_menu.pack(side="left", fill="both", expand=True)
-
-        thanh_cuon_menu = ttk.Scrollbar(
-            vung_menu,
-            orient="vertical",
-            command=canvas_menu.yview,
-        )
-        thanh_cuon_menu.pack(side="right", fill="y")
-
-        canvas_menu.configure(yscrollcommand=thanh_cuon_menu.set)
-
-        menu = tk.Frame(canvas_menu, bg=self.mau_sidebar)
-        menu_window = canvas_menu.create_window((0, 0), window=menu, anchor="nw")
-
-        def cap_nhat_vung_cuon(event=None):
-            canvas_menu.configure(scrollregion=canvas_menu.bbox("all"))
-            canvas_menu.itemconfigure(menu_window, width=canvas_menu.winfo_width())
-
-        def cuon_menu(event):
-            canvas_menu.yview_scroll(int(-1 * (event.delta / 120)), "units")
-
-        menu.bind("<Configure>", cap_nhat_vung_cuon)
-        canvas_menu.bind("<Configure>", cap_nhat_vung_cuon)
-        canvas_menu.bind("<Enter>", lambda event: canvas_menu.bind_all("<MouseWheel>", cuon_menu))
-        canvas_menu.bind("<Leave>", lambda event: canvas_menu.unbind_all("<MouseWheel>"))
-
-        self.tao_nut_menu(menu, "🏠  Trang chủ", self.hien_trang_chu)
-
-        self.tao_menu_xo_sidebar(
-            menu,
-            "🏬  Kho hàng",
-            [
-                ("Nhập kho", self.hien_phieu_nhap),
-                ("Xuất kho", self.hien_phieu_xuat),
-                ("Tồn kho", self.hien_ton_kho),
-                ("Kiểm kho", self.hien_kiem_kho),
-            ],
-        )
-
-        self.tao_nut_menu(menu, "📦  Hàng hóa", self.hien_hang_hoa)
-        self.tao_nut_menu(menu, "📝  Lịch sử", self.hien_lich_su)
-
-        self.tao_menu_xo_sidebar(
-            menu,
-            "📊  Thống kê",
-            [
-                ("Tổng quan kho", self.hien_thong_ke_tong_quan),
-                ("Nhập theo ngày", self.hien_thong_ke_nhap_ngay),
-                ("Xuất theo ngày", self.hien_thong_ke_xuat_ngay),
-                ("Cảnh báo tồn thấp", self.hien_thong_ke_canh_bao),
-            ],
-        )
-
-        self.tao_menu_xo_sidebar(
-            menu,
-            "👤  Tài khoản",
-            [
-                ("Thông tin tài khoản", self.hien_tai_khoan),
-                ("Đổi mật khẩu", self.hien_doi_mat_khau),
-            ],
-        )
-
-        bottom = tk.Frame(self.sidebar, bg=self.mau_sidebar)
-        bottom.pack(side="bottom", fill="x", padx=12, pady=(6, 12))
-
-        self.tao_nut(
-            bottom,
-            "Đăng xuất",
-            self.dang_xuat,
-            self.mau_thoat,
-        ).pack(fill="x")
-
-
-    def tao_nut_menu(self, parent, text, command):
-        button = tk.Button(
-            parent,
-            text=text,
-            bg=self.mau_sidebar_nhat,
-            fg=self.mau_chu_dam,
-            activebackground=self.mau_menu_hover,
-            activeforeground=self.mau_chu_dam,
-            font=("Segoe UI", 9, "bold"),
-            bd=0,
-            anchor="w",
-            padx=14,
-            pady=12,
-            cursor="hand2",
-            relief="flat",
-        )
-
-        button.config(command=lambda: self.chon_menu(button, command))
-        button.pack(fill="x", pady=(0, 10))
-
-        self.danh_sach_menu.append(button)
-        return button
-
-
-    def tao_menu_xo_sidebar(self, parent, title, danh_sach_con):
-        khung = tk.Frame(parent, bg=self.mau_sidebar)
-        khung.pack(fill="x", pady=(0, 10))
-
-        khung_con = tk.Frame(khung, bg=self.mau_sidebar)
-        dang_mo = {"value": False}
-
-        def toggle_menu():
-            if dang_mo["value"]:
-                khung_con.pack_forget()
-                dang_mo["value"] = False
-                nut_cha.config(text=title + "   ▾")
-            else:
-                khung_con.pack(fill="x", pady=(3, 0))
-                dang_mo["value"] = True
-                nut_cha.config(text=title + "   ▴")
-
-        nut_cha = tk.Button(
-            khung,
-            text=title + "   ▾",
-            bg=self.mau_sidebar_nhat,
-            fg=self.mau_chu_dam,
-            activebackground=self.mau_menu_hover,
-            activeforeground=self.mau_chu_dam,
-            font=("Segoe UI", 10, "bold"),
-            bd=0,
-            anchor="w",
-            padx=14,
-            pady=12,
-            cursor="hand2",
-            relief="flat",
-            command=toggle_menu,
-        )
-        nut_cha.pack(fill="x")
-        self.danh_sach_menu.append(nut_cha)
-
-        for text, command in danh_sach_con:
-            nut_con = tk.Button(
-                khung_con,
-                text="      " + text,
-                bg=self.mau_sidebar,
-                fg=self.mau_sidebar_nhat,
-                activebackground=self.mau_menu_hover,
-                activeforeground=self.mau_chu_dam,
-                font=("Segoe UI", 9),
-                bd=0,
-                anchor="w",
-                padx=14,
-                pady=7,
-                cursor="hand2",
-                relief="flat",
-            )
-            nut_con.config(command=lambda btn=nut_con, cmd=command: self.chon_menu(btn, cmd))
-            nut_con.pack(fill="x", pady=(2, 2))
-            self.danh_sach_menu.append(nut_con)
-
-
-    def chon_menu(self, button, command):
-        for nut in self.danh_sach_menu:
-            text = str(nut.cget("text"))
-
-            if text.startswith("      "):
-                nut.config(bg=self.mau_sidebar, fg=self.mau_sidebar_nhat)
-            else:
-                nut.config(bg=self.mau_sidebar_nhat, fg=self.mau_chu_dam)
-
-        button.config(bg=self.mau_menu_chon, fg="white")
-        command()
 
 
 
     def hien_trang_chu(self):
-        self.xoa_noi_dung(self.content)
-
-        header = self.tao_header_trang_chu()
-        header.pack(fill="x", padx=24, pady=(16, 8))
+        self.tao_tieu_de_trang(
+            self.content,
+            "Trang chủ",
+            "Tổng quan hệ thống quản lý kho hàng",
+        )
 
         body = tk.Frame(self.content, bg=self.mau_nen)
         body.pack(fill="both", expand=True, padx=24, pady=(0, 16))
@@ -401,91 +202,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
         self.tao_dashboard_trang_chu(left, right)
 
-    def tao_header_trang_chu(self):
-        header = tk.Frame(self.content, bg=self.mau_nen)
 
-        left_header = tk.Frame(header, bg=self.mau_nen)
-        left_header.pack(side="left", fill="x", expand=True)
-
-        self.tao_label(
-            left_header,
-            "Trang chủ",
-            23,
-            self.mau_chu_dam,
-            True,
-            self.mau_nen,
-        ).pack(anchor="w")
-
-        self.tao_label(
-            left_header,
-            "Tổng quan hệ thống quản lý kho hàng",
-            9,
-            self.mau_chu_phu,
-            False,
-            self.mau_nen,
-        ).pack(anchor="w", pady=(2, 0))
-
-        self.tao_user_box(header).pack(side="right", pady=(2, 0))
-        return header
-
-
-    def tao_user_box(self, parent):
-        user_box = tk.Frame(
-            parent,
-            bg=self.mau_card,
-            highlightbackground=self.mau_vien,
-            highlightthickness=1,
-            cursor="hand2",
-        )
-
-        icon_box = tk.Frame(
-            user_box,
-            bg=self.mau_card_nhe,
-            width=34,
-            height=34,
-        )
-        icon_box.pack(side="left", padx=(12, 9), pady=8)
-        icon_box.pack_propagate(False)
-
-        tk.Label(
-            icon_box,
-            text="👤",
-            bg=self.mau_card_nhe,
-            fg=self.mau_sidebar_dam,
-            font=("Segoe UI", 12),
-            cursor="hand2",
-        ).place(relx=0.5, rely=0.5, anchor="center")
-
-        text_box = tk.Frame(user_box, bg=self.mau_card)
-        text_box.pack(side="left", padx=(0, 14), pady=7)
-
-        name = tk.Label(
-            text_box,
-            text="Xin chào, Nhân viên kho",
-            bg=self.mau_card,
-            fg=self.mau_chu_dam,
-            font=("Segoe UI", 9, "bold"),
-            cursor="hand2",
-        )
-        name.pack(anchor="w")
-
-        role = tk.Label(
-            text_box,
-            text="Vai trò: Nhân viên kho",
-            bg=self.mau_card,
-            fg=self.mau_chu_phu,
-            font=("Segoe UI", 8),
-            cursor="hand2",
-        )
-        role.pack(anchor="w", pady=(2, 0))
-
-        user_box.bind("<Button-1>", lambda event: self.hien_tai_khoan())
-        icon_box.bind("<Button-1>", lambda event: self.hien_tai_khoan())
-        text_box.bind("<Button-1>", lambda event: self.hien_tai_khoan())
-        name.bind("<Button-1>", lambda event: self.hien_tai_khoan())
-        role.bind("<Button-1>", lambda event: self.hien_tai_khoan())
-
-        return user_box
 
 
     def tao_dashboard_trang_chu(self, left, right):
@@ -639,108 +356,9 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             self.mau_card_nhe,
         ).pack(side="right", padx=8, pady=6)
 
-    def tao_noi_dung_trang_chu(self, body):
-        bottom = tk.Frame(body, bg=self.mau_card)
-        bottom.pack(fill="both", expand=True)
-
-        left = self.tao_card(bottom)
-        left.pack(side="left", fill="both", expand=True, padx=(0, 10))
-
-        right = self.tao_card(bottom)
-        right.pack(side="right", fill="y", ipadx=20)
-
-        self.tao_label(
-            left, "Tổng quan hệ thống", 20, self.mau_chu_dam, True
-        ).pack(anchor="w", padx=22, pady=(22, 10))
-
-        mo_ta = (
-            "Đây là khu vực mặc định khi nhân viên kho đăng nhập.\n\n"
-            "Có thể bấm vào các thẻ phía trên để đi nhanh tới "
-            "Hàng hóa hoặc Tồn kho."
-        )
-
-        label = self.tao_label(left, mo_ta, 12, self.mau_chu_phu)
-        label.config(wraplength=650)
-        label.pack(anchor="w", padx=22)
-
-        self.tao_label(
-            right, "Thông báo", 18, self.mau_chu_dam, True
-        ).pack(anchor="w", padx=18, pady=(18, 12))
-
-        self.tao_thong_bao(right, "Kiểm tra tồn kho định kỳ.")
-        self.tao_thong_bao(right, "Cập nhật phiếu nhập và phiếu xuất đầy đủ.")
-        self.tao_thong_bao(right, "Theo dõi lịch sử thao tác người dùng.")
 
 
 
-    def tao_the_tong_quan(self, parent, title, value, desc, command=None, icon_text="", column=0):
-        card = tk.Frame(
-            parent,
-            bg=self.mau_card,
-            highlightbackground=self.mau_vien,
-            highlightthickness=1,
-        )
-        card.grid(
-            row=0,
-            column=column,
-            sticky="nsew",
-            padx=5,
-        )
-        card.grid_propagate(False)
-        card.config(height=125)
-
-        top = tk.Frame(card, bg=self.mau_card)
-        top.pack(fill="x", padx=13, pady=(11, 0))
-
-        if icon_text != "":
-            icon = tk.Frame(
-                top,
-                bg=self.mau_card_nhe,
-                width=30,
-                height=28,
-            )
-            icon.pack(side="left", padx=(0, 8))
-            icon.pack_propagate(False)
-
-            tk.Label(
-                icon,
-                text=icon_text,
-                bg=self.mau_card_nhe,
-                fg=self.mau_sidebar_dam,
-                font=("Segoe UI", 11),
-            ).place(relx=0.5, rely=0.5, anchor="center")
-
-        self.tao_label(
-            top,
-            title,
-            10,
-            self.mau_chu_dam,
-            True,
-            self.mau_card,
-        ).pack(side="left")
-
-        self.tao_label(
-            card,
-            str(value),
-            20,
-            self.mau_sidebar_dam,
-            True,
-            self.mau_card,
-        ).pack(anchor="w", padx=14, pady=(8, 0))
-
-        mo_ta = self.rut_gon_chu(desc, 24)
-
-        self.tao_label(
-            card,
-            mo_ta,
-            8,
-            self.mau_chu_phu,
-            False,
-            self.mau_card,
-        ).pack(anchor="w", padx=14, pady=(2, 10))
-
-        if command is not None:
-            self.gan_su_kien_click(card, command)
 
     def tao_thong_bao(self, parent, text):
         item = tk.Frame(
@@ -2137,7 +1755,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         labels_ngan = [self.rut_gon_chu(label, 10) for label in labels]
         x = list(range(len(labels_ngan)))
 
-        bars = ax.bar(x, values, color=self.mau_menu_chon, width=0.38)
+        bars = ax.bar(x, values, color=self.mau_menu, width=0.38)
 
         ax.set_xticks(x)
         ax.set_xticklabels(labels_ngan, rotation=0, ha="center")
@@ -2379,7 +1997,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             khung_nut,
             "Hủy",
             self.hien_tai_khoan,
-            self.mau_thoat,
+            self.mau_sidebar_dam,
         ).pack(side="right")
 
     def tao_o_mat_khau(self, parent, label_text, co_nut_mat):
@@ -2486,16 +2104,6 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
     # =========================
     # HÀM PHỤ GIAO DIỆN
     # =========================
-    def tao_nut_thoat(self, parent, pady=(16, 0)):
-        bottom = tk.Frame(parent, bg=self.mau_card)
-        bottom.pack(side="bottom", fill="x", pady=pady)
-
-        self.tao_nut(
-            bottom,
-            "Thoát",
-            self.hien_trang_chu,
-            self.mau_thoat,
-        ).pack(side="right")
 
     def tao_dong_thong_tin(self, parent, label_text, value_text):
         row = tk.Frame(parent, bg=self.mau_card)
@@ -2504,35 +2112,11 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         self.tao_label(row, label_text + ":", 11, self.mau_chu_phu, True).pack(side="left")
         self.tao_label(row, str(value_text), 11, self.mau_chu_dam).pack(side="left", padx=(12, 0))
 
-    def gan_su_kien_click(self, widget, command):
-        widget.config(cursor="hand2")
-        widget.bind("<Button-1>", lambda event: command())
-
-        for child in widget.winfo_children():
-            child.config(cursor="hand2")
-            child.bind("<Button-1>", lambda event: command())
 
     # =========================
     # HÀM PHỤ DỮ LIỆU
     # =========================
-    def xoa_du_lieu_bang(self, bang):
-        for row in bang.get_children():
-            bang.delete(row)
 
-    def loc_du_lieu(self, danh_sach, tu_khoa, danh_sach_truong):
-        tu_khoa = tu_khoa.lower().strip()
-        ket_qua = []
-
-        for item in danh_sach:
-            noi_dung = ""
-
-            for truong in danh_sach_truong:
-                noi_dung += str(item.get(truong, "")) + " "
-
-            if tu_khoa == "" or tu_khoa in noi_dung.lower():
-                ket_qua.append(item)
-
-        return ket_qua
 
     def tim_vai_tro_theo_ma(self, data, ma_vai_tro):
         for vai_tro in data.get("vaiTro", []):
@@ -2620,11 +2204,6 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
     # =========================
     # HÀM ĐỊNH DẠNG
     # =========================
-    def rut_gon_chu(self, text, max_len):
-        text = str(text)
-        if len(text) <= max_len:
-            return text
-        return text[:max_len] + "..."
 
     # =========================
     # ĐĂNG XUẤT

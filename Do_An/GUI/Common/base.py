@@ -6,6 +6,11 @@ import tkinter as tk
 from datetime import date, datetime
 from tkinter import ttk, messagebox
 
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
 from Calculator.common import (
     chuyen_so,
     chuyen_so_nguyen,
@@ -1159,3 +1164,492 @@ class GiaoDienCoSo:
             command,
             self.mau_thoat,
         ).pack(side="right")
+
+    # =========================
+    # LAYOUT CHUNG THEO ADMIN
+    # =========================
+    def tao_cua_so_chinh(self, title, width=1280, height=720, min_width=1120, min_height=640):
+        root = tk.Tk()
+        root.title(title)
+        root.geometry(str(width) + "x" + str(height))
+        root.minsize(min_width, min_height)
+        root.configure(bg=self.mau_nen)
+        return root
+
+    def tao_bo_cuc_chinh(self):
+        self.sidebar = tk.Frame(self.root, bg=self.mau_sidebar, width=238)
+        self.sidebar.pack(side="left", fill="y")
+        self.sidebar.pack_propagate(False)
+
+        self.content = tk.Frame(self.root, bg=self.mau_nen)
+        self.content.pack(side="right", fill="both", expand=True)
+
+    def tao_sidebar_chung(
+        self,
+        ten_vai_tro,
+        mo_ta_vai_tro,
+        tieu_de_phu,
+        mo_ta_phu,
+        danh_sach_menu,
+        lenh_dang_xuat=None,
+    ):
+        logo = tk.Frame(self.sidebar, bg=self.mau_sidebar)
+        logo.pack(fill="x", padx=14, pady=(16, 10))
+
+        top_logo = tk.Frame(logo, bg=self.mau_sidebar)
+        top_logo.pack(fill="x")
+
+        icon_box = tk.Frame(
+            top_logo,
+            bg=self.mau_card,
+            width=46,
+            height=46,
+            highlightbackground=self.mau_blue_sang,
+            highlightthickness=1,
+        )
+        icon_box.pack(side="left")
+        icon_box.pack_propagate(False)
+
+        tk.Label(
+            icon_box,
+            text="📦",
+            bg=self.mau_card,
+            fg=self.mau_menu_chon,
+            font=("Segoe UI", 19),
+        ).place(relx=0.5, rely=0.5, anchor="center")
+
+        text_logo = tk.Frame(top_logo, bg=self.mau_sidebar)
+        text_logo.pack(side="left", padx=(10, 0))
+
+        tk.Label(
+            text_logo,
+            text=ten_vai_tro,
+            bg=self.mau_sidebar,
+            fg="white",
+            font=("Segoe UI", 18, "bold"),
+        ).pack(anchor="w")
+
+        tk.Label(
+            text_logo,
+            text=mo_ta_vai_tro,
+            bg=self.mau_sidebar,
+            fg=self.mau_sidebar_nhat,
+            font=("Segoe UI", 8, "bold"),
+        ).pack(anchor="w")
+
+        slogan = tk.Frame(
+            logo,
+            bg=self.mau_sidebar_dam,
+            highlightbackground=self.mau_blue_sang,
+            highlightthickness=1,
+        )
+        slogan.pack(fill="x", pady=(12, 0))
+
+        tk.Label(
+            slogan,
+            text=tieu_de_phu,
+            bg=self.mau_sidebar_dam,
+            fg="white",
+            font=("Segoe UI", 10, "bold"),
+        ).pack(anchor="w", padx=10, pady=(7, 1))
+
+        tk.Label(
+            slogan,
+            text=mo_ta_phu,
+            bg=self.mau_sidebar_dam,
+            fg=self.mau_sidebar_nhat,
+            font=("Segoe UI", 8),
+        ).pack(anchor="w", padx=10, pady=(0, 7))
+
+        vung_menu = tk.Frame(self.sidebar, bg=self.mau_sidebar)
+        vung_menu.pack(fill="both", expand=True, padx=10, pady=(0, 6))
+
+        canvas_menu = tk.Canvas(vung_menu, bg=self.mau_sidebar, bd=0, highlightthickness=0)
+        canvas_menu.pack(side="left", fill="both", expand=True)
+
+        thanh_cuon_menu = ttk.Scrollbar(vung_menu, orient="vertical", command=canvas_menu.yview)
+        thanh_cuon_menu.pack(side="right", fill="y")
+        canvas_menu.configure(yscrollcommand=thanh_cuon_menu.set)
+
+        menu = tk.Frame(canvas_menu, bg=self.mau_sidebar)
+        menu_window = canvas_menu.create_window((0, 0), window=menu, anchor="nw")
+
+        def cap_nhat_vung_cuon(event=None):
+            canvas_menu.configure(scrollregion=canvas_menu.bbox("all"))
+            canvas_menu.itemconfigure(menu_window, width=canvas_menu.winfo_width())
+
+        def cuon_menu(event):
+            canvas_menu.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+        menu.bind("<Configure>", cap_nhat_vung_cuon)
+        canvas_menu.bind("<Configure>", cap_nhat_vung_cuon)
+        canvas_menu.bind("<Enter>", lambda event: canvas_menu.bind_all("<MouseWheel>", cuon_menu))
+        canvas_menu.bind("<Leave>", lambda event: canvas_menu.unbind_all("<MouseWheel>"))
+
+        for item in danh_sach_menu:
+            if "children" in item:
+                self.tao_menu_xo_sidebar(menu, item.get("title", ""), item.get("children", []))
+            else:
+                self.tao_nut_menu(menu, item.get("title", ""), item.get("command"))
+
+        if lenh_dang_xuat is not None:
+            bottom = tk.Frame(self.sidebar, bg=self.mau_sidebar)
+            bottom.pack(side="bottom", fill="x", padx=12, pady=(6, 12))
+            self.tao_nut(bottom, "Đăng xuất", lenh_dang_xuat, self.mau_sidebar_dam).pack(fill="x")
+
+    def tao_nut_menu(self, parent, text, command):
+        button = tk.Button(
+            parent,
+            text=text,
+            bg=self.mau_menu,
+            fg="white",
+            activebackground=self.mau_menu_hover,
+            activeforeground="white",
+            font=("Segoe UI", 9, "bold"),
+            bd=0,
+            anchor="w",
+            padx=14,
+            pady=12,
+            cursor="hand2",
+            relief="flat",
+        )
+        button.config(command=lambda: self.chon_menu(button, command))
+        button.pack(fill="x", pady=(0, 10))
+        self.danh_sach_menu.append(button)
+        return button
+
+    def tao_menu_xo_sidebar(self, parent, title, danh_sach_con):
+        khung = tk.Frame(parent, bg=self.mau_sidebar)
+        khung.pack(fill="x", pady=(0, 10))
+
+        khung_con = tk.Frame(khung, bg=self.mau_sidebar)
+        dang_mo = {"value": False}
+
+        def toggle_menu():
+            if dang_mo["value"]:
+                khung_con.pack_forget()
+                dang_mo["value"] = False
+                nut_cha.config(text=title + "   ▾")
+            else:
+                khung_con.pack(fill="x", pady=(3, 0))
+                dang_mo["value"] = True
+                nut_cha.config(text=title + "   ▴")
+
+        nut_cha = tk.Button(
+            khung,
+            text=title + "   ▾",
+            bg=self.mau_menu,
+            fg="white",
+            activebackground=self.mau_menu_hover,
+            activeforeground="white",
+            font=("Segoe UI", 10, "bold"),
+            bd=0,
+            anchor="w",
+            padx=14,
+            pady=12,
+            cursor="hand2",
+            relief="flat",
+            command=toggle_menu,
+        )
+        nut_cha.pack(fill="x")
+        self.danh_sach_menu.append(nut_cha)
+
+        for text, command in danh_sach_con:
+            nut_con = tk.Button(
+                khung_con,
+                text="      " + text,
+                bg=self.mau_sidebar,
+                fg=self.mau_sidebar_nhat,
+                activebackground=self.mau_menu_hover,
+                activeforeground="white",
+                font=("Segoe UI", 9),
+                bd=0,
+                anchor="w",
+                padx=14,
+                pady=7,
+                cursor="hand2",
+                relief="flat",
+            )
+            nut_con.config(command=lambda btn=nut_con, cmd=command: self.chon_menu(btn, cmd))
+            nut_con.pack(fill="x", pady=(2, 2))
+            self.danh_sach_menu.append(nut_con)
+
+    def chon_menu(self, button, command):
+        for nut in self.danh_sach_menu:
+            text = str(nut.cget("text"))
+            if text.startswith("      "):
+                nut.config(bg=self.mau_sidebar, fg=self.mau_sidebar_nhat)
+            else:
+                nut.config(bg=self.mau_menu, fg="white")
+
+        button.config(bg=self.mau_menu_hover, fg="white")
+        if command is not None:
+            command()
+
+    def tao_tieu_de_trang(self, parent, title, subtitle=""):
+        self.xoa_noi_dung(parent)
+
+        header = tk.Frame(parent, bg=self.mau_nen)
+        header.pack(fill="x", padx=24, pady=(18, 8))
+
+        left = tk.Frame(header, bg=self.mau_nen)
+        left.pack(side="left", fill="x", expand=True)
+
+        tk.Label(
+            left,
+            text=title,
+            bg=self.mau_nen,
+            fg=self.mau_chu_dam,
+            font=("Segoe UI", 23, "bold"),
+        ).pack(anchor="w")
+
+        if subtitle != "":
+            tk.Label(
+                left,
+                text=subtitle,
+                bg=self.mau_nen,
+                fg=self.mau_chu_phu,
+                font=("Segoe UI", 9),
+            ).pack(anchor="w", pady=(2, 0))
+
+        self.tao_user_box(header).pack(side="right", pady=(2, 0))
+
+    def lay_ten_nguoi_dung_hien_tai(self):
+        if hasattr(self, "lay_ten_admin_hien_tai"):
+            return self.lay_ten_admin_hien_tai()
+        return "Người dùng"
+
+    def tao_user_box(self, parent):
+        user_box = tk.Frame(
+            parent,
+            bg=self.mau_card,
+            highlightbackground=self.mau_vien,
+            highlightthickness=1,
+            cursor="hand2",
+        )
+
+        icon_box = tk.Frame(user_box, bg=self.mau_card_nhe, width=34, height=34)
+        icon_box.pack(side="left", padx=(12, 9), pady=8)
+        icon_box.pack_propagate(False)
+
+        tk.Label(
+            icon_box,
+            text="👤",
+            bg=self.mau_card_nhe,
+            fg=self.mau_menu_chon,
+            font=("Segoe UI", 12),
+            cursor="hand2",
+        ).place(relx=0.5, rely=0.5, anchor="center")
+
+        text_box = tk.Frame(user_box, bg=self.mau_card)
+        text_box.pack(side="left", padx=(0, 14), pady=7)
+
+        ten = self.rut_gon_chu(self.lay_ten_nguoi_dung_hien_tai(), 18)
+        vai_tro = getattr(self, "ten_vai_tro", "Admin")
+
+        name = tk.Label(
+            text_box,
+            text="Xin chào, " + ten,
+            bg=self.mau_card,
+            fg=self.mau_chu_dam,
+            font=("Segoe UI", 9, "bold"),
+            cursor="hand2",
+        )
+        name.pack(anchor="w")
+
+        role = tk.Label(
+            text_box,
+            text="Vai trò: " + vai_tro,
+            bg=self.mau_card,
+            fg=self.mau_chu_phu,
+            font=("Segoe UI", 8),
+            cursor="hand2",
+        )
+        role.pack(anchor="w", pady=(2, 0))
+
+        if hasattr(self, "hien_tai_khoan"):
+            for widget in [user_box, icon_box, text_box, name, role]:
+                widget.bind("<Button-1>", lambda event: self.hien_tai_khoan())
+
+        return user_box
+
+    def tao_the_tong_quan(self, parent, title, value, desc, command=None, icon_text="", column=None):
+        card = tk.Frame(parent, bg=self.mau_card, highlightbackground=self.mau_vien, highlightthickness=1)
+        card.pack_propagate(False)
+        card.config(height=136)
+
+        if column is None:
+            column = len(parent.grid_slaves(row=0))
+
+        parent.grid_rowconfigure(0, minsize=136)
+        parent.grid_columnconfigure(column, weight=1)
+        card.grid(row=0, column=column, sticky="nsew", padx=5)
+
+        top = tk.Frame(card, bg=self.mau_card)
+        top.pack(fill="x", padx=13, pady=(12, 0))
+
+        if icon_text != "":
+            icon = tk.Frame(top, bg=self.mau_card_nhe, width=30, height=28)
+            icon.pack(side="left", padx=(0, 8))
+            icon.pack_propagate(False)
+            tk.Label(icon, text=icon_text, bg=self.mau_card_nhe, fg=self.mau_menu_chon, font=("Segoe UI", 11)).place(relx=0.5, rely=0.5, anchor="center")
+
+        self.tao_label(top, title, 10, self.mau_chu_dam, True, self.mau_card).pack(side="left")
+
+        value_label = self.tao_label(card, str(value), 21, self.mau_menu_chon, True, self.mau_card)
+        value_label.config(wraplength=210, justify="left")
+        value_label.pack(anchor="w", padx=14, pady=(9, 0))
+
+        desc_label = self.tao_label(card, desc, 9, self.mau_chu_phu, False, self.mau_card)
+        desc_label.config(wraplength=210, justify="left")
+        desc_label.pack(anchor="w", padx=14, pady=(3, 14))
+
+        if command is not None:
+            self.gan_su_kien_click(card, command)
+
+    def tao_the_thong_ke(self, parent, value, ton_thap, command=None):
+        self.tao_the_tong_quan(parent, "Tồn thấp", ton_thap, "Sản phẩm cần kiểm tra", command, "⚠")
+
+    def tao_o_theo_doi(self, parent, title, desc, value, canh_bao=False):
+        bg = self.mau_sidebar_nhat if canh_bao else self.mau_card_nhe
+        border = self.mau_canh_bao if canh_bao else self.mau_vien
+        value_color = self.mau_nguy_hiem if canh_bao else self.mau_menu_chon
+
+        item = tk.Frame(parent, bg=bg, highlightbackground=border, highlightthickness=1)
+        item.pack(fill="x", padx=14, pady=(0, 8))
+
+        left = tk.Frame(item, bg=bg)
+        left.pack(side="left", fill="x", expand=True, padx=12, pady=9)
+
+        self.tao_label(left, title, 10, self.mau_chu_dam, True, bg).pack(anchor="w")
+        self.tao_label(left, desc, 9, self.mau_chu_phu, False, bg).pack(anchor="w", pady=(2, 0))
+        self.tao_label(item, value, 12, value_color, True, bg).pack(side="right", padx=12)
+
+    def tao_dong_dashboard(self, parent, left_text, right_text, canh_bao=False):
+        row = tk.Frame(parent, bg=self.mau_card_nhe)
+        row.pack(fill="x", padx=10, pady=(0, 5))
+
+        fg_right = self.mau_nguy_hiem if canh_bao else self.mau_chu_phu
+
+        left_label = self.tao_label(row, self.rut_gon_chu(left_text, 22), 9, self.mau_chu_dam, True, self.mau_card_nhe)
+        left_label.pack(side="left", padx=8, pady=6)
+
+        right_label = self.tao_label(row, right_text, 9, fg_right, True, self.mau_card_nhe)
+        right_label.pack(side="right", padx=8, pady=6)
+
+    def hien_bang_du_lieu(
+        self,
+        title,
+        subtitle,
+        columns,
+        headers,
+        widths,
+        data,
+        fields,
+        placeholder="Nhập nội dung cần tìm...",
+        buttons=None,
+        bottom_buttons=None,
+    ):
+        self.tao_tieu_de_trang(self.content, title, subtitle)
+        body = self.tao_khung_noi_dung(self.content)
+
+        if buttons is None:
+            buttons = []
+
+        def load_bang(tu_khoa=""):
+            ket_qua = self.loc_du_lieu(data, tu_khoa, fields)
+            self.do_du_lieu_vao_bang(bang, ket_qua, fields)
+
+        self.tao_thanh_cong_cu(body, placeholder, load_bang, buttons=buttons)
+
+        table_area = tk.Frame(body, bg=self.mau_card)
+        table_area.pack(fill="both", expand=True)
+
+        bang = self.tao_bang(table_area, columns, headers, widths)
+        self.tao_thanh_nut_duoi(body, bottom_buttons)
+        load_bang("")
+        return bang
+
+    def ve_bieu_do_thong_ke(self, parent, data, title, chieu_cao=3.0):
+        box = tk.Frame(parent, bg=self.mau_card)
+        box.pack(fill="both", expand=True, padx=10, pady=(4, 8))
+
+        self.tao_label(box, title, 12, self.mau_chu_dam, True, self.mau_card).pack(anchor="w", padx=6, pady=(0, 4))
+
+        if len(data) == 0:
+            self.tao_label(box, "Không có dữ liệu để hiển thị biểu đồ", 10, self.mau_chu_phu, False, self.mau_card).pack(padx=18, pady=20)
+            return
+
+        labels = []
+        values = []
+
+        for item in data:
+            labels.append(self.rut_gon_chu(item["noiDung"], 12))
+            values.append(self.chuyen_so(item["soLuong"]))
+
+        fig = Figure(figsize=(5.0, chieu_cao), dpi=100, facecolor=self.mau_card)
+        ax = fig.add_subplot(111)
+        ax.bar(labels, values, width=0.42, color=self.mau_menu)
+        ax.tick_params(axis="x", labelrotation=20, labelsize=8)
+        ax.tick_params(axis="y", labelsize=8)
+        ax.grid(axis="y", linestyle="--", alpha=0.18)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+
+        for index, value in enumerate(values):
+            ax.text(index, value, self.dinh_dang_so_ngan(value), ha="center", va="bottom", fontsize=7, color=self.mau_chu_dam)
+
+        fig.subplots_adjust(left=0.12, right=0.96, top=0.90, bottom=0.24)
+
+        canvas = FigureCanvasTkAgg(fig, box)
+        canvas.draw()
+        canvas.get_tk_widget().pack(fill="both", expand=True)
+
+    def dat_placeholder_entry(self, entry, placeholder):
+        entry.delete(0, tk.END)
+        entry.insert(0, placeholder)
+        entry.config(fg=self.mau_chu_phu)
+
+        def xoa_placeholder(event=None):
+            if entry.get() == placeholder:
+                entry.delete(0, tk.END)
+                entry.config(fg=self.mau_chu_dam)
+
+        def khoi_phuc_placeholder(event=None):
+            if entry.get().strip() == "":
+                entry.delete(0, tk.END)
+                entry.insert(0, placeholder)
+                entry.config(fg=self.mau_chu_phu)
+
+        entry.bind("<FocusIn>", xoa_placeholder)
+        entry.bind("<FocusOut>", khoi_phuc_placeholder)
+
+    def lay_noi_dung_entry(self, entry, placeholder):
+        noi_dung = entry.get().strip()
+        if noi_dung == placeholder:
+            return ""
+        return noi_dung
+
+    def tao_thanh_nut_duoi(self, parent, buttons=None, pady=(14, 0)):
+        bottom = tk.Frame(parent, bg=self.mau_card)
+        bottom.pack(side="bottom", fill="x", pady=pady)
+
+        self.tao_nut(bottom, "Thoát", self.hien_trang_chu, self.mau_thoat).pack(side="right")
+
+        if buttons is None:
+            return
+
+        for button in reversed(buttons):
+            self.tao_nut(bottom, button["text"], button["command"], button["color"]).pack(side="right", padx=(0, 8))
+
+    def tao_nut_thoat(self, parent, pady=(14, 0)):
+        self.tao_thanh_nut_duoi(parent, None, pady)
+
+    def rut_gon_chu(self, text, max_len):
+        text = str(text)
+
+        if len(text) <= max_len:
+            return text
+
+        return text[:max_len] + "..."
+

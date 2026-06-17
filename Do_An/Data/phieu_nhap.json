@@ -140,5 +140,104 @@
         "maViTri": "KHO001-A"
       }
     ]
+  },
+  {
+    "maPhieuNhap": "PN0009",
+    "maNhaSanXuat": "NSX007",
+    "maKho": "KHO001",
+    "maTaiKhoan": "TK002",
+    "ngayNhap": "2026-06-12",
+    "tongTien": 314200000,
+    "trangThai": "Lưu tạm",
+    "chiTiet": [
+      {
+        "maSanPham": "SP0001",
+        "soLuong": 5,
+        "donGia": 35000000,
+        "maViTri": "KHO001-A"
+      },
+      {
+        "maSanPham": "SP0006",
+        "soLuong": 9,
+        "donGia": 9000000,
+        "maViTri": "KHO001-A"
+      },
+      {
+        "maSanPham": "SP0008",
+        "soLuong": 3,
+        "donGia": 17000000,
+        "maViTri": "KHO001-A"
+      },
+      {
+        "maSanPham": "SP0028",
+        "soLuong": 2,
+        "donGia": 600000,
+        "maViTri": "KHO001-A"
+      },
+      {
+        "maSanPham": "SP0035",
+        "soLuong": 1,
+        "donGia": 6000000,
+        "maViTri": "KHO001-A"
+      }
+    ]
+  },
+  {
+    "maPhieuNhap": "PN0010",
+    "maNhaSanXuat": "NSX001",
+    "maKho": "KHO001",
+    "maTaiKhoan": "TK001",
+    "ngayNhap": "2026-06-12",
+    "tongTien": 288000000,
+    "trangThai": "Đã nhập",
+    "chiTiet": [
+      {
+        "maSanPham": "SP0031",
+        "soLuong": 6,
+        "donGia": 25000000,
+        "maViTri": "KHO001-D"
+      },
+      {
+        "maSanPham": "SP0056",
+        "soLuong": 3,
+        "donGia": 15000000,
+        "maViTri": "KHO002-B"
+      },
+      {
+        "maSanPham": "SP0051",
+        "soLuong": 4,
+        "donGia": 14000000,
+        "maViTri": "KHO001-B"
+      },
+      {
+        "maSanPham": "SP0070",
+        "soLuong": 3,
+        "donGia": 10000000,
+        "maViTri": "KHO003-A"
+      },
+      {
+        "maSanPham": "SP0047",
+        "soLuong": 2,
+        "donGia": 3500000,
+        "maViTri": "KHO005-A"
+      }
+    ]
+  },
+  {
+    "maPhieuNhap": "PN0011",
+    "maNhaSanXuat": "NSX001",
+    "maKho": "KHO001",
+    "maTaiKhoan": "TK002",
+    "ngayNhap": "2026-06-12",
+    "tongTien": 140000000,
+    "trangThai": "Đã nhập",
+    "chiTiet": [
+      {
+        "maSanPham": "SP0001",
+        "soLuong": 4,
+        "donGia": 35000000,
+        "maViTri": "KHO001-A"
+      }
+    ]
   }
 ]

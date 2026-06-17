@@ -10,28 +10,38 @@ from Calculator.thongke import thong_ke_tien_theo_ngay
 class ThongKe:
     def dem_so_kho(self):
         data = self.doc_json("kho_hang.json", {})
-        return len(data.get("kho", []))
+        return len(self.loc_theo_kho_duoc_phan_cong(data.get("kho", [])))
 
     def dem_so_hang_hoa(self):
-        data = self.doc_json("hang_hoa.json", {})
-        return len(data.get("sanPham", []))
+        data = self.doc_json("kho_hang.json", {})
+        danh_sach_ma_san_pham = set()
+
+        for ton in self.loc_theo_kho_duoc_phan_cong(data.get("tonKho", [])):
+            ma_san_pham = ton.get("maSanPham", "")
+
+            if ma_san_pham != "":
+                danh_sach_ma_san_pham.add(ma_san_pham)
+
+        return len(danh_sach_ma_san_pham)
 
     def tinh_tong_ton_kho(self):
         data = self.doc_json("kho_hang.json", {})
-        return tinh_tong_ton_kho_calculator(data.get("tonKho", []))
+        return tinh_tong_ton_kho_calculator(
+            self.loc_theo_kho_duoc_phan_cong(data.get("tonKho", []))
+        )
 
     def tinh_ton_kho_theo_kho(self):
         data = self.doc_json("kho_hang.json", {})
         return tinh_ton_kho_theo_kho_calculator(
-            data.get("kho", []),
-            data.get("tonKho", []),
+            self.loc_theo_kho_duoc_phan_cong(data.get("kho", [])),
+            self.loc_theo_kho_duoc_phan_cong(data.get("tonKho", [])),
         )
 
     def lay_canh_bao_ton_thap(self):
         kho_data = self.doc_json("kho_hang.json", {})
         hang_data = self.doc_json("hang_hoa.json", {})
         return lay_canh_bao_ton_thap_calculator(
-            kho_data.get("tonKho", []),
+            self.loc_theo_kho_duoc_phan_cong(kho_data.get("tonKho", [])),
             hang_data.get("sanPham", []),
         )
 
@@ -40,4 +50,7 @@ class ThongKe:
 
     def thong_ke_phieu_theo_ngay(self, ten_file, truong_ngay):
         data = self.doc_json(ten_file, [])
-        return thong_ke_tien_theo_ngay(data, truong_ngay)
+        return thong_ke_tien_theo_ngay(
+            self.loc_theo_kho_duoc_phan_cong(data),
+            truong_ngay,
+        )

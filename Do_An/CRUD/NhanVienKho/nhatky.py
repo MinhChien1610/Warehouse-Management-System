@@ -6,7 +6,7 @@ from copy import deepcopy
 from datetime import date, datetime
 from typing import Any, Dict, List, Tuple
 
-from Class.nhatky import NhatKy
+from Class.nhatky import NhatKy as NhatKyModel
 
 
 class NhatKy:
@@ -14,13 +14,13 @@ class NhatKy:
         data = self.doc_json("nhat_ky.json", [])
         ma_nhat_ky = self.tao_ma_tu_dong(data, "maNhatKy", "NK")
 
-        nhat_ky = NhatKy(
+        nhat_ky = NhatKyModel(
             ma_nhat_ky,
             self.ma_tai_khoan,
             hanh_dong,
             doi_tuong,
             self.lay_thoi_gian_hien_tai(),
-            "Th?nh c?ng",
+            "Thành công",
             ghi_chu,
         ).to_dict()
 

@@ -53,6 +53,11 @@
     {
       "maLoaiHang": "LH0008",
       "tenLoaiHang": "Máy lạnh"
+    },
+    {
+      "tenLoaiHang": "Chuột",
+      "ghiChu": "",
+      "maLoaiHang": "LH0009"
     }
   ],
   "sanPham": [
@@ -95,7 +100,7 @@
       "maLoaiHang": "LH0001",
       "donGia": 18000000,
       "mucTonToiThieu": 6,
-      "trangThai": "Ngừng kinh doanh"
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0006",
@@ -112,7 +117,7 @@
       "maLoaiHang": "LH0001",
       "donGia": 15000000,
       "mucTonToiThieu": 9,
-      "trangThai": "Ngừng kinh doanh"
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0008",
@@ -184,7 +189,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0002",
       "donGia": 25000000,
-      "mucTonToiThieu": 6
+      "mucTonToiThieu": 6,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0017",
@@ -416,7 +422,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0005",
       "donGia": 11000000,
-      "mucTonToiThieu": 5
+      "mucTonToiThieu": 5,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0046",
@@ -664,7 +671,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0008",
       "donGia": 10500000,
-      "mucTonToiThieu": 6
+      "mucTonToiThieu": 6,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0077",
@@ -697,6 +705,15 @@
       "maLoaiHang": "LH0008",
       "donGia": 16000000,
       "mucTonToiThieu": 3
+    },
+    {
+      "maSanPham": "SP0081",
+      "tenSanPham": "Máy lạnh Samsung Inverter 2HP",
+      "maDonViTinh": "DVT001",
+      "maLoaiHang": "LH0001",
+      "donGia": 80000000,
+      "mucTonToiThieu": 4,
+      "trangThai": "Hoạt động"
     }
   ]
 }

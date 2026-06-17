@@ -967,7 +967,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
             color=self.mau_chu_phu,
         ).pack(anchor="center", pady=(4, 18))
 
-        if tai_khoan.get("trangThai") is True:
+        if self.tai_khoan_dang_hoat_dong(tai_khoan):
             status_text = "ĐANG HOẠT ĐỘNG"
             status_bg = self.mau_sidebar_nhat
             status_fg = self.mau_thanh_cong
@@ -1896,10 +1896,23 @@ class GiaoDienKeToan(GiaoDienCoSo):
         return None
 
     def lay_trang_thai_tai_khoan(self, tai_khoan):
-        if tai_khoan.get("trangThai") is True:
+        if self.tai_khoan_dang_hoat_dong(tai_khoan):
             return "Đang hoạt động"
 
         return "Đã khóa"
+
+    def tai_khoan_dang_hoat_dong(self, tai_khoan):
+        trang_thai = str(tai_khoan.get("trangThai", "")).strip().lower()
+
+        return trang_thai in [
+            "true",
+            "1",
+            "hoạt động",
+            "hoat dong",
+            "đang hoạt động",
+            "dang hoat dong",
+            "active",
+        ]
 
     # =========================
     # ĐĂNG XUẤT

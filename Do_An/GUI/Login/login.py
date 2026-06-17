@@ -345,7 +345,15 @@ class GiaoDienLogin(GiaoDienCoSo):
     def tai_khoan_dang_hoat_dong(self, tai_khoan):
         trang_thai = str(tai_khoan.get("trangThai", "")).strip().lower()
 
-        return trang_thai in ["true", "1", "hoạt động", "active"]
+        return trang_thai in [
+            "true",
+            "1",
+            "hoạt động",
+            "hoat dong",
+            "đang hoạt động",
+            "dang hoat dong",
+            "active",
+        ]
 
     def lay_vai_tro_tai_khoan(self, data, ma_tai_khoan):
         vai_tro_map = {}

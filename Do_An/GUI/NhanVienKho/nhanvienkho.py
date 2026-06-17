@@ -9,7 +9,6 @@ matplotlib.use("TkAgg")
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-from Calculator.tonkho import lay_canh_bao_ton_thap
 from GUI.Common.base import GiaoDienCoSo
 from GUI.Login.login import hien_thi_login
 from CRUD.NhanVienKho.nhanvienkho import NghiepVuNhanVienKho
@@ -53,7 +52,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         self.notebook_kho = None
         self.toolbar_kho_area = None
         self.vung_bang_kho = None
-        self.man_hinh_kho_hien_tai = "Danh sách kho"
+        self.man_hinh_kho_hien_tai = "Nhập kho"
         self.man_hinh_thong_ke_hien_tai = "Tổng quan kho"
         self.nghiep_vu_kho = NghiepVuNhanVienKho(
             lay_thu_muc_goc(),
@@ -206,7 +205,6 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             menu,
             "🏬  Kho hàng",
             [
-                ("Danh sách kho", self.hien_danh_sach_kho),
                 ("Nhập kho", self.hien_phieu_nhap),
                 ("Xuất kho", self.hien_phieu_xuat),
                 ("Tồn kho", self.hien_ton_kho),
@@ -222,7 +220,6 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             "📊  Thống kê",
             [
                 ("Tổng quan kho", self.hien_thong_ke_tong_quan),
-                ("Tồn kho theo kho", self.hien_thong_ke_ton_kho),
                 ("Nhập theo ngày", self.hien_thong_ke_nhap_ngay),
                 ("Xuất theo ngày", self.hien_thong_ke_xuat_ngay),
                 ("Cảnh báo tồn thấp", self.hien_thong_ke_canh_bao),
@@ -356,18 +353,8 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         card_row = tk.Frame(body, bg=self.mau_nen)
         card_row.pack(fill="x", pady=(0, 10))
 
-        for cot in range(4):
+        for cot in range(3):
             card_row.grid_columnconfigure(cot, weight=1, uniform="dashboard_cards")
-
-        self.tao_the_tong_quan(
-            card_row,
-            "Kho hàng",
-            self.dem_so_kho(),
-            "Số kho hoạt động",
-            self.hien_kho,
-            "🏬",
-            0,
-        )
 
         self.tao_the_tong_quan(
             card_row,
@@ -376,7 +363,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             "Sản phẩm quản lý",
             self.hien_hang_hoa,
             "📦",
-            1,
+            0,
         )
 
         self.tao_the_tong_quan(
@@ -386,7 +373,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             "Tổng số lượng tồn",
             self.hien_ton_kho,
             "📊",
-            2,
+            1,
         )
 
         self.tao_the_tong_quan(
@@ -396,7 +383,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             "Sản phẩm cần kiểm tra",
             self.hien_thong_ke_canh_bao,
             "⚠",
-            3,
+            2,
         )
 
         main = tk.Frame(body, bg=self.mau_nen)
@@ -512,7 +499,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
         self.tao_label(
             left,
-            "Theo dõi nhanh kho, hàng hóa, tồn kho và cảnh báo cần xử lý.",
+            "Theo dõi nhanh hàng hóa, tồn kho và cảnh báo cần xử lý.",
             9,
             self.mau_chu_phu,
             False,
@@ -524,9 +511,8 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         self.ve_bieu_do_cot(
             chart_box,
             "Tổng quan kho",
-            ["Kho", "Hàng hóa", "Tồn kho", "Tồn thấp"],
+            ["Hàng hóa", "Tồn kho", "Tồn thấp"],
             [
-                self.dem_so_kho(),
                 self.dem_so_hang_hoa(),
                 self.tinh_tong_ton_kho(),
                 len(self.lay_canh_bao_ton_thap()),
@@ -669,7 +655,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
         mo_ta = (
             "Đây là khu vực mặc định khi nhân viên kho đăng nhập.\n\n"
-            "Có thể bấm vào các thẻ phía trên để đi nhanh tới Kho hàng, "
+            "Có thể bấm vào các thẻ phía trên để đi nhanh tới "
             "Hàng hóa hoặc Tồn kho."
         )
 
@@ -778,7 +764,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         self.tao_tieu_de_trang(
             self.content,
             self.man_hinh_kho_hien_tai,
-            "Quản lý danh sách kho, nhập kho, xuất kho, tồn kho và kiểm kho",
+            "Quản lý nhập kho, xuất kho, tồn kho và kiểm kho",
         )
 
         body = self.tao_khung_noi_dung(self.content)
@@ -792,10 +778,6 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         self.vung_bang_kho.pack(fill="both", expand=True)
 
         self.chuyen_man_hinh_kho()
-
-    def hien_danh_sach_kho(self):
-        self.man_hinh_kho_hien_tai = "Danh sách kho"
-        self.hien_kho()
 
     def hien_phieu_nhap(self):
         self.man_hinh_kho_hien_tai = "Nhập kho"
@@ -817,9 +799,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
         man_hinh = self.man_hinh_kho_hien_tai
 
-        if man_hinh == "Danh sách kho":
-            self.hien_bang_danh_sach_kho()
-        elif man_hinh == "Nhập kho":
+        if man_hinh == "Nhập kho":
             self.hien_bang_phieu_nhap()
         elif man_hinh == "Xuất kho":
             self.hien_bang_phieu_xuat()
@@ -829,15 +809,6 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             self.hien_bang_kiem_kho()
 
         self.cap_nhat_thanh_cong_cu_kho()
-
-    def hien_bang_danh_sach_kho(self):
-        self.bang_kho = self.tao_bang(
-            self.vung_bang_kho,
-            ("maKho", "tenKho", "diaDiem", "soDienThoai"),
-            ("Mã kho", "Tên kho", "Địa điểm", "Số điện thoại"),
-            (130, 260, 430, 180),
-        )
-        self.load_kho("")
 
     def hien_bang_phieu_nhap(self):
         self.bang_phieu_nhap = self.tao_bang(
@@ -869,9 +840,9 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
     def hien_bang_kiem_kho(self):
         self.bang_kiem_kho = self.tao_bang(
             self.vung_bang_kho,
-            ("maKiemKe", "maKho", "ngayKiemKe", "ghiChu"),
-            ("Mã kiểm kê", "Mã kho", "Ngày kiểm kê", "Ghi chú"),
-            (140, 120, 160, 520),
+            ("maKiemKe", "maKho", "ngayKiemKe", "ghiChu", "trangThai"),
+            ("Mã kiểm kê", "Mã kho", "Ngày kiểm kê", "Ghi chú", "Trạng thái"),
+            (140, 120, 160, 420, 140),
         )
         self.load_kiem_kho("")
 
@@ -885,46 +856,42 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         if tab == 0:
             self.tao_thanh_cong_cu(
                 self.toolbar_kho_area,
-                "Nhập mã kho, tên kho hoặc địa điểm cần tìm...",
-                self.tim_kiem_kho,
-                buttons=[],
-            )
-        elif tab == 1:
-            self.tao_thanh_cong_cu(
-                self.toolbar_kho_area,
                 "Nhập mã phiếu nhập, nhà sản xuất hoặc kho cần tìm...",
                 self.tim_kiem_phieu_nhap,
                 buttons=[
                     {"text": "Thêm", "command": lambda: self.mo_form_nhap_xuat_kho("nhap"), "color": self.mau_them},
+                    {"text": "Chi tiết", "command": self.xem_chi_tiet_phieu_nhap, "color": self.mau_menu},
                     {"text": "Sửa", "command": self.sua_phieu_nhap_da_chon, "color": self.mau_sua},
                     {"text": "Xóa", "command": self.xoa_phieu_nhap_luu_tam_da_chon, "color": self.mau_xoa},
                 ],
             )
-        elif tab == 2:
+        elif tab == 1:
             self.tao_thanh_cong_cu(
                 self.toolbar_kho_area,
                 "Nhập mã phiếu xuất, khách hàng hoặc kho cần tìm...",
                 self.tim_kiem_phieu_xuat,
                 buttons=[
                     {"text": "Thêm", "command": lambda: self.mo_form_nhap_xuat_kho("xuat"), "color": self.mau_them},
+                    {"text": "Chi tiết", "command": self.xem_chi_tiet_phieu_xuat, "color": self.mau_menu},
                     {"text": "Sửa", "command": self.sua_phieu_xuat_da_chon, "color": self.mau_sua},
                     {"text": "Xóa", "command": self.xoa_phieu_xuat_luu_tam_da_chon, "color": self.mau_xoa},
                 ],
             )
-        elif tab == 3:
+        elif tab == 2:
             self.tao_thanh_cong_cu(
                 self.toolbar_kho_area,
                 "Nhập mã kho, mã sản phẩm hoặc tên sản phẩm cần tìm...",
                 self.tim_kiem_ton_kho,
                 buttons=[],
             )
-        elif tab == 4:
+        elif tab == 3:
             self.tao_thanh_cong_cu(
                 self.toolbar_kho_area,
                 "Nhập mã kiểm kê, mã kho hoặc ghi chú cần tìm...",
                 self.tim_kiem_kiem_kho,
                 buttons=[
                     {"text": "Thêm", "command": self.mo_form_kiem_kho, "color": self.mau_them},
+                    {"text": "Chi tiết", "command": self.xem_chi_tiet_kiem_ke, "color": self.mau_menu},
                     {"text": "Sửa", "command": self.sua_kiem_ke_da_chon, "color": self.mau_sua},
                 ],
             )
@@ -939,16 +906,14 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
         man_hinh = self.man_hinh_kho_hien_tai
 
-        if man_hinh == "Danh sách kho":
-            return 0
         if man_hinh == "Nhập kho":
-            return 1
+            return 0
         if man_hinh == "Xuất kho":
-            return 2
+            return 1
         if man_hinh == "Tồn kho":
-            return 3
+            return 2
         if man_hinh == "Kiểm kho":
-            return 4
+            return 3
 
         return -1
 
@@ -959,27 +924,10 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
     # =========================
     # LOAD / TÌM KIẾM KHO
     # =========================
-    def load_kho(self, tu_khoa=""):
-        data = doc_json("kho_hang.json", {})
-        danh_sach = data.get("kho", [])
-
-        ket_qua = self.loc_du_lieu(
-            danh_sach,
-            tu_khoa,
-            ["maKho", "tenKho", "diaDiem", "soDienThoai"],
-        )
-
-        self.do_du_lieu_vao_bang(
-            self.bang_kho,
-            ket_qua,
-            ["maKho", "tenKho", "diaDiem", "soDienThoai"],
-        )
-
-    def tim_kiem_kho(self, tu_khoa):
-        self.load_kho(tu_khoa)
-
     def load_phieu_nhap(self, tu_khoa=""):
-        data = doc_json("phieu_nhap.json", [])
+        data = self.nghiep_vu_kho.loc_theo_kho_duoc_phan_cong(
+            doc_json("phieu_nhap.json", [])
+        )
         ket_qua = self.loc_du_lieu(
             data,
             tu_khoa,
@@ -996,7 +944,9 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         self.load_phieu_nhap(tu_khoa)
 
     def load_phieu_xuat(self, tu_khoa=""):
-        data = doc_json("phieu_xuat.json", [])
+        data = self.nghiep_vu_kho.loc_theo_kho_duoc_phan_cong(
+            doc_json("phieu_xuat.json", [])
+        )
         ket_qua = self.loc_du_lieu(
             data,
             tu_khoa,
@@ -1013,18 +963,14 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         self.load_phieu_xuat(tu_khoa)
 
     def load_ton_kho(self, tu_khoa=""):
-        kho_data = doc_json("kho_hang.json", {})
-        hang_data = doc_json("hang_hoa.json", {})
-
-        danh_sach_sp = hang_data.get("sanPham", [])
-        danh_sach_ton = kho_data.get("tonKho", [])
+        danh_sach_ton = self.nghiep_vu_kho.lay_ton_kho()
 
         self.xoa_du_lieu_bang(self.bang_ton_kho)
         tu_khoa = tu_khoa.lower().strip()
 
         for ton in danh_sach_ton:
             ma_sp = ton.get("maSanPham", "")
-            ten_sp = self.tim_ten_san_pham(danh_sach_sp, ma_sp)
+            ten_sp = ton.get("tenSanPham", "")
 
             noi_dung = " ".join([
                 str(ton.get("maKho", "")),
@@ -1053,21 +999,35 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         self.load_ton_kho(tu_khoa)
 
     def load_kiem_kho(self, tu_khoa=""):
-        data = doc_json("kiem_ke.json", [])
+        data = self.nghiep_vu_kho.loc_theo_kho_duoc_phan_cong(
+            doc_json("kiem_ke.json", [])
+        )
+        data = self.chuan_hoa_trang_thai_kiem_ke(data)
         ket_qua = self.loc_du_lieu(
             data,
             tu_khoa,
-            ["maKiemKe", "maKho", "ngayKiemKe", "ghiChu"],
+            ["maKiemKe", "maKho", "ngayKiemKe", "ghiChu", "trangThai"],
         )
 
         self.do_du_lieu_vao_bang(
             self.bang_kiem_kho,
             ket_qua,
-            ["maKiemKe", "maKho", "ngayKiemKe", "ghiChu"],
+            ["maKiemKe", "maKho", "ngayKiemKe", "ghiChu", "trangThai"],
         )
 
     def tim_kiem_kiem_kho(self, tu_khoa):
         self.load_kiem_kho(tu_khoa)
+
+    def chuan_hoa_trang_thai_kiem_ke(self, data):
+        ket_qua = []
+
+        for item in data:
+            dong = dict(item)
+            if str(dong.get("trangThai", "")).strip() == "":
+                dong["trangThai"] = "Đã kiểm kê"
+            ket_qua.append(dong)
+
+        return ket_qua
 
     # =========================
     # HÀNG HÓA
@@ -1083,35 +1043,33 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
         self.tao_thanh_cong_cu(
             body,
-            "Nhập mã sản phẩm, tên sản phẩm hoặc loại hàng cần tìm...",
+            "Nhập mã kho, mã sản phẩm, tên sản phẩm hoặc vị trí cần tìm...",
             self.tim_kiem_hang_hoa,
-            buttons=[
-                {"text": "Thêm", "command": self.them_hang_hoa, "color": self.mau_them},
-                {"text": "Sửa", "command": self.sua_hang_hoa, "color": self.mau_sua},
-                {"text": "Ngừng kinh doanh", "command": self.ngung_kinh_doanh_hang_hoa, "color": self.mau_xoa},
-            ],
+            buttons=[],
         )
 
         self.tao_nut_thoat(body)
+
+        self.khung_tong_hang_hoa = tk.Frame(body, bg=self.mau_card)
+        self.khung_tong_hang_hoa.pack(fill="x", pady=(0, 12))
 
         table_area = tk.Frame(body, bg=self.mau_card)
         table_area.pack(fill="both", expand=True)
 
         self.bang_hang_hoa = self.tao_bang(
             table_area,
-            ("maSanPham", "tenSanPham", "maLoaiHang", "donGia", "mucTonToiThieu", "trangThai"),
-            ("Mã SP", "Tên sản phẩm", "Loại hàng", "Đơn giá", "Tồn tối thiểu", "Trạng thái"),
-            (120, 350, 130, 150, 130, 170),
+            ("maSanPham", "tenSanPham", "maKho", "soLuongTon", "maViTri", "donGia", "mucTonToiThieu", "trangThai"),
+            ("Mã SP", "Tên sản phẩm", "Kho", "Số lượng tồn", "Vị trí", "Đơn giá", "Tồn tối thiểu", "Trạng thái"),
+            (120, 310, 110, 130, 130, 140, 130, 160),
         )
 
         self.load_hang_hoa("")
 
     def load_hang_hoa(self, tu_khoa=""):
-        data = doc_json("hang_hoa.json", {})
         danh_sach = []
 
-        for san_pham in data.get("sanPham", []):
-            dong = dict(san_pham)
+        for ton in self.nghiep_vu_kho.lay_ton_kho():
+            dong = dict(ton)
             if dong.get("trangThai", "") == "":
                 dong["trangThai"] = "Đang kinh doanh"
             danh_sach.append(dong)
@@ -1119,152 +1077,40 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         ket_qua = self.loc_du_lieu(
             danh_sach,
             tu_khoa,
-            ["maSanPham", "tenSanPham", "maLoaiHang", "donGia", "trangThai"],
+            ["maKho", "maSanPham", "tenSanPham", "maViTri", "donGia", "trangThai"],
         )
+
+        self.cap_nhat_tong_hang_hoa(ket_qua)
 
         self.do_du_lieu_vao_bang(
             self.bang_hang_hoa,
             ket_qua,
-            ["maSanPham", "tenSanPham", "maLoaiHang", "donGia", "mucTonToiThieu", "trangThai"],
+            ["maSanPham", "tenSanPham", "maKho", "soLuongTon", "maViTri", "donGia", "mucTonToiThieu", "trangThai"],
         )
+
+    def cap_nhat_tong_hang_hoa(self, danh_sach):
+        if not hasattr(self, "khung_tong_hang_hoa"):
+            return
+
+        self.xoa_noi_dung(self.khung_tong_hang_hoa)
+
+        danh_sach_ma_san_pham = set()
+
+        for item in danh_sach:
+            ma_san_pham = item.get("maSanPham", "")
+
+            if ma_san_pham != "":
+                danh_sach_ma_san_pham.add(ma_san_pham)
+
+        tong_so_luong = self.tinh_tong_hang_hoa_hien_co(danh_sach)
+
+        row = self.tao_hang_the_thong_ke(self.khung_tong_hang_hoa)
+        self.tao_the_thong_ke_nho(row, "Mặt hàng trong kho", len(danh_sach_ma_san_pham), "Theo kho được phân công")
+        self.tao_the_thong_ke_nho(row, "Tổng hàng hóa hiện có", int(tong_so_luong), "Tổng số lượng tồn")
+        self.tao_the_thong_ke_nho(row, "Dòng tồn kho", len(danh_sach), "Theo kho và vị trí")
 
     def tim_kiem_hang_hoa(self, tu_khoa):
         self.load_hang_hoa(tu_khoa)
-
-    def them_hang_hoa(self):
-        self.mo_form_hang_hoa()
-
-    def sua_hang_hoa(self):
-        ma_san_pham = self.lay_ma_dong_dang_chon(self.bang_hang_hoa)
-
-        if ma_san_pham == "":
-            messagebox.showwarning("Chưa chọn dữ liệu", "Vui lòng chọn sản phẩm cần sửa.")
-            return
-
-        san_pham = self.nghiep_vu_kho.tim_san_pham(ma_san_pham)
-
-        if san_pham is None:
-            messagebox.showerror("Lỗi", "Không tìm thấy sản phẩm đã chọn.")
-            return
-
-        self.mo_form_hang_hoa(san_pham)
-
-    def ngung_kinh_doanh_hang_hoa(self):
-        ma_san_pham = self.lay_ma_dong_dang_chon(self.bang_hang_hoa)
-
-        if ma_san_pham == "":
-            messagebox.showwarning("Chưa chọn dữ liệu", "Vui lòng chọn sản phẩm cần ngừng kinh doanh.")
-            return
-
-        hoi = messagebox.askyesno(
-            "Xác nhận",
-            "Chuyển sản phẩm " + ma_san_pham + " sang trạng thái Ngừng kinh doanh?"
-        )
-
-        if not hoi:
-            return
-
-        try:
-            self.nghiep_vu_kho.ngung_kinh_doanh_san_pham(ma_san_pham)
-            self.load_hang_hoa("")
-
-            if hasattr(self, "bang_ton_kho"):
-                self.load_ton_kho()
-
-            messagebox.showinfo(
-                "Thành công",
-                "Đã chuyển sản phẩm sang trạng thái Ngừng kinh doanh."
-            )
-        except ValueError as loi:
-            messagebox.showerror("Lỗi nghiệp vụ", str(loi))
-
-    def mo_form_hang_hoa(self, san_pham=None):
-        la_sua = san_pham is not None
-        hang_data = doc_json("hang_hoa.json", {})
-
-        title = "Sửa sản phẩm" if la_sua else "Thêm sản phẩm"
-        form = self.tao_cua_so_form(title, 540, 560)
-        khung = form["body"]
-
-        ten_entry = self.tao_entry_form(khung, "Tên sản phẩm")
-
-        loai_cb = self.tao_combobox_form(
-            khung,
-            "Loại hàng",
-            self.tao_danh_sach_chon(
-                hang_data.get("loaiHang", []),
-                "maLoaiHang",
-                "tenLoaiHang"
-            ),
-        )
-
-        dvt_cb = self.tao_combobox_form(
-            khung,
-            "Đơn vị tính",
-            self.tao_danh_sach_chon(
-                hang_data.get("donViTinh", []),
-                "maDonViTinh",
-                "tenDonViTinh"
-            ),
-        )
-
-        don_gia_entry = self.tao_entry_form(khung, "Đơn giá")
-        muc_ton_entry = self.tao_entry_form(khung, "Mức tồn tối thiểu")
-
-        if la_sua:
-            ten_entry.insert(0, san_pham.get("tenSanPham", ""))
-            self.chon_combobox_theo_ma(loai_cb, san_pham.get("maLoaiHang", ""))
-            self.chon_combobox_theo_ma(dvt_cb, san_pham.get("maDonViTinh", ""))
-            don_gia_entry.insert(0, str(san_pham.get("donGia", 0)))
-            muc_ton_entry.insert(0, str(san_pham.get("mucTonToiThieu", 0)))
-
-        def luu():
-            try:
-                ten = ten_entry.get().strip()
-                ma_loai = self.lay_ma_tu_combobox(loai_cb.get())
-                ma_dvt = self.lay_ma_tu_combobox(dvt_cb.get())
-                don_gia = int(self.chuyen_so(don_gia_entry.get()))
-                muc_ton = int(self.chuyen_so(muc_ton_entry.get()))
-
-                if ten == "":
-                    raise ValueError("Vui lòng nhập tên sản phẩm.")
-                if ma_loai == "" or ma_dvt == "":
-                    raise ValueError("Vui lòng chọn loại hàng và đơn vị tính.")
-                if don_gia <= 0:
-                    raise ValueError("Đơn giá phải lớn hơn 0.")
-                if muc_ton < 0:
-                    raise ValueError("Mức tồn tối thiểu không được âm.")
-
-                if la_sua:
-                    self.nghiep_vu_kho.sua_san_pham(
-                        san_pham.get("maSanPham", ""),
-                        ten,
-                        ma_loai,
-                        ma_dvt,
-                        don_gia,
-                        muc_ton,
-                    )
-                else:
-                    self.nghiep_vu_kho.tao_san_pham(
-                        ten,
-                        ma_loai,
-                        ma_dvt,
-                        don_gia,
-                        muc_ton,
-                    )
-
-                form["window"].destroy()
-                self.load_hang_hoa("")
-
-                if hasattr(self, "bang_ton_kho"):
-                    self.load_ton_kho()
-
-                messagebox.showinfo("Thành công", "Đã lưu sản phẩm.")
-            except ValueError as loi:
-                messagebox.showerror("Lỗi nghiệp vụ", str(loi))
-
-        self.tao_nut(form["bottom"], "Lưu", luu, self.mau_them).pack(side="right", padx=(8, 0))
-        self.tao_nut(form["bottom"], "Hủy", form["window"].destroy, self.mau_thoat).pack(side="right")
 
     # =========================
     # FORM NHẬP / XUẤT KHO NHIỀU SẢN PHẨM
@@ -1286,6 +1132,21 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             doi_tac_ma = "maKhachHang"
             doi_tac_ten = "tenKhachHang"
 
+        danh_sach_kho = self.nghiep_vu_kho.lay_danh_sach_kho()
+        danh_sach_san_pham_data = self.nghiep_vu_kho.lay_danh_sach_san_pham()
+
+        if len(danh_sach_kho) == 0:
+            messagebox.showwarning("Chưa phân công kho", "Tài khoản này chưa được phân công kho để tạo phiếu.")
+            return
+
+        if len(doi_tac_list) == 0:
+            messagebox.showwarning("Thiếu dữ liệu", "Chưa có dữ liệu " + doi_tac_label.lower() + " để tạo phiếu.")
+            return
+
+        if len(danh_sach_san_pham_data) == 0:
+            messagebox.showwarning("Thiếu dữ liệu", "Chưa có dữ liệu sản phẩm để tạo phiếu.")
+            return
+
         form = self.tao_cua_so_form(tieu_de, 760, 700)
         khung = form["body"]
 
@@ -1299,13 +1160,14 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             khung,
             "Kho",
             self.tao_danh_sach_chon(
-                self.nghiep_vu_kho.lay_danh_sach_kho(),
+                danh_sach_kho,
                 "maKho",
                 "tenKho",
             ),
         )
 
         so_dong_entry = self.tao_entry_form(khung, "Số lượng sản phẩm trong phiếu")
+        self.gan_rang_buoc_chi_nhap_so(so_dong_entry, "Số lượng sản phẩm trong phiếu")
 
         khung_nut_dong = tk.Frame(khung, bg=self.mau_card)
         khung_nut_dong.pack(fill="x", pady=(8, 8))
@@ -1316,7 +1178,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         danh_sach_dong = []
 
         danh_sach_san_pham = self.tao_danh_sach_chon(
-            self.nghiep_vu_kho.lay_danh_sach_san_pham(),
+            danh_sach_san_pham_data,
             "maSanPham",
             "tenSanPham",
         )
@@ -1396,6 +1258,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
                 highlightthickness=1,
             )
             so_luong_entry.pack(side="left", padx=(0, 6), ipady=4)
+            self.gan_rang_buoc_chi_nhap_so(so_luong_entry, "Số lượng sản phẩm")
 
             don_gia_entry = tk.Entry(
                 dong_frame,
@@ -1408,6 +1271,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
                 highlightthickness=1,
             )
             don_gia_entry.pack(side="left", padx=(0, 6), ipady=4)
+            self.gan_rang_buoc_chi_nhap_so(don_gia_entry, "Đơn giá sản phẩm")
 
             if la_nhap:
                 vi_tri_cb = ttk.Combobox(
@@ -1464,12 +1328,12 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             danh_sach_dong.clear()
 
         def tao_cac_dong_chi_tiet():
-            so_dong = int(self.chuyen_so(so_dong_entry.get()))
-
-            if so_dong <= 0:
+            try:
+                so_dong = self.kiem_tra_chi_so(so_dong_entry.get(), "Số lượng sản phẩm trong phiếu", True, 1)
+            except ValueError as loi:
                 messagebox.showwarning(
                     "Dữ liệu không hợp lệ",
-                    "Số lượng sản phẩm trong phiếu phải lớn hơn 0.",
+                    str(loi),
                 )
                 return
 
@@ -1519,15 +1383,11 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
             for dong in danh_sach_dong:
                 ma_san_pham = self.lay_ma_tu_combobox(dong["sp_cb"].get())
-                so_luong = int(self.chuyen_so(dong["so_luong_entry"].get()))
-                don_gia = int(self.chuyen_so(dong["don_gia_entry"].get()))
+                so_luong = self.kiem_tra_chi_so(dong["so_luong_entry"].get(), "Số lượng sản phẩm", True, 1)
+                don_gia = self.kiem_tra_chi_so(dong["don_gia_entry"].get(), "Đơn giá sản phẩm", True, 1)
 
                 if ma_san_pham == "":
                     raise ValueError("Vui lòng chọn sản phẩm.")
-                if so_luong <= 0:
-                    raise ValueError("Số lượng sản phẩm phải lớn hơn 0.")
-                if don_gia <= 0:
-                    raise ValueError("Đơn giá sản phẩm phải lớn hơn 0.")
 
                 item = {
                     "maSanPham": ma_san_pham,
@@ -1671,9 +1531,27 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         except ValueError as loi:
             messagebox.showerror("Lỗi nghiệp vụ", str(loi))
 
+    def xem_chi_tiet_phieu_nhap(self):
+        phieu = self.lay_phieu_da_chon(self.bang_phieu_nhap, "phieu_nhap.json", "maPhieuNhap")
+
+        if phieu is not None:
+            self.mo_chi_tiet_phieu(phieu, "nhap")
+
+    def xem_chi_tiet_phieu_xuat(self):
+        phieu = self.lay_phieu_da_chon(self.bang_phieu_xuat, "phieu_xuat.json", "maPhieuXuat")
+
+        if phieu is not None:
+            self.mo_chi_tiet_phieu(phieu, "xuat")
+
+    def xem_chi_tiet_kiem_ke(self):
+        phieu = self.lay_phieu_da_chon(self.bang_kiem_kho, "kiem_ke.json", "maKiemKe")
+
+        if phieu is not None:
+            self.mo_chi_tiet_phieu(phieu, "kiem")
+
     def la_phieu_luu_tam(self, phieu):
         trang_thai = str(phieu.get("trangThai", "")).strip().lower()
-        return trang_thai in ["lưu tạm", "luu tam", "chưa xác nhận", "chua xac nhan"]
+        return trang_thai in ["lưu tạm", "luu tam", "l?u t?m", "chưa xác nhận", "chua xac nhan"]
 
     def lay_phieu_da_chon(self, bang, ten_file, truong_ma):
         ma_phieu = self.lay_ma_dong_dang_chon(bang)
@@ -1682,7 +1560,9 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             messagebox.showwarning("Chưa chọn dữ liệu", "Vui lòng chọn một dòng.")
             return None
 
-        danh_sach = doc_json(ten_file, [])
+        danh_sach = self.nghiep_vu_kho.loc_theo_kho_duoc_phan_cong(
+            doc_json(ten_file, [])
+        )
 
         for item in danh_sach:
             if item.get(truong_ma) == ma_phieu:
@@ -1697,52 +1577,213 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
     def mo_form_kiem_kho(self, phieu=None):
         la_sua = phieu is not None
         title = "Sửa phiếu kiểm kho" if la_sua else "Tạo phiếu kiểm kho"
-        form = self.tao_cua_so_form(title, 540, 500)
+        form = self.tao_cua_so_form(title, 760, 650)
         khung = form["body"]
+        danh_sach_kho = self.nghiep_vu_kho.lay_danh_sach_kho()
+
+        if len(danh_sach_kho) == 0:
+            form["window"].destroy()
+            messagebox.showwarning("Chưa phân công kho", "Tài khoản này chưa được phân công kho để kiểm kê.")
+            return
 
         kho_cb = self.tao_combobox_form(
             khung,
             "Kho",
-            self.tao_danh_sach_chon(self.nghiep_vu_kho.lay_danh_sach_kho(), "maKho", "tenKho"),
+            self.tao_danh_sach_chon(danh_sach_kho, "maKho", "tenKho"),
         )
 
-        sp_cb = self.tao_combobox_form(
-            khung,
-            "Sản phẩm",
-            self.tao_danh_sach_chon(self.nghiep_vu_kho.lay_danh_sach_san_pham(), "maSanPham", "tenSanPham"),
-        )
-
-        so_luong_entry = self.tao_entry_form(khung, "Số lượng thực tế")
         ghi_chu_entry = self.tao_entry_form(khung, "Ghi chú")
 
-        chi_tiet = {}
-        if la_sua and len(phieu.get("chiTiet", [])) > 0:
-            chi_tiet = phieu.get("chiTiet", [])[0]
+        self.tao_label(
+            khung,
+            "Chi tiết tồn kho",
+            10,
+            self.mau_chu_phu,
+            True,
+        ).pack(anchor="w", pady=(10, 4))
+
+        khung_chi_tiet = self.tao_khung_cuon_doc(khung)
+
+        danh_sach_dong = []
 
         if la_sua:
             self.chon_combobox_theo_ma(kho_cb, phieu.get("maKho", ""))
-            self.chon_combobox_theo_ma(sp_cb, chi_tiet.get("maSanPham", ""))
-            so_luong_entry.insert(0, str(chi_tiet.get("soLuongThucTe", "")))
             ghi_chu_entry.insert(0, phieu.get("ghiChu", ""))
 
-        def luu():
+        def lay_chi_tiet_cu_map():
+            ket_qua = {}
+
+            if not la_sua:
+                return ket_qua
+
+            for item in phieu.get("chiTiet", []):
+                ket_qua[item.get("maSanPham", "")] = item
+
+            return ket_qua
+
+        def lay_ton_theo_kho(ma_kho):
+            return [
+                ton
+                for ton in self.nghiep_vu_kho.lay_ton_kho()
+                if ton.get("maKho", "") == ma_kho
+            ]
+
+        def ve_header_kiem_ke():
+            header = tk.Frame(khung_chi_tiet, bg=self.mau_card)
+            header.pack(fill="x", pady=(0, 4))
+
+            tk.Label(
+                header,
+                text="Sản phẩm",
+                bg=self.mau_card,
+                fg=self.mau_chu_phu,
+                font=("Segoe UI", 10, "bold"),
+                width=36,
+                anchor="w",
+            ).pack(side="left", padx=(0, 8))
+
+            tk.Label(
+                header,
+                text="SL hệ thống",
+                bg=self.mau_card,
+                fg=self.mau_chu_phu,
+                font=("Segoe UI", 10, "bold"),
+                width=14,
+                anchor="w",
+            ).pack(side="left", padx=(0, 8))
+
+            tk.Label(
+                header,
+                text="SL thực tế",
+                bg=self.mau_card,
+                fg=self.mau_chu_phu,
+                font=("Segoe UI", 10, "bold"),
+                width=14,
+                anchor="w",
+            ).pack(side="left", padx=(0, 8))
+
+        def ve_dong_kiem_ke(ton, chi_tiet_cu):
+            row = tk.Frame(khung_chi_tiet, bg=self.mau_card)
+            row.pack(fill="x", pady=3)
+
+            ma_san_pham = ton.get("maSanPham", "")
+            ten_san_pham = ton.get("tenSanPham", "")
+            so_luong_he_thong = self.chuyen_so_nguyen(
+                chi_tiet_cu.get("soLuongHeThong", ton.get("soLuongTon", 0))
+            )
+
+            tk.Label(
+                row,
+                text=ma_san_pham + " - " + ten_san_pham,
+                bg=self.mau_card,
+                fg=self.mau_chu_dam,
+                font=("Segoe UI", 10),
+                width=36,
+                anchor="w",
+            ).pack(side="left", padx=(0, 8))
+
+            tk.Label(
+                row,
+                text=str(so_luong_he_thong),
+                bg=self.mau_card_nhe,
+                fg=self.mau_chu_dam,
+                font=("Segoe UI", 10),
+                width=14,
+                anchor="w",
+                padx=8,
+                pady=5,
+            ).pack(side="left", padx=(0, 8))
+
+            thuc_te_entry = tk.Entry(
+                row,
+                font=("Segoe UI", 10),
+                width=14,
+                bg=self.mau_card_nhe,
+                fg=self.mau_chu_dam,
+                bd=0,
+                highlightbackground=self.mau_vien,
+                highlightthickness=1,
+            )
+            thuc_te_entry.pack(side="left", padx=(0, 8), ipady=5)
+            self.gan_rang_buoc_chi_nhap_so(thuc_te_entry, "Số lượng thực tế")
+            thuc_te_entry.insert(0, str(chi_tiet_cu.get("soLuongThucTe", so_luong_he_thong)))
+
+            danh_sach_dong.append({
+                "maSanPham": ma_san_pham,
+                "entry": thuc_te_entry,
+            })
+
+        def tai_ton_kho_kiem_ke(event=None):
+            for widget in khung_chi_tiet.winfo_children():
+                widget.destroy()
+            danh_sach_dong.clear()
+
+            ma_kho = self.lay_ma_tu_combobox(kho_cb.get())
+            danh_sach_ton = lay_ton_theo_kho(ma_kho)
+            chi_tiet_cu_map = lay_chi_tiet_cu_map()
+
+            if len(danh_sach_ton) == 0:
+                self.tao_label(
+                    khung_chi_tiet,
+                    "Kho này chưa có tồn kho để kiểm kê.",
+                    11,
+                    self.mau_chu_phu,
+                    True,
+                ).pack(anchor="w", pady=12)
+                return
+
+            ve_header_kiem_ke()
+
+            for ton in danh_sach_ton:
+                ve_dong_kiem_ke(ton, chi_tiet_cu_map.get(ton.get("maSanPham", ""), {}))
+
+        kho_cb.bind("<<ComboboxSelected>>", tai_ton_kho_kiem_ke)
+        tai_ton_kho_kiem_ke()
+
+        def luu(luu_tam):
             try:
+                ma_kho = self.lay_ma_tu_combobox(kho_cb.get())
+
+                if ma_kho == "":
+                    raise ValueError("Vui lòng chọn kho kiểm kê.")
+
+                chi_tiet_moi = []
+
+                for dong in danh_sach_dong:
+                    so_luong_thuc_te = self.kiem_tra_chi_so(dong["entry"].get(), "Số lượng thực tế", True, 0)
+
+                    chi_tiet_moi.append({
+                        "maSanPham": dong["maSanPham"],
+                        "soLuongThucTe": so_luong_thuc_te,
+                    })
+
+                if len(chi_tiet_moi) == 0:
+                    raise ValueError("Kho này chưa có tồn kho để kiểm kê.")
+
                 if la_sua:
-                    self.nghiep_vu_kho.xoa_phieu_kiem_ke(phieu.get("maKiemKe", ""), True)
+                    self.nghiep_vu_kho.xoa_phieu_kiem_ke(
+                        phieu.get("maKiemKe", ""),
+                        not self.la_phieu_luu_tam(phieu),
+                    )
 
                 self.nghiep_vu_kho.tao_phieu_kiem_ke(
-                    self.lay_ma_tu_combobox(kho_cb.get()),
-                    [{"maSanPham": self.lay_ma_tu_combobox(sp_cb.get()), "soLuongThucTe": int(self.chuyen_so(so_luong_entry.get()))}],
+                    ma_kho,
+                    chi_tiet_moi,
                     ghi_chu_entry.get().strip(),
+                    luu_tam=luu_tam,
                 )
 
                 form["window"].destroy()
                 self.lam_moi_du_lieu_kho()
-                messagebox.showinfo("Thành công", "Đã lưu phiếu kiểm kho.")
+                if luu_tam:
+                    messagebox.showinfo("Thành công", "Đã lưu tạm phiếu kiểm kho.")
+                else:
+                    messagebox.showinfo("Thành công", "Đã lưu phiếu kiểm kho và cập nhật tồn.")
             except ValueError as loi:
                 messagebox.showerror("Lỗi nghiệp vụ", str(loi))
 
-        self.tao_nut(form["bottom"], "Lưu", luu, self.mau_them).pack(side="right", padx=(8, 0))
+        self.tao_nut(form["bottom"], "Lưu", lambda: luu(False), self.mau_them).pack(side="right", padx=(8, 0))
+        self.tao_nut(form["bottom"], "Lưu tạm", lambda: luu(True), self.mau_sua).pack(side="right", padx=(8, 0))
         self.tao_nut(form["bottom"], "Hủy", form["window"].destroy, self.mau_thoat).pack(side="right")
 
     def sua_kiem_ke_da_chon(self):
@@ -1750,8 +1791,8 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         if phieu is None:
             return
 
-        if self.la_phieu_da_chot(phieu):
-            messagebox.showwarning("Không thể sửa", "Chỉ được sửa phiếu kiểm kê khi phiếu chưa chốt.")
+        if not self.la_phieu_luu_tam(phieu):
+            messagebox.showwarning("Không thể sửa", "Nhân viên kho chỉ được sửa phiếu kiểm kê đang lưu tạm.")
             return
 
         self.mo_form_kiem_kho(phieu)
@@ -1827,8 +1868,6 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
         if self.man_hinh_thong_ke_hien_tai == "Tổng quan kho":
             self.ve_tab_tong_quan(noi_dung)
-        elif self.man_hinh_thong_ke_hien_tai == "Tồn kho theo kho":
-            self.ve_tab_ton_kho_theo_kho(noi_dung)
         elif self.man_hinh_thong_ke_hien_tai == "Nhập theo ngày":
             self.ve_tab_nhap_theo_ngay(noi_dung)
         elif self.man_hinh_thong_ke_hien_tai == "Xuất theo ngày":
@@ -1838,10 +1877,6 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
     def hien_thong_ke_tong_quan(self):
         self.man_hinh_thong_ke_hien_tai = "Tổng quan kho"
-        self.hien_thong_ke()
-
-    def hien_thong_ke_ton_kho(self):
-        self.man_hinh_thong_ke_hien_tai = "Tồn kho theo kho"
         self.hien_thong_ke()
 
     def hien_thong_ke_nhap_ngay(self):
@@ -1947,52 +1982,30 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         body = self.tao_khung_tab_thong_ke(
             parent,
             "Tổng quan kho hàng",
-            "Tóm tắt số kho, số mặt hàng, tổng tồn kho và số sản phẩm dưới mức tồn tối thiểu",
+            "Tóm tắt số mặt hàng, tổng tồn kho và số sản phẩm dưới mức tồn tối thiểu",
         )
 
-        so_kho = self.dem_so_kho()
         so_hang = self.dem_so_hang_hoa()
         ton_kho = self.tinh_tong_ton_kho()
         canh_bao = len(self.lay_canh_bao_ton_thap())
 
         row = self.tao_hang_the_thong_ke(body)
 
-        self.tao_the_thong_ke_nho(row, "Số kho", so_kho, "Kho đang quản lý")
         self.tao_the_thong_ke_nho(row, "Sản phẩm", so_hang, "Mặt hàng trong hệ thống")
         self.tao_the_thong_ke_nho(row, "Cần nhập thêm", canh_bao, "Sản phẩm tồn thấp")
+        self.tao_the_thong_ke_nho(row, "Tồn kho", ton_kho, "Tổng số lượng hiện có")
 
         self.ve_bieu_do_cot(
             body,
             "Tổng quan kho",
-            ["Kho", "Sản phẩm", "Tồn kho", "Tồn thấp"],
-            [so_kho, so_hang, ton_kho, canh_bao],
+            ["Sản phẩm", "Tồn kho", "Tồn thấp"],
+            [so_hang, ton_kho, canh_bao],
         )
-
-    def ve_tab_ton_kho_theo_kho(self, parent):
-        body = self.tao_khung_tab_thong_ke(
-            parent,
-            "Tồn kho theo kho",
-            "Theo dõi tổng số lượng hàng tồn tại từng kho để hỗ trợ kiểm kho và điều chuyển",
-        )
-
-        thong_ke = self.tinh_ton_kho_theo_kho()
-        labels = [item["tenKho"] for item in thong_ke]
-        values = [item["tongTon"] for item in thong_ke]
-
-        row = self.tao_hang_the_thong_ke(body)
-
-        tong_ton = sum(values)
-        kho_co_hang = sum(1 for value in values if value > 0)
-        ton_cao_nhat = max(values) if len(values) > 0 else 0
-
-        self.tao_the_thong_ke_nho(row, "Tổng tồn", tong_ton, "Tổng số lượng trong kho")
-        self.tao_the_thong_ke_nho(row, "Kho có hàng", kho_co_hang, "Kho đang có tồn")
-        self.tao_the_thong_ke_nho(row, "Tồn cao nhất", ton_cao_nhat, "Số lượng lớn nhất/kho")
-
-        self.ve_bieu_do_cot(body, "Số lượng tồn theo kho", labels, values)
 
     def ve_tab_nhap_theo_ngay(self, parent):
-        data = doc_json("phieu_nhap.json", [])
+        data = self.nghiep_vu_kho.loc_theo_kho_duoc_phan_cong(
+            doc_json("phieu_nhap.json", [])
+        )
         self.ve_tab_theo_ngay(
             parent,
             "Nhập kho theo ngày",
@@ -2006,7 +2019,9 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         )
 
     def ve_tab_xuat_theo_ngay(self, parent):
-        data = doc_json("phieu_xuat.json", [])
+        data = self.nghiep_vu_kho.loc_theo_kho_duoc_phan_cong(
+            doc_json("phieu_xuat.json", [])
+        )
         self.ve_tab_theo_ngay(
             parent,
             "Xuất kho theo ngày",
@@ -2569,60 +2584,20 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             return "Chưa phân công"
         return ", ".join(danh_sach_kho)
 
-    def dem_so_kho(self):
-        data = doc_json("kho_hang.json", {})
-        return len(data.get("kho", []))
-
     def dem_so_hang_hoa(self):
-        data = doc_json("hang_hoa.json", {})
-        return len(data.get("sanPham", []))
+        return self.nghiep_vu_kho.dem_so_hang_hoa()
+
+    def tinh_tong_hang_hoa_hien_co(self, danh_sach_ton=None):
+        if danh_sach_ton is None:
+            danh_sach_ton = self.nghiep_vu_kho.lay_ton_kho()
+
+        return super().tinh_tong_hang_hoa_hien_co(danh_sach_ton)
 
     def tinh_tong_ton_kho(self):
-        data = doc_json("kho_hang.json", {})
-        tong = 0
-        for item in data.get("tonKho", []):
-            tong += self.chuyen_so(item.get("soLuongTon", 0))
-        return int(tong)
-
-    def tinh_ton_kho_theo_kho(self):
-        kho_data = doc_json("kho_hang.json", {})
-        danh_sach_kho = kho_data.get("kho", [])
-        danh_sach_ton = kho_data.get("tonKho", [])
-
-        thong_ke = {}
-
-        for kho in danh_sach_kho:
-            ma_kho = kho.get("maKho", "")
-            thong_ke[ma_kho] = {
-                "maKho": ma_kho,
-                "tenKho": kho.get("tenKho", ma_kho),
-                "tongTon": 0,
-            }
-
-        for ton in danh_sach_ton:
-            ma_kho = ton.get("maKho", "")
-            so_luong = self.chuyen_so(ton.get("soLuongTon", 0))
-
-            if ma_kho not in thong_ke:
-                thong_ke[ma_kho] = {
-                    "maKho": ma_kho,
-                    "tenKho": ma_kho,
-                    "tongTon": 0,
-                }
-
-            thong_ke[ma_kho]["tongTon"] += so_luong
-
-        return list(thong_ke.values())
+        return self.nghiep_vu_kho.tinh_tong_ton_kho()
 
     def lay_canh_bao_ton_thap(self):
-        kho_data = doc_json("kho_hang.json", {})
-        hang_data = doc_json("hang_hoa.json", {})
-
-        return lay_canh_bao_ton_thap(
-            kho_data.get("tonKho", []),
-            hang_data.get("sanPham", []),
-            kho_data.get("viTriKho", []),
-        )
+        return self.nghiep_vu_kho.lay_canh_bao_ton_thap()
 
     def tinh_tong_so_luong_can_nhap(self, danh_sach):
         tong = 0

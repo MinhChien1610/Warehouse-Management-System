@@ -6,7 +6,7 @@
     "maTaiKhoan": "TK001",
     "ngayXuat": "2025-03-05",
     "tongTien": 45000000,
-    "trangThai": "Đã xuất",
+    "trangThai": "Đã hủy",
     "chiTiet": [
       {
         "maSanPham": "SP0001",
@@ -64,7 +64,7 @@
     "maTaiKhoan": "TK002",
     "ngayXuat": "2026-05-17",
     "tongTien": 1056000000,
-    "trangThai": "Lưu tạm",
+    "trangThai": "Đã hủy",
     "chiTiet": [
       {
         "maSanPham": "SP0052",

@@ -157,7 +157,7 @@
     {
       "maKho": "KHO001",
       "maSanPham": "SP0001",
-      "soLuongTon": 76,
+      "soLuongTon": 80,
       "maViTri": "KHO001-A"
     },
     {
@@ -187,8 +187,8 @@
     {
       "maKho": "KHO001",
       "maSanPham": "SP0031",
-      "soLuongTon": 10,
-      "maViTri": "KHO001-B"
+      "soLuongTon": 16,
+      "maViTri": "KHO001-D"
     },
     {
       "maKho": "KHO001",
@@ -199,8 +199,8 @@
     {
       "maKho": "KHO001",
       "maSanPham": "SP0051",
-      "soLuongTon": 5,
-      "maViTri": "KHO001-D"
+      "soLuongTon": 0,
+      "maViTri": "KHO001-B"
     },
     {
       "maKho": "KHO001",
@@ -223,7 +223,7 @@
     {
       "maKho": "KHO002",
       "maSanPham": "SP0005",
-      "soLuongTon": 10,
+      "soLuongTon": 0,
       "maViTri": "KHO002-D"
     },
     {
@@ -235,7 +235,7 @@
     {
       "maKho": "KHO002",
       "maSanPham": "SP0025",
-      "soLuongTon": 30,
+      "soLuongTon": 29,
       "maViTri": "KHO002-B"
     },
     {
@@ -465,6 +465,24 @@
       "maSanPham": "SP0023",
       "soLuongTon": 6,
       "maViTri": "KHO001-A"
+    },
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0056",
+      "soLuongTon": 3,
+      "maViTri": "KHO002-B"
+    },
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0070",
+      "soLuongTon": 3,
+      "maViTri": "KHO003-A"
+    },
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0047",
+      "soLuongTon": 2,
+      "maViTri": "KHO005-A"
     }
   ]
 }

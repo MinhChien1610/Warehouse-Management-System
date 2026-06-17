@@ -2,17 +2,15 @@ from __future__ import annotations
 
 import os
 
-from CRUD.NhanVienKho.khohang import KhoHang
-from CRUD.NhanVienKho.hanghoa import HangHoa
+from CRUD.Shared.khohang import KhoHang
+from CRUD.Shared.hanghoa import HangHoa
 from CRUD.NhanVienKho.nhatky import NhatKy
-from CRUD.NhanVienKho.thongke import ThongKe
 
 
 class NghiepVuNhanVienKho(
     KhoHang,
     HangHoa,
-    NhatKy,
-    ThongKe,
+    NhatKy
 ):
     """Xu ly nghiep vu cua nhan vien kho."""
 

@@ -25,6 +25,7 @@
     <Folder Include="CRUD\" />
     <Folder Include="CRUD\Admin\" />
     <Folder Include="CRUD\KeToan\" />
+    <Folder Include="CRUD\Shared\" />
     <Folder Include="CRUD\NhanVienKho\" />
     <Folder Include="Data\" />
     <Folder Include="GUI\" />
@@ -60,11 +61,14 @@
     <Compile Include="Class\sanpham.py" />
     <Compile Include="Class\tonkho.py" />
     <Compile Include="CRUD\Admin\admin.py" />
-    <Compile Include="CRUD\NhanVienKho\hanghoa.py" />
-    <Compile Include="CRUD\NhanVienKho\khohang.py" />
+    <Compile Include="CRUD\Admin\danhmuc.py" />
+    <Compile Include="CRUD\Admin\nhanvien.py" />
+    <Compile Include="CRUD\Admin\taikhoan.py" />
     <Compile Include="CRUD\NhanVienKho\nhanvienkho.py" />
     <Compile Include="CRUD\NhanVienKho\nhatky.py" />
-    <Compile Include="CRUD\NhanVienKho\thongke.py" />
+    <Compile Include="CRUD\Shared\hanghoa.py" />
+    <Compile Include="CRUD\Shared\khohang.py" />
+    <Compile Include="CRUD\Shared\thongke.py" />
     <Compile Include="GUI\Admin\admin.py" />
     <Compile Include="GUI\Common\base.py" />
     <Compile Include="GUI\KeToan\ketoan.py" />

@@ -1159,3 +1159,31 @@ class GiaoDienCoSo:
             command,
             self.mau_thoat,
         ).pack(side="right")
+
+
+    def loc_du_lieu(self, danh_sach, tu_khoa, danh_sach_truong):
+        tu_khoa = str(tu_khoa).lower().strip()
+        ket_qua = []
+
+        for item in danh_sach:
+            noi_dung = ""
+
+            for truong in danh_sach_truong:
+                if isinstance(item, dict):
+                    noi_dung += str(item.get(truong, "")) + " "
+                else:
+                    noi_dung += str(getattr(item, truong, "")) + " "
+
+            if tu_khoa == "" or tu_khoa in noi_dung.lower():
+                ket_qua.append(item)
+
+        return ket_qua
+
+
+    def rut_gon_chu(self, text, max_len):
+        text = str(text)
+
+        if len(text) <= max_len:
+            return text
+
+        return text[:max_len] + "..."

@@ -391,7 +391,21 @@ class GiaoDienAdmin(GiaoDienCoSo):
         self.tao_user_box(header).pack(side="right", pady=(2, 0))
 
     def lay_ten_admin_hien_tai(self):
-        return self.nghiep_vu_admin.lay_ten_admin_hien_tai()
+        try:
+            data = doc_json("nguoi_dung.json", {})
+            ma_tai_khoan = self.tai_khoan_dang_nhap.get("maTaiKhoan", "")
+
+            for tai_khoan in data.get("taiKhoan", []):
+                if tai_khoan.get("maTaiKhoan", "") == ma_tai_khoan:
+                    ma_nhan_vien = tai_khoan.get("maNhanVien", "")
+
+                    for nhan_vien in data.get("nhanVien", []):
+                        if nhan_vien.get("maNhanVien", "") == ma_nhan_vien:
+                            return nhan_vien.get("tenNhanVien", "Admin")
+        except Exception:
+            pass
+
+        return "Admin"
 
 
 

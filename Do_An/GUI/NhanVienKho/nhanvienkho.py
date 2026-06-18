@@ -1382,6 +1382,67 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             "tenViTri",
         )
 
+        def lay_so_luong_ton(ma_kho, ma_san_pham):
+            for item in self.nghiep_vu_kho.lay_ton_kho():
+                if item.get("maKho", "") == ma_kho and item.get("maSanPham", "") == ma_san_pham:
+                    return self.chuyen_so(item.get("soLuongTon", 0))
+            return 0
+
+        def lay_danh_sach_san_pham_theo_kho(ma_san_pham_hien_tai=""):
+            if la_nhap:
+                return danh_sach_san_pham
+
+            ma_kho = self.lay_ma_tu_combobox(kho_cb.get())
+            ket_qua = []
+
+            for san_pham in danh_sach_san_pham_data:
+                ma_san_pham = san_pham.get("maSanPham", "")
+                so_luong_ton = lay_so_luong_ton(ma_kho, ma_san_pham)
+
+                if so_luong_ton > 0 or ma_san_pham == ma_san_pham_hien_tai:
+                    ket_qua.append(
+                        ma_san_pham
+                        + " - "
+                        + san_pham.get("tenSanPham", "")
+                        + " (Tồn: "
+                        + str(so_luong_ton)
+                        + ")"
+                    )
+
+            return ket_qua
+
+        def cap_nhat_thong_tin_dong(dong):
+            sp_cb = dong["sp_cb"]
+            don_gia_entry = dong["don_gia_entry"]
+            ma_san_pham = self.lay_ma_tu_combobox(sp_cb.get())
+            san_pham = self.nghiep_vu_kho.tim_san_pham(ma_san_pham)
+
+            if san_pham is not None:
+                don_gia_entry.delete(0, tk.END)
+                don_gia_entry.insert(0, str(san_pham.get("donGia", 0)))
+
+            if dong.get("ton_label") is not None:
+                ma_kho = self.lay_ma_tu_combobox(kho_cb.get())
+                dong["ton_label"].config(text=str(lay_so_luong_ton(ma_kho, ma_san_pham)))
+
+        def cap_nhat_san_pham_theo_kho():
+            for dong in danh_sach_dong:
+                sp_cb = dong["sp_cb"]
+                ma_hien_tai = self.lay_ma_tu_combobox(sp_cb.get())
+                values = lay_danh_sach_san_pham_theo_kho(ma_hien_tai)
+                sp_cb["values"] = values
+                ma_hop_le = any(self.lay_ma_tu_combobox(value) == ma_hien_tai for value in values)
+
+                if ma_hien_tai != "" and ma_hop_le:
+                    self.chon_combobox_theo_ma(sp_cb, ma_hien_tai)
+                else:
+                    sp_cb.set("")
+
+                if sp_cb.get() == "" and len(values) > 0:
+                    sp_cb.current(0)
+
+                cap_nhat_thong_tin_dong(dong)
+
         def tao_tieu_de_bang_chi_tiet():
             header = tk.Frame(khung_chi_tiet, bg=self.mau_card)
             header.pack(fill="x", pady=(0, 4))
@@ -1426,6 +1487,16 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
                     width=18,
                     anchor="w",
                 ).pack(side="left", padx=(0, 6))
+            else:
+                tk.Label(
+                    header,
+                    text="Tồn kho",
+                    bg=self.mau_card,
+                    fg=self.mau_chu_phu,
+                    font=("Segoe UI", 10, "bold"),
+                    width=10,
+                    anchor="w",
+                ).pack(side="left", padx=(0, 6))
 
         def tao_dong_san_pham(du_lieu=None):
             dong_frame = tk.Frame(khung_chi_tiet, bg=self.mau_card)
@@ -1433,7 +1504,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
             sp_cb = ttk.Combobox(
                 dong_frame,
-                values=danh_sach_san_pham,
+                values=lay_danh_sach_san_pham_theo_kho(),
                 state="readonly",
                 font=("Segoe UI", 10),
                 width=28,
@@ -1478,24 +1549,36 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
                 if len(danh_sach_vi_tri) > 0:
                     vi_tri_cb.current(0)
+                ton_label = None
             else:
                 vi_tri_cb = None
+                ton_label = tk.Label(
+                    dong_frame,
+                    text="0",
+                    bg=self.mau_card,
+                    fg=self.mau_chu_dam,
+                    font=("Segoe UI", 10),
+                    width=10,
+                    anchor="w",
+                )
+                ton_label.pack(side="left", padx=(0, 6))
 
-            if len(danh_sach_san_pham) > 0:
+            if len(sp_cb["values"]) > 0:
                 sp_cb.current(0)
 
-            def cap_nhat_don_gia(event=None):
-                ma_san_pham = self.lay_ma_tu_combobox(sp_cb.get())
-                san_pham = self.nghiep_vu_kho.tim_san_pham(ma_san_pham)
+            dong = {
+                "frame": dong_frame,
+                "sp_cb": sp_cb,
+                "so_luong_entry": so_luong_entry,
+                "don_gia_entry": don_gia_entry,
+                "vi_tri_cb": vi_tri_cb,
+                "ton_label": ton_label,
+            }
 
-                if san_pham is not None:
-                    don_gia_entry.delete(0, tk.END)
-                    don_gia_entry.insert(0, str(san_pham.get("donGia", 0)))
-
-            sp_cb.bind("<<ComboboxSelected>>", cap_nhat_don_gia)
-            cap_nhat_don_gia()
+            sp_cb.bind("<<ComboboxSelected>>", lambda event: cap_nhat_thong_tin_dong(dong))
 
             if du_lieu is not None:
+                sp_cb["values"] = lay_danh_sach_san_pham_theo_kho(du_lieu.get("maSanPham", ""))
                 self.chon_combobox_theo_ma(sp_cb, du_lieu.get("maSanPham", ""))
 
                 so_luong_entry.delete(0, tk.END)
@@ -1507,13 +1590,8 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
                 if la_nhap and vi_tri_cb is not None:
                     self.chon_combobox_theo_ma(vi_tri_cb, du_lieu.get("maViTri", ""))
 
-            danh_sach_dong.append({
-                "frame": dong_frame,
-                "sp_cb": sp_cb,
-                "so_luong_entry": so_luong_entry,
-                "don_gia_entry": don_gia_entry,
-                "vi_tri_cb": vi_tri_cb,
-            })
+            cap_nhat_thong_tin_dong(dong)
+            danh_sach_dong.append(dong)
 
         def xoa_cac_dong_chi_tiet():
             for widget in khung_chi_tiet.winfo_children():
@@ -1581,6 +1659,19 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
                 if ma_san_pham == "":
                     raise ValueError("Vui lòng chọn sản phẩm.")
+
+                if not la_nhap:
+                    so_luong_ton = lay_so_luong_ton(ma_kho, ma_san_pham)
+                    if so_luong_ton <= 0:
+                        raise ValueError("Sản phẩm " + ma_san_pham + " đã hết hàng trong kho đã chọn.")
+                    if so_luong > so_luong_ton:
+                        raise ValueError(
+                            "Sản phẩm "
+                            + ma_san_pham
+                            + " chỉ còn "
+                            + str(so_luong_ton)
+                            + " trong kho đã chọn."
+                        )
 
                 item = {
                     "maSanPham": ma_san_pham,
@@ -1654,6 +1745,7 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         self.tao_nut(form["bottom"], "Lưu", lambda: luu_phieu(False), self.mau_them).pack(side="right", padx=(8, 0))
         self.tao_nut(form["bottom"], "Lưu tạm", lambda: luu_phieu(True), self.mau_sua).pack(side="right", padx=(8, 0))
         self.tao_nut(form["bottom"], "Hủy", form["window"].destroy, self.mau_thoat).pack(side="right")
+        kho_cb.bind("<<ComboboxSelected>>", lambda event: cap_nhat_san_pham_theo_kho())
 
     # =========================
     # SỬA / XÓA PHIẾU LƯU TẠM
@@ -1701,6 +1793,8 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             messagebox.showinfo("Thành công", "Đã xóa phiếu nhập lưu tạm.")
         except ValueError as loi:
             messagebox.showerror("Lỗi nghiệp vụ", str(loi))
+        except Exception as loi:
+            messagebox.showerror("Lỗi", "Không thể xóa phiếu nhập: " + str(loi))
 
     def xoa_phieu_xuat_luu_tam_da_chon(self):
         phieu = self.lay_phieu_da_chon(self.bang_phieu_xuat, "phieu_xuat.json", "maPhieuXuat")
@@ -1723,6 +1817,8 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             messagebox.showinfo("Thành công", "Đã xóa phiếu xuất lưu tạm.")
         except ValueError as loi:
             messagebox.showerror("Lỗi nghiệp vụ", str(loi))
+        except Exception as loi:
+            messagebox.showerror("Lỗi", "Không thể xóa phiếu xuất: " + str(loi))
 
     def xem_chi_tiet_phieu_nhap(self):
         phieu = self.lay_phieu_da_chon(self.bang_phieu_nhap, "phieu_nhap.json", "maPhieuNhap")
@@ -2720,7 +2816,16 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         self.tao_label(left, ten_nhan_vien, 17, self.mau_chu_dam, True).pack(anchor="center")
         self.tao_label(left, "Nhân viên kho", 11, self.mau_chu_phu).pack(anchor="center", pady=(4, 18))
 
-        if tai_khoan.get("trangThai") is True:
+        trang_thai = str(tai_khoan.get("trangThai", "")).strip().lower()
+        dang_hoat_dong = tai_khoan.get("trangThai") is True or trang_thai in [
+            "hoạt động",
+            "hoat dong",
+            "active",
+            "true",
+            "1",
+        ]
+
+        if dang_hoat_dong:
             status_text = "ĐANG HOẠT ĐỘNG"
             status_bg = self.mau_sidebar_nhat
             status_fg = self.mau_thanh_cong

@@ -1053,7 +1053,10 @@ class GiaoDienCoSo:
         dong_2 = tk.Frame(thong_tin, bg=self.mau_card)
         dong_2.pack(fill="x", padx=14, pady=(0, 4))
         self.tao_dong_thong_tin(dong_2, "Ngày", ngay)
-        self.tao_dong_thong_tin(dong_2, "Trạng thái", phieu.get("trangThai", ""))
+        trang_thai = str(phieu.get("trangThai", "")).strip()
+        if trang_thai == "" and loai == "kiem":
+            trang_thai = "Đã kiểm kê"
+        self.tao_dong_thong_tin(dong_2, "Trạng thái", trang_thai)
 
         dong_3 = tk.Frame(thong_tin, bg=self.mau_card)
         dong_3.pack(fill="x", padx=14, pady=(0, 12))

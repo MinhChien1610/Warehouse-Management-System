@@ -257,6 +257,7 @@ class KhoHang:
         ma_san_pham,
         so_luong_thay_doi,
         ma_vi_tri="",
+        cho_phep_am=False,
     ):
         self.kiem_tra_kho_duoc_phan_cong(ma_kho)
 
@@ -273,7 +274,7 @@ class KhoHang:
                 so_luong_cu = self.chuyen_so_nguyen(ton.get("soLuongTon", 0))
                 so_luong_moi = so_luong_cu + so_luong_thay_doi
 
-                if so_luong_moi < 0:
+                if so_luong_moi < 0 and not cho_phep_am:
                     raise ValueError("Số lượng tồn kho không đủ.")
 
                 ton["soLuongTon"] = so_luong_moi
@@ -284,7 +285,7 @@ class KhoHang:
                 self.ghi_json("kho_hang.json", kho_data)
                 return
 
-        if so_luong_thay_doi < 0:
+        if so_luong_thay_doi < 0 and not cho_phep_am:
             raise ValueError("Sản phẩm chưa có tồn kho nên không thể xuất hàng.")
 
         danh_sach_ton.append(
@@ -686,19 +687,12 @@ class KhoHang:
             return phieu
 
         for item in phieu.get("chiTiet", []):
-            ma_kho = phieu.get("maKho", "")
-            ma_san_pham = item.get("maSanPham", "")
-            so_luong = self.chuyen_so_nguyen(item.get("soLuong", 0))
-
-            if self.lay_so_luong_ton(ma_kho, ma_san_pham) < so_luong:
-                raise ValueError("Không đủ tồn kho để hủy phiếu nhập " + ma_phieu_nhap + ".")
-
-        for item in phieu.get("chiTiet", []):
             self.cap_nhat_ton_kho(
                 phieu.get("maKho", ""),
                 item.get("maSanPham", ""),
                 -self.chuyen_so_nguyen(item.get("soLuong", 0)),
                 item.get("maViTri", ""),
+                cho_phep_am=True,
             )
 
         phieu["trangThai"] = "Đã hủy"
@@ -1013,7 +1007,7 @@ class KhoHang:
             "l?u t?m",
             "chưa xác nhận",
             "chua xac nhan",
-        ]
+        ] or "lưu" in trang_thai or "luu" in trang_thai
 
     def chuyen_so_nguyen(self, value):
         return chuyen_so_nguyen(value)

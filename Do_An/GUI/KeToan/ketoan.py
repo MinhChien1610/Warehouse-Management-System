@@ -844,7 +844,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
         row.pack(fill="x", pady=(0, 12))
         self.tao_the_tong_quan(row, ten_loai, tong_phieu, "Tổng số phiếu")
         self.tao_the_tong_quan(row, "Tổng tiền", self.dinh_dang_tien_the(tong_tien), "Tổng giá trị")
-        self.tao_the_tong_quan(row, "Trung bình", self.dinh_dang_tien_the(trung_binh), "Giá trị/phiếu")
+        self.tao_the_tong_quan(row, "Trung bình", self.dinh_dang_tien(round(trung_binh)), "Giá trị/phiếu")
 
         main = tk.Frame(body, bg=self.mau_card)
         main.pack(fill="both", expand=True)
@@ -1249,7 +1249,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
 
     def tao_the_tong_quan(self, parent, title, value, desc, command=None, column=None):
         card = self.tao_card(parent)
-        card.config(height=126)
+        card.config(height=136)
         card.pack_propagate(False)
 
         if column is None:
@@ -1270,11 +1270,11 @@ class GiaoDienKeToan(GiaoDienCoSo):
         value_label = self.tao_label(
             card,
             str(value),
-            size=17,
+            size=15,
             color=self.mau_menu_chon,
             bold=True,
         )
-        value_label.config(wraplength=210, justify="left")
+        value_label.config(wraplength=260, justify="left")
         value_label.pack(anchor="w", padx=14)
 
         desc_label = self.tao_label(
@@ -1283,7 +1283,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
             size=8,
             color=self.mau_chu_phu,
         )
-        desc_label.config(wraplength=210, justify="left")
+        desc_label.config(wraplength=260, justify="left")
         desc_label.pack(anchor="w", padx=14, pady=(4, 10))
 
         if command is not None:

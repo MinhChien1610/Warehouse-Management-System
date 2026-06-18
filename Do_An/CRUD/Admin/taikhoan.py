@@ -102,18 +102,23 @@ class TaiKhoan:
         if self.la_trang_thai_khoa(nhan_vien.get("trangThai", "")):
             raise ValueError("Nhân viên đang bị khóa nên không thể mở tài khoản.")
 
-    def kiem_tra_vai_tro_duoc_cap(self, data, ma_vai_tro):
-        ma_vai_tro = self.kiem_tra_vai_tro_ton_tai(data, ma_vai_tro)
+    def la_vai_tro_admin(self, data, ma_vai_tro):
         vai_tro = self.tim_item(data.get("vaiTro", []), "maVaiTro", ma_vai_tro)
+
+        if vai_tro is None:
+            return False
+
         ten_vai_tro = str(vai_tro.get("tenVaiTro", "")).strip().lower()
+        return ten_vai_tro in ["admin", "quản trị", "quan tri", "quản trị viên", "quan tri vien"]
 
-        if ten_vai_tro in ["admin", "quản trị", "quan tri", "quản trị viên", "quan tri vien"]:
-            raise ValueError("Không được tạo hoặc cấp vai trò Admin từ màn hình này.")
+    def lay_vai_tro_cua_tai_khoan(self, data, ma_tai_khoan):
+        for phan_quyen in data.get("phanQuyen", []):
+            if phan_quyen.get("maTaiKhoan", "") == ma_tai_khoan:
+                return phan_quyen.get("maVaiTro", "")
+        return ""
 
-        if ten_vai_tro not in ["nhân viên kho", "nhan vien kho", "nhanvienkho", "kế toán", "ke toan", "ketoan"]:
-            raise ValueError("Chỉ được cấp vai trò Nhân viên kho hoặc Kế toán.")
-
-        return ma_vai_tro
+    def kiem_tra_vai_tro_duoc_cap(self, data, ma_vai_tro, ma_tai_khoan=""):
+        return self.kiem_tra_vai_tro_ton_tai(data, ma_vai_tro)
 
     def kiem_tra_thong_tin_tai_khoan(self, data, du_lieu, ma_bo_qua=""):
         ten_tai_khoan = self.kiem_tra_ten_tai_khoan(du_lieu.get("tenTaiKhoan", ""))
@@ -153,10 +158,56 @@ class TaiKhoan:
 
         return ma_vai_tro
 
-    def tao_tai_khoan(self, du_lieu, ma_vai_tro):
+    def vai_tro_can_phan_cong_kho(self, data, ma_vai_tro):
+        vai_tro = self.tim_item(data.get("vaiTro", []), "maVaiTro", ma_vai_tro)
+
+        if vai_tro is None:
+            return False
+
+        ten_vai_tro = str(vai_tro.get("tenVaiTro", "")).strip().lower()
+        return ten_vai_tro in ["nhân viên kho", "nhan vien kho", "nhanvienkho", "kế toán", "ke toan", "ketoan"]
+
+    def kiem_tra_kho_phan_cong(self, data, ma_kho, bat_buoc=False):
+        ma_kho = str(ma_kho).strip()
+
+        if ma_kho == "":
+            if bat_buoc:
+                raise ValueError("Vui lòng chọn kho phụ trách.")
+            return ""
+
+        for kho in data.get("kho", []):
+            if kho.get("maKho", "") == ma_kho:
+                return ma_kho
+
+        kho_data = self.doc_json("kho_hang.json", {})
+        for kho in kho_data.get("kho", []):
+            if kho.get("maKho", "") == ma_kho:
+                return ma_kho
+
+        raise ValueError("Kho phụ trách không tồn tại.")
+
+    def cap_nhat_phan_cong_kho(self, data, ma_tai_khoan, ma_kho):
+        data["phanCongKho"] = [
+            item for item in data.get("phanCongKho", [])
+            if item.get("maTaiKhoan", "") != ma_tai_khoan
+        ]
+
+        if ma_kho != "":
+            data.setdefault("phanCongKho", []).append({
+                "maTaiKhoan": ma_tai_khoan,
+                "maKho": ma_kho,
+                "trangThai": True,
+            })
+
+    def tao_tai_khoan(self, du_lieu, ma_vai_tro, ma_kho=""):
         data = self.doc_nguoi_dung()
         self.kiem_tra_thong_tin_tai_khoan(data, du_lieu)
         ma_vai_tro = self.kiem_tra_vai_tro_duoc_cap(data, ma_vai_tro)
+        ma_kho = self.kiem_tra_kho_phan_cong(
+            data,
+            ma_kho,
+            self.vai_tro_can_phan_cong_kho(data, ma_vai_tro),
+        )
 
         danh_sach = data.setdefault("taiKhoan", [])
         ma_tai_khoan = self.tao_ma_tu_dong_do_dai(danh_sach, "maTaiKhoan", "TK", 3)
@@ -169,13 +220,14 @@ class TaiKhoan:
 
         danh_sach.append(dong)
         data.setdefault("phanQuyen", []).append({"maTaiKhoan": ma_tai_khoan, "maVaiTro": ma_vai_tro})
+        self.cap_nhat_phan_cong_kho(data, ma_tai_khoan, ma_kho)
 
         self.ghi_nguoi_dung(data)
         self.ghi_nhat_ky("Admin thêm Tài khoản", "Tài khoản", "Thêm " + ma_tai_khoan)
 
         return dong
 
-    def cap_nhat_tai_khoan(self, ma_tai_khoan, du_lieu, ma_vai_tro):
+    def cap_nhat_tai_khoan(self, ma_tai_khoan, du_lieu, ma_vai_tro, ma_kho=""):
         data = self.doc_nguoi_dung()
         tai_khoan = self.tim_item(data.get("taiKhoan", []), "maTaiKhoan", ma_tai_khoan)
 
@@ -183,7 +235,16 @@ class TaiKhoan:
             raise ValueError("Không tìm thấy tài khoản cần sửa.")
 
         self.kiem_tra_thong_tin_tai_khoan(data, du_lieu, ma_tai_khoan)
-        ma_vai_tro = self.kiem_tra_vai_tro_duoc_cap(data, ma_vai_tro)
+        ma_vai_tro = self.kiem_tra_vai_tro_duoc_cap(data, ma_vai_tro, ma_tai_khoan)
+        ma_kho = self.kiem_tra_kho_phan_cong(
+            data,
+            ma_kho,
+            self.vai_tro_can_phan_cong_kho(data, ma_vai_tro),
+        )
+        ma_vai_tro_hien_tai = self.lay_vai_tro_cua_tai_khoan(data, ma_tai_khoan)
+
+        if self.la_tai_khoan_dang_dung(ma_tai_khoan=ma_tai_khoan) and ma_vai_tro != ma_vai_tro_hien_tai:
+            raise ValueError("Không thể thay đổi phân quyền của chính tài khoản đang đăng nhập.")
 
         tai_khoan.update(du_lieu)
         tai_khoan["maTaiKhoan"] = ma_tai_khoan
@@ -199,6 +260,7 @@ class TaiKhoan:
         if not da_cap_nhat:
             data.setdefault("phanQuyen", []).append({"maTaiKhoan": ma_tai_khoan, "maVaiTro": ma_vai_tro})
 
+        self.cap_nhat_phan_cong_kho(data, ma_tai_khoan, ma_kho)
         self.ghi_nguoi_dung(data)
         self.ghi_nhat_ky("Admin sửa Tài khoản", "Tài khoản", "Sửa " + ma_tai_khoan)
 

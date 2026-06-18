@@ -240,5 +240,24 @@
         "donGia": 12000000
       }
     ]
+  },
+  {
+    "maPhieuXuat": "PX0013",
+    "maKho": "KHO001",
+    "maKhachHang": "KH001",
+    "maTaiKhoan": "TK001",
+    "ngayXuat": "2026-06-18",
+    "tongTien": 72000000,
+    "trangThai": "Đã hủy",
+    "chiTiet": [
+      {
+        "maSanPham": "SP0005",
+        "soLuong": 4,
+        "donGia": 18000000,
+        "donGiaHienThi": "18.000.000",
+        "thanhTienHienThi": "72.000.000"
+      }
+    ],
+    "tongTienHienThi": "72.000.000"
   }
 ]

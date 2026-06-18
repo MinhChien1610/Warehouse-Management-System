@@ -252,6 +252,113 @@ class GiaoDienCoSo:
 
         return button
 
+    def tao_nut_menu(self, parent, text, command):
+        button = tk.Button(
+            parent,
+            text=text,
+            bg=self.mau_menu,
+            fg="white",
+            activebackground=self.mau_menu_hover,
+            activeforeground="white",
+            font=("Segoe UI", 9, "bold"),
+            bd=0,
+            anchor="w",
+            padx=14,
+            pady=12,
+            cursor="hand2",
+            relief="flat",
+        )
+
+        button.config(command=lambda: self.chon_menu(button, command))
+        button.pack(fill="x", pady=(0, 10))
+
+        if hasattr(self, "danh_sach_menu"):
+            self.danh_sach_menu.append(button)
+
+        return button
+
+    def tao_menu_xo_sidebar(self, parent, title, danh_sach_con):
+        khung = tk.Frame(parent, bg=self.mau_sidebar)
+        khung.pack(fill="x", pady=(0, 10))
+
+        khung_con = tk.Frame(khung, bg=self.mau_sidebar)
+        dang_mo = {"value": False}
+
+        def toggle_menu():
+            if dang_mo["value"]:
+                khung_con.pack_forget()
+                dang_mo["value"] = False
+                nut_cha.config(text=title + "   ▾")
+            else:
+                khung_con.pack(fill="x", pady=(3, 0))
+                dang_mo["value"] = True
+                nut_cha.config(text=title + "   ▴")
+
+        nut_cha = tk.Button(
+            khung,
+            text=title + "   ▾",
+            bg=self.mau_menu,
+            fg="white",
+            activebackground=self.mau_menu_hover,
+            activeforeground="white",
+            font=("Segoe UI", 10, "bold"),
+            bd=0,
+            anchor="w",
+            padx=14,
+            pady=12,
+            cursor="hand2",
+            relief="flat",
+            command=toggle_menu,
+        )
+        nut_cha.pack(fill="x")
+
+        if hasattr(self, "danh_sach_menu"):
+            self.danh_sach_menu.append(nut_cha)
+
+        for text, command in danh_sach_con:
+            nut_con = tk.Button(
+                khung_con,
+                text="      " + text,
+                bg=self.mau_sidebar,
+                fg=self.mau_sidebar_nhat,
+                activebackground=self.mau_menu_hover,
+                activeforeground="white",
+                font=("Segoe UI", 9),
+                bd=0,
+                anchor="w",
+                padx=14,
+                pady=7,
+                cursor="hand2",
+                relief="flat",
+            )
+            nut_con.config(command=lambda btn=nut_con, cmd=command: self.chon_menu(btn, cmd))
+            nut_con.pack(fill="x", pady=(2, 2))
+
+            if hasattr(self, "danh_sach_menu"):
+                self.danh_sach_menu.append(nut_con)
+
+    def tao_menu_tai_khoan_sidebar(self, parent, hien_thong_tin, doi_mat_khau):
+        return self.tao_menu_xo_sidebar(
+            parent,
+            "👤  Tài khoản",
+            [
+                ("Thông tin tài khoản", hien_thong_tin),
+                ("Đổi mật khẩu", doi_mat_khau),
+            ],
+        )
+
+    def chon_menu(self, button, command):
+        for nut in getattr(self, "danh_sach_menu", []):
+            text = str(nut.cget("text"))
+
+            if text.startswith("      "):
+                nut.config(bg=self.mau_sidebar, fg=self.mau_sidebar_nhat)
+            else:
+                nut.config(bg=self.mau_menu, fg="white")
+
+        button.config(bg=self.mau_menu_chon, fg="white")
+        command()
+
 
 
 

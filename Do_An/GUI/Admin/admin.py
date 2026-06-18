@@ -699,7 +699,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             noi_dung,
             "Tổng hàng hiện có",
             "Tổng số lượng trong tồn kho",
-            str(self.tinh_tong_hang_hoa_hien_co()),
+            str(self.tinh_tong_so_luong_ton()),
         )
 
         self.tao_o_theo_doi(
@@ -934,6 +934,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
 
     def hien_nhap_kho(self):
         data = self.chuan_hoa_trang_thai_phieu(doc_json("phieu_nhap.json", []), "nhap")
+        data = self.dinh_dang_danh_sach_phieu_tien(data)
 
         self.bang_phieu_nhap = self.hien_bang_du_lieu(
             "Nhập kho",
@@ -954,6 +955,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
 
     def hien_xuat_kho(self):
         data = self.chuan_hoa_trang_thai_phieu(doc_json("phieu_xuat.json", []), "xuat")
+        data = self.dinh_dang_danh_sach_phieu_tien(data)
 
         self.bang_phieu_xuat = self.hien_bang_du_lieu(
             "Xuất kho",
@@ -973,18 +975,83 @@ class GiaoDienAdmin(GiaoDienCoSo):
         )
 
     def hien_ton_kho(self):
-        data = self.lay_du_lieu_ton_kho_day_du()
-
-        self.bang_loai_hang = self.hien_bang_du_lieu(
+        self.tao_tieu_de_trang(
+            self.content,
             "Tồn kho",
             "Theo dõi số lượng hàng tồn trong kho",
+        )
+
+        body = self.tao_khung_noi_dung(self.content)
+
+        self.tao_thanh_cong_cu(
+            body,
+            "Nhập mã kho, mã sản phẩm, tên sản phẩm, vị trí hoặc trạng thái...",
+            self.tim_kiem_ton_kho_admin,
+            buttons=[],
+        )
+
+        table_area = tk.Frame(body, bg=self.mau_card)
+        table_area.pack(fill="both", expand=True)
+
+        self.bang_ton_kho = self.tao_bang(
+            table_area,
             ("maKho", "maSanPham", "tenSanPham", "soLuongTon", "mucTonToiThieu", "trangThai", "viTriHang"),
             ("Mã kho", "Mã SP", "Tên sản phẩm", "Tồn", "Tồn tối thiểu", "Trạng thái", "Vị trí hàng"),
             (90, 105, 270, 80, 115, 120, 130),
-            data,
-            ["maKho", "maSanPham", "tenSanPham", "soLuongTon", "mucTonToiThieu", "trangThai", "viTriHang"],
-            "Nhập mã kho, mã sản phẩm, tên sản phẩm, vị trí hoặc trạng thái...",
         )
+
+        self.bang_ton_kho.tag_configure("het_hang", foreground=self.mau_nguy_hiem)
+        self.bang_ton_kho.tag_configure("ton_thap", foreground=self.mau_nguy_hiem)
+        self.bang_ton_kho.tag_configure("binh_thuong", foreground=self.mau_chu_dam)
+
+        self.tao_nut_thoat(body)
+        self.load_ton_kho_admin("")
+
+    def load_ton_kho_admin(self, tu_khoa=""):
+        data = self.lay_du_lieu_ton_kho_day_du()
+
+        ket_qua = self.loc_du_lieu(
+            data,
+            tu_khoa,
+            ["maKho", "maSanPham", "tenSanPham", "soLuongTon", "mucTonToiThieu", "trangThai", "viTriHang"],
+        )
+
+        for dong in self.bang_ton_kho.get_children():
+            self.bang_ton_kho.delete(dong)
+
+        for item in ket_qua:
+            so_luong_ton = self.chuyen_so(item.get("soLuongTon", 0))
+            muc_ton_toi_thieu = self.chuyen_so(item.get("mucTonToiThieu", 0))
+            trang_thai = str(item.get("trangThai", "")).strip()
+
+            if so_luong_ton <= 0:
+                tag = "het_hang"
+                trang_thai = "Hết hàng"
+            elif so_luong_ton < muc_ton_toi_thieu:
+                tag = "ton_thap"
+                trang_thai = "Tồn thấp"
+            else:
+                tag = "binh_thuong"
+                if trang_thai == "":
+                    trang_thai = "Đủ hàng"
+
+            self.bang_ton_kho.insert(
+                "",
+                "end",
+                values=(
+                    item.get("maKho", ""),
+                    item.get("maSanPham", ""),
+                    item.get("tenSanPham", ""),
+                    item.get("soLuongTon", ""),
+                    item.get("mucTonToiThieu", ""),
+                    trang_thai,
+                    item.get("viTriHang", ""),
+                ),
+                tags=(tag,),
+            )
+
+    def tim_kiem_ton_kho_admin(self, tu_khoa):
+        self.load_ton_kho_admin(tu_khoa)
 
     def hien_kiem_kho(self):
         data = self.lay_kiem_ke_dang_hien_thi()
@@ -1009,6 +1076,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
     def hien_hang_hoa(self):
         data = doc_json("hang_hoa.json", {})
         danh_sach = self.chuan_hoa_trang_thai_san_pham(data.get("sanPham", []))
+        danh_sach = self.dinh_dang_danh_sach_hang_hoa_tien(danh_sach)
 
         self.bang_hang_hoa = self.hien_bang_du_lieu(
             "Danh mục hàng hóa",
@@ -1030,7 +1098,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
         data = doc_json("hang_hoa.json", {})
         danh_sach = data.get("loaiHang", [])
 
-        self.bang_nha_san_xuat = self.hien_bang_du_lieu(
+        self.bang_loai_hang = self.hien_bang_du_lieu(
             "Loại hàng",
             "Quản lý nhóm loại hàng hóa",
             ("maLoaiHang", "tenLoaiHang", "ghiChu"),
@@ -1050,7 +1118,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
         data = doc_json("doi_tac.json", {})
         danh_sach = data.get("nhaSanXuat", [])
 
-        self.hien_bang_du_lieu(
+        self.bang_nha_san_xuat = self.hien_bang_du_lieu(
             "Nhà sản xuất",
             "Quản lý thông tin nhà sản xuất",
             ("maNhaSanXuat", "tenNhaSanXuat", "soDienThoai", "email", "diaChi"),
@@ -1575,10 +1643,195 @@ class GiaoDienAdmin(GiaoDienCoSo):
 
         return noi_dung
 
+
+    def dinh_dang_tien_admin(self, value):
+        try:
+            value = str(value).strip()
+
+            if value == "" or value == "-":
+                return value
+
+            value = value.replace(".", "").replace(",", "")
+            so_tien = int(float(value))
+            return "{:,}".format(so_tien).replace(",", ".")
+        except Exception:
+            return str(value)
+
+    def dinh_dang_so_ngan(self, value):
+        return self.dinh_dang_tien_admin(value)
+
+    def dinh_dang_danh_sach_tien_hien_thi(self, danh_sach, truong_tien, truong_hien_thi=None):
+        if truong_hien_thi is None:
+            truong_hien_thi = truong_tien
+
+        ket_qua = []
+
+        for item in danh_sach:
+            dong = dict(item)
+            dong[truong_hien_thi] = self.dinh_dang_tien_admin(dong.get(truong_tien, 0))
+            ket_qua.append(dong)
+
+        return ket_qua
+
+    def dinh_dang_danh_sach_phieu_tien(self, danh_sach):
+        return self.dinh_dang_danh_sach_tien_hien_thi(danh_sach, "tongTien", "tongTien")
+
+    def dinh_dang_danh_sach_hang_hoa_tien(self, danh_sach):
+        return self.dinh_dang_danh_sach_tien_hien_thi(danh_sach, "donGia", "donGia")
+
     # =========================
     # NHẬT KÝ
     # =========================
     def hien_nhat_ky_dang_nhap(self):
+        self.tao_tieu_de_trang(
+            self.content,
+            "Nhật ký đăng nhập",
+            "Theo dõi lịch sử đăng nhập và đăng xuất hệ thống",
+        )
+
+        body = self.tao_khung_noi_dung(self.content)
+        data = self.lay_nhat_ky_dang_nhap_admin()
+
+        self.tong_ban_ghi_nhat_ky_dang_nhap_label = self.tao_label(
+            body,
+            "Tổng số bản ghi: " + str(len(data)),
+            11,
+            self.mau_chu_phu,
+            False,
+            self.mau_card,
+        )
+        self.tong_ban_ghi_nhat_ky_dang_nhap_label.pack(anchor="w", padx=4, pady=(0, 12))
+
+        filter_bar = tk.Frame(body, bg=self.mau_card)
+        filter_bar.pack(fill="x", pady=(0, 12))
+
+        self.cbo_loai_nhat_ky_dang_nhap = ttk.Combobox(
+            filter_bar,
+            values=["Tất cả", "Đăng nhập", "Đăng xuất"],
+            state="readonly",
+            width=22,
+            font=("Segoe UI", 10),
+        )
+        self.cbo_loai_nhat_ky_dang_nhap.set("Tất cả")
+        self.cbo_loai_nhat_ky_dang_nhap.pack(side="left", padx=(0, 10), ipady=5)
+
+        self.entry_tu_ngay_dang_nhap = tk.Entry(
+            filter_bar,
+            font=("Segoe UI", 10),
+            bg=self.mau_card_nhe,
+            fg=self.mau_chu_phu,
+            bd=0,
+            highlightbackground=self.mau_vien,
+            highlightthickness=1,
+            width=18,
+        )
+        self.entry_tu_ngay_dang_nhap.pack(side="left", padx=(0, 2), ipady=7)
+        self.dat_placeholder_entry(self.entry_tu_ngay_dang_nhap, "Từ ngày yyyy-mm-dd")
+        self.gan_rang_buoc_ngay(self.entry_tu_ngay_dang_nhap, "Từ ngày", "Từ ngày yyyy-mm-dd")
+
+        tk.Button(
+            filter_bar,
+            text="📅",
+            command=lambda: self.mo_lich_chon_ngay(self.entry_tu_ngay_dang_nhap),
+            bg=self.mau_sua,
+            fg="white",
+            activebackground=self.mau_menu_hover,
+            activeforeground="white",
+            font=("Segoe UI", 9, "bold"),
+            bd=0,
+            padx=8,
+            pady=7,
+            cursor="hand2",
+        ).pack(side="left", padx=(0, 10))
+
+        self.entry_den_ngay_dang_nhap = tk.Entry(
+            filter_bar,
+            font=("Segoe UI", 10),
+            bg=self.mau_card_nhe,
+            fg=self.mau_chu_phu,
+            bd=0,
+            highlightbackground=self.mau_vien,
+            highlightthickness=1,
+            width=18,
+        )
+        self.entry_den_ngay_dang_nhap.pack(side="left", padx=(0, 2), ipady=7)
+        self.dat_placeholder_entry(self.entry_den_ngay_dang_nhap, "Đến ngày yyyy-mm-dd")
+        self.gan_rang_buoc_ngay(self.entry_den_ngay_dang_nhap, "Đến ngày", "Đến ngày yyyy-mm-dd")
+
+        tk.Button(
+            filter_bar,
+            text="📅",
+            command=lambda: self.mo_lich_chon_ngay(self.entry_den_ngay_dang_nhap),
+            bg=self.mau_sua,
+            fg="white",
+            activebackground=self.mau_menu_hover,
+            activeforeground="white",
+            font=("Segoe UI", 9, "bold"),
+            bd=0,
+            padx=8,
+            pady=7,
+            cursor="hand2",
+        ).pack(side="left", padx=(0, 10))
+
+        self.tao_nut(
+            filter_bar,
+            "Lọc",
+            self.loc_nhat_ky_dang_nhap_admin,
+            self.mau_sua,
+        ).pack(side="left", padx=(0, 10))
+
+        self.tao_nut(
+            filter_bar,
+            "Làm mới",
+            self.lam_moi_nhat_ky_dang_nhap_admin,
+            self.mau_thoat,
+        ).pack(side="left")
+
+        search_box = tk.Frame(
+            filter_bar,
+            bg=self.mau_card_nhe,
+            highlightbackground=self.mau_vien,
+            highlightthickness=1,
+        )
+        search_box.pack(side="right", ipady=1)
+
+        tk.Label(
+            search_box,
+            text="🔎",
+            bg=self.mau_card_nhe,
+            fg=self.mau_menu,
+            font=("Segoe UI", 9),
+        ).pack(side="left", padx=(10, 0))
+
+        self.entry_tim_nhat_ky_dang_nhap = tk.Entry(
+            search_box,
+            font=("Segoe UI", 9),
+            bg=self.mau_card_nhe,
+            fg=self.mau_chu_phu,
+            bd=0,
+            width=36,
+        )
+        self.entry_tim_nhat_ky_dang_nhap.pack(side="left", padx=(8, 8), ipady=6)
+        self.dat_placeholder_entry(self.entry_tim_nhat_ky_dang_nhap, "Tìm kiếm nhật ký...")
+
+        table_area = tk.Frame(body, bg=self.mau_card)
+        table_area.pack(fill="both", expand=True)
+
+        self.bang_nhat_ky_dang_nhap = self.tao_bang(
+            table_area,
+            ("maNhatKy", "maTaiKhoan", "hanhDong", "thoiGian", "trangThai"),
+            ("Mã", "Tài khoản", "Hành động", "Thời gian", "Trạng thái"),
+            (90, 130, 250, 220, 150),
+        )
+
+        self.tao_nut_thoat(body)
+
+        self.entry_tim_nhat_ky_dang_nhap.bind("<Return>", lambda event: self.loc_nhat_ky_dang_nhap_admin())
+        self.cbo_loai_nhat_ky_dang_nhap.bind("<<ComboboxSelected>>", lambda event: self.loc_nhat_ky_dang_nhap_admin())
+
+        self.loc_nhat_ky_dang_nhap_admin()
+
+    def lay_nhat_ky_dang_nhap_admin(self):
         data = self.chuan_hoa_trang_thai(doc_json("nhat_ky.json", []))
         ket_qua = []
 
@@ -1588,19 +1841,89 @@ class GiaoDienAdmin(GiaoDienCoSo):
             if "đăng nhập" in hanh_dong or "đăng xuất" in hanh_dong:
                 ket_qua.append(item)
 
-        self.hien_bang_du_lieu(
-            "Nhật ký đăng nhập",
-            "Theo dõi lịch sử đăng nhập và đăng xuất",
-            ("maNhatKy", "maTaiKhoan", "hanhDong", "thoiGian", "trangThai"),
-            ("Mã", "Tài khoản", "Hành động", "Thời gian", "Trạng thái"),
-            (90, 130, 250, 220, 150),
-            ket_qua,
-            ["maNhatKy", "maTaiKhoan", "hanhDong", "thoiGian", "trangThai"],
-            "Nhập tài khoản, hành động hoặc thời gian...",
-        )
+        return ket_qua
+
+    def loc_nhat_ky_dang_nhap_admin(self):
+        try:
+            loai = self.cbo_loai_nhat_ky_dang_nhap.get()
+            tu_ngay = self.lay_noi_dung_entry(self.entry_tu_ngay_dang_nhap, "Từ ngày yyyy-mm-dd")
+            den_ngay = self.lay_noi_dung_entry(self.entry_den_ngay_dang_nhap, "Đến ngày yyyy-mm-dd")
+            tu_khoa = self.lay_noi_dung_entry(self.entry_tim_nhat_ky_dang_nhap, "Tìm kiếm nhật ký...")
+
+            tu_ngay, den_ngay = self.kiem_tra_khoang_ngay_loc(tu_ngay, den_ngay)
+
+            data = self.lay_nhat_ky_dang_nhap_admin()
+            ket_qua = []
+
+            for item in data:
+                if self.nhat_ky_dang_nhap_dung_bo_loc(item, loai, tu_ngay, den_ngay, tu_khoa):
+                    ket_qua.append(item)
+
+            self.tong_ban_ghi_nhat_ky_dang_nhap_label.config(
+                text="Tổng số bản ghi: " + str(len(ket_qua))
+            )
+
+            self.do_du_lieu_vao_bang(
+                self.bang_nhat_ky_dang_nhap,
+                ket_qua,
+                ["maNhatKy", "maTaiKhoan", "hanhDong", "thoiGian", "trangThai"],
+            )
+
+        except ValueError as loi:
+            messagebox.showwarning("Dữ liệu không hợp lệ", str(loi))
+
+    def nhat_ky_dang_nhap_dung_bo_loc(self, item, loai, tu_ngay, den_ngay, tu_khoa):
+        hanh_dong = str(item.get("hanhDong", "")).lower()
+        thoi_gian = str(item.get("thoiGian", ""))
+        ngay = self.chuan_hoa_ngay_loc(thoi_gian)
+
+        if loai != "Tất cả":
+            loai_lower = loai.lower()
+
+            if loai_lower == "đăng nhập" and "đăng nhập" not in hanh_dong:
+                return False
+
+            if loai_lower == "đăng xuất" and "đăng xuất" not in hanh_dong:
+                return False
+
+        if tu_ngay != "" and ngay != "" and ngay < tu_ngay:
+            return False
+
+        if den_ngay != "" and ngay != "" and ngay > den_ngay:
+            return False
+
+        if tu_khoa != "":
+            noi_dung = " ".join([
+                str(item.get("maNhatKy", "")),
+                str(item.get("maTaiKhoan", "")),
+                str(item.get("hanhDong", "")),
+                str(item.get("thoiGian", "")),
+                str(item.get("trangThai", "")),
+            ]).lower()
+
+            if tu_khoa.lower() not in noi_dung:
+                return False
+
+        return True
+
+    def lam_moi_nhat_ky_dang_nhap_admin(self):
+        self.cbo_loai_nhat_ky_dang_nhap.set("Tất cả")
+        self.dat_placeholder_entry(self.entry_tu_ngay_dang_nhap, "Từ ngày yyyy-mm-dd")
+        self.dat_placeholder_entry(self.entry_den_ngay_dang_nhap, "Đến ngày yyyy-mm-dd")
+        self.dat_placeholder_entry(self.entry_tim_nhat_ky_dang_nhap, "Tìm kiếm nhật ký...")
+        self.loc_nhat_ky_dang_nhap_admin()
 
     def hien_nhat_ky_thao_tac(self):
-        data = self.chuan_hoa_trang_thai(doc_json("nhat_ky.json", []))
+        tat_ca = self.chuan_hoa_trang_thai(doc_json("nhat_ky.json", []))
+        data = []
+
+        for item in tat_ca:
+            hanh_dong = str(item.get("hanhDong", "")).lower()
+
+            if "đăng nhập" in hanh_dong or "đăng xuất" in hanh_dong:
+                continue
+
+            data.append(item)
 
         self.tao_tieu_de_trang(
             self.content,
@@ -1613,21 +1936,22 @@ class GiaoDienAdmin(GiaoDienCoSo):
         header = tk.Frame(body, bg=self.mau_card)
         header.pack(fill="x", pady=(0, 12))
 
-        self.tao_label(
+        tong_label = self.tao_label(
             header,
             "Tổng số bản ghi: " + str(len(data)),
             11,
             self.mau_chu_phu,
             False,
             self.mau_card,
-        ).pack(side="left", padx=(4, 0))
+        )
+        tong_label.pack(side="left", padx=(4, 0))
 
         filter_bar = tk.Frame(body, bg=self.mau_card)
         filter_bar.pack(fill="x", pady=(0, 12))
 
         cbo_loai = ttk.Combobox(
             filter_bar,
-            values=["Tất cả", "Thêm", "Sửa", "Xóa", "Khóa/Mở khóa", "Reset mật khẩu", "Đăng nhập", "Đăng xuất"],
+            values=["Tất cả", "Thêm", "Sửa", "Xóa", "Khóa/Mở khóa", "Reset mật khẩu"],
             state="readonly",
             width=22,
             font=("Segoe UI", 10),
@@ -1730,6 +2054,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             (90, 130, 220, 180, 220, 150),
         )
 
+        
         def loc_nhat_ky(event=None):
             loai = cbo_loai.get()
             tu_ngay = self.lay_noi_dung_entry(entry_tu_ngay, "Từ ngày yyyy-mm-dd")
@@ -1737,12 +2062,13 @@ class GiaoDienAdmin(GiaoDienCoSo):
             tu_khoa = self.lay_noi_dung_entry(entry_tim, "Tìm kiếm nhật ký...")
 
             try:
-                tu_ngay = self.kiem_tra_ngay(tu_ngay, "Từ ngày", False)
-                den_ngay = self.kiem_tra_ngay(den_ngay, "Đến ngày", False)
+                tu_ngay, den_ngay = self.kiem_tra_khoang_ngay_loc(tu_ngay, den_ngay)
                 ket_qua = self.loc_nhat_ky_thao_tac(data, loai, tu_ngay, den_ngay, tu_khoa)
             except ValueError as loi:
                 messagebox.showwarning("Dữ liệu không hợp lệ", str(loi))
                 return
+
+            tong_label.config(text="Tổng số bản ghi: " + str(len(ket_qua)))
 
             self.do_du_lieu_vao_bang(
                 bang,
@@ -1902,6 +2228,36 @@ class GiaoDienAdmin(GiaoDienCoSo):
 
         return str(value).strip() or "Hoạt động"
 
+    def lay_nhan_vien_chua_co_tai_khoan(self, ma_tai_khoan_bo_qua=""):
+        nguoi_dung = doc_json("nguoi_dung.json", {})
+        danh_sach_ma_nhan_vien_da_co_tai_khoan = []
+
+        for tai_khoan in nguoi_dung.get("taiKhoan", []):
+            if tai_khoan.get("maTaiKhoan", "") != ma_tai_khoan_bo_qua:
+                danh_sach_ma_nhan_vien_da_co_tai_khoan.append(tai_khoan.get("maNhanVien", ""))
+
+        ket_qua = []
+
+        for nhan_vien in nguoi_dung.get("nhanVien", []):
+            ma_nhan_vien = nhan_vien.get("maNhanVien", "")
+
+            if ma_nhan_vien not in danh_sach_ma_nhan_vien_da_co_tai_khoan:
+                ket_qua.append(nhan_vien)
+
+        return ket_qua
+
+    def lay_vai_tro_duoc_cap(self):
+        nguoi_dung = doc_json("nguoi_dung.json", {})
+        ket_qua = []
+
+        for vai_tro in nguoi_dung.get("vaiTro", []):
+            ten_vai_tro = str(vai_tro.get("tenVaiTro", "")).strip().lower()
+
+            if ten_vai_tro in ["nhân viên kho", "nhan vien kho", "nhanvienkho", "kế toán", "ke toan", "ketoan"]:
+                ket_qua.append(vai_tro)
+
+        return ket_qua
+
     def them_nhan_vien_admin(self):
         fields = [
             {"key": "tenNhanVien", "label": "Tên nhân viên", "validate": "text"},
@@ -1955,7 +2311,6 @@ class GiaoDienAdmin(GiaoDienCoSo):
             messagebox.showerror("Lỗi nghiệp vụ", str(loi))
 
     def them_tai_khoan_admin(self):
-        nguoi_dung = doc_json("nguoi_dung.json", {})
         fields = [
             {"key": "tenTaiKhoan", "label": "Tên tài khoản"},
             {"key": "matKhau", "label": "Mật khẩu", "default": "123456"},
@@ -1963,13 +2318,21 @@ class GiaoDienAdmin(GiaoDienCoSo):
                 "key": "maNhanVien",
                 "label": "Nhân viên",
                 "type": "combo",
-                "values": self.tao_danh_sach_chon(nguoi_dung.get("nhanVien", []), "maNhanVien", "tenNhanVien"),
+                "values": self.tao_danh_sach_chon(
+                    self.lay_nhan_vien_chua_co_tai_khoan(),
+                    "maNhanVien",
+                    "tenNhanVien",
+                ),
             },
             {
                 "key": "maVaiTro",
                 "label": "Vai trò",
                 "type": "combo",
-                "values": self.tao_danh_sach_chon(nguoi_dung.get("vaiTro", []), "maVaiTro", "tenVaiTro"),
+                "values": self.tao_danh_sach_chon(
+                    self.lay_vai_tro_duoc_cap(),
+                    "maVaiTro",
+                    "tenVaiTro",
+                ),
             },
             {"key": "trangThai", "label": "Trạng thái", "type": "combo", "values": ["Hoạt động", "Đã khóa"]},
         ]
@@ -1987,15 +2350,18 @@ class GiaoDienAdmin(GiaoDienCoSo):
             return
 
         nguoi_dung = doc_json("nguoi_dung.json", {})
+        ma_tai_khoan = item.get("maTaiKhoan", "")
         ma_vai_tro_hien_tai = ""
+
         for phan_quyen in nguoi_dung.get("phanQuyen", []):
-            if phan_quyen.get("maTaiKhoan") == item.get("maTaiKhoan"):
+            if phan_quyen.get("maTaiKhoan") == ma_tai_khoan:
                 ma_vai_tro_hien_tai = phan_quyen.get("maVaiTro", "")
                 break
 
         values = dict(item)
         values["maVaiTro"] = ma_vai_tro_hien_tai
         values["trangThai"] = self.lay_gia_tri_trang_thai_nguoi_dung(item.get("trangThai", ""))
+
         fields = [
             {"key": "tenTaiKhoan", "label": "Tên tài khoản"},
             {"key": "matKhau", "label": "Mật khẩu"},
@@ -2003,20 +2369,28 @@ class GiaoDienAdmin(GiaoDienCoSo):
                 "key": "maNhanVien",
                 "label": "Nhân viên",
                 "type": "combo",
-                "values": self.tao_danh_sach_chon(nguoi_dung.get("nhanVien", []), "maNhanVien", "tenNhanVien"),
+                "values": self.tao_danh_sach_chon(
+                    self.lay_nhan_vien_chua_co_tai_khoan(ma_tai_khoan),
+                    "maNhanVien",
+                    "tenNhanVien",
+                ),
             },
             {
                 "key": "maVaiTro",
                 "label": "Vai trò",
                 "type": "combo",
-                "values": self.tao_danh_sach_chon(nguoi_dung.get("vaiTro", []), "maVaiTro", "tenVaiTro"),
+                "values": self.tao_danh_sach_chon(
+                    self.lay_vai_tro_duoc_cap(),
+                    "maVaiTro",
+                    "tenVaiTro",
+                ),
             },
             {"key": "trangThai", "label": "Trạng thái", "type": "combo", "values": ["Hoạt động", "Đã khóa"]},
         ]
 
         def save(data):
             ma_vai_tro = data.pop("maVaiTro", "")
-            self.nghiep_vu_admin.cap_nhat_tai_khoan(item.get("maTaiKhoan", ""), data, ma_vai_tro)
+            self.nghiep_vu_admin.cap_nhat_tai_khoan(ma_tai_khoan, data, ma_vai_tro)
             self.hien_tai_khoan()
 
         self.mo_form_danh_muc_admin("Sửa tài khoản", fields, save, values)
@@ -3049,17 +3423,21 @@ class GiaoDienAdmin(GiaoDienCoSo):
         ket_qua = []
         tu_khoa = tu_khoa.lower().strip()
 
-        if tu_ngay != "" and den_ngay != "" and tu_ngay > den_ngay:
-            messagebox.showerror(
-                "Lỗi!",
-                "Vui lòng chọn lại ngày cần lọc!"
-            )
-            return []
+        tu_ngay, den_ngay = self.kiem_tra_khoang_ngay_loc(tu_ngay, den_ngay)
 
         for item in danh_sach:
             hanh_dong = str(item.get("hanhDong", "")).lower()
+
+            if "đăng nhập" in hanh_dong or "đăng xuất" in hanh_dong:
+                continue
+
             thoi_gian = str(item.get("thoiGian", ""))
-            noi_dung = " ".join(str(item.get(key, "")) for key in ["maNhatKy", "maTaiKhoan", "hanhDong", "doiTuong", "thoiGian", "trangThai", "ghiChu"]).lower()
+            ngay_so_sanh = self.chuan_hoa_ngay_loc(thoi_gian)
+
+            noi_dung = " ".join(
+                str(item.get(key, ""))
+                for key in ["maNhatKy", "maTaiKhoan", "hanhDong", "doiTuong", "thoiGian", "trangThai", "ghiChu"]
+            ).lower()
 
             if loai != "Tất cả":
                 if loai == "Khóa/Mở khóa":
@@ -3068,11 +3446,8 @@ class GiaoDienAdmin(GiaoDienCoSo):
                 elif loai == "Reset mật khẩu":
                     if "reset" not in hanh_dong:
                         continue
-                else:
-                    if loai.lower() not in hanh_dong:
-                        continue
-
-            ngay_so_sanh = self.chuan_hoa_ngay_loc(thoi_gian)
+                elif loai.lower() not in hanh_dong:
+                    continue
 
             if tu_ngay != "" and ngay_so_sanh != "" and ngay_so_sanh < tu_ngay:
                 continue
@@ -3086,6 +3461,15 @@ class GiaoDienAdmin(GiaoDienCoSo):
             ket_qua.append(item)
 
         return ket_qua
+
+    def kiem_tra_khoang_ngay_loc(self, tu_ngay, den_ngay):
+        tu_ngay = self.kiem_tra_ngay(tu_ngay, "Từ ngày", False)
+        den_ngay = self.kiem_tra_ngay(den_ngay, "Đến ngày", False)
+
+        if tu_ngay != "" and den_ngay != "" and tu_ngay > den_ngay:
+            raise ValueError("Từ ngày không được lớn hơn đến ngày.")
+
+        return tu_ngay, den_ngay
 
     def chuan_hoa_ngay_loc(self, thoi_gian):
         thoi_gian = str(thoi_gian)
@@ -3253,7 +3637,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
         return ket_qua
 
     def dinh_dang_danh_sach_phieu(self, danh_sach):
-        return tinh_admin.dinh_dang_danh_sach_phieu(danh_sach)
+        return self.dinh_dang_danh_sach_phieu_tien(danh_sach)
 
     def tinh_tong_tien_tu_danh_sach(self, danh_sach):
         return tinh_admin.tinh_tong_tien_tu_danh_sach(danh_sach)
@@ -3386,7 +3770,17 @@ class GiaoDienAdmin(GiaoDienCoSo):
         return tinh_admin.tinh_gia_tri_ton_kho(data)
 
     def dinh_dang_du_lieu_tong_quan(self, data):
-        return tinh_admin.dinh_dang_du_lieu_tong_quan(data)
+        ket_qua = []
+
+        for item in data:
+            dong = dict(item)
+
+            if dong.get("giaTri", "") != "-":
+                dong["giaTri"] = self.dinh_dang_tien_admin(dong.get("giaTri", 0))
+
+            ket_qua.append(dong)
+
+        return ket_qua
 
     def lay_doanh_thu_theo_kho(self):
         data = doc_json("phieu_xuat.json", [])
@@ -3394,7 +3788,14 @@ class GiaoDienAdmin(GiaoDienCoSo):
         return tinh_admin.lay_doanh_thu_theo_kho(data, kho_data.get("kho", []))
 
     def dinh_dang_doanh_thu_kho(self, data):
-        return tinh_admin.dinh_dang_doanh_thu_kho(data)
+        ket_qua = []
+
+        for item in data:
+            dong = dict(item)
+            dong["tongDoanhThu"] = self.dinh_dang_tien_admin(dong.get("tongDoanhThu", 0))
+            ket_qua.append(dong)
+
+        return ket_qua
 
     def lay_top_5_theo_tien(self, danh_sach, truong_ma):
         return tinh_admin.lay_top_5_theo_tien(danh_sach, truong_ma)

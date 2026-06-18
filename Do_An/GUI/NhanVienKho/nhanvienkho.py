@@ -2070,8 +2070,23 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             highlightthickness=1,
             width=18,
         )
-        self.entry_tu_ngay_nhat_ky.pack(side="left", padx=(0, 10), ipady=7)
+        self.entry_tu_ngay_nhat_ky.pack(side="left", padx=(0, 2), ipady=7)
         self.dat_placeholder_nhan_vien_kho(self.entry_tu_ngay_nhat_ky, "Từ ngày yyyy-mm-dd")
+
+        tk.Button(
+            filter_bar,
+            text="📅",
+            command=lambda: self.mo_lich_chon_ngay(self.entry_tu_ngay_nhat_ky),
+            bg=self.mau_sua,
+            fg="white",
+            activebackground=self.mau_menu_hover,
+            activeforeground="white",
+            font=("Segoe UI", 9, "bold"),
+            bd=0,
+            padx=8,
+            pady=7,
+            cursor="hand2",
+        ).pack(side="left", padx=(0, 10))
 
         self.entry_den_ngay_nhat_ky = tk.Entry(
             filter_bar,
@@ -2083,8 +2098,23 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
             highlightthickness=1,
             width=18,
         )
-        self.entry_den_ngay_nhat_ky.pack(side="left", padx=(0, 10), ipady=7)
+        self.entry_den_ngay_nhat_ky.pack(side="left", padx=(0, 2), ipady=7)
         self.dat_placeholder_nhan_vien_kho(self.entry_den_ngay_nhat_ky, "Đến ngày yyyy-mm-dd")
+
+        tk.Button(
+            filter_bar,
+            text="📅",
+            command=lambda: self.mo_lich_chon_ngay(self.entry_den_ngay_nhat_ky),
+            bg=self.mau_sua,
+            fg="white",
+            activebackground=self.mau_menu_hover,
+            activeforeground="white",
+            font=("Segoe UI", 9, "bold"),
+            bd=0,
+            padx=8,
+            pady=7,
+            cursor="hand2",
+        ).pack(side="left", padx=(0, 10))
 
         self.tao_nut(
             filter_bar,
@@ -2149,8 +2179,18 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
         data = []
 
         for item in doc_json("nhat_ky.json", []):
-            if ma_tai_khoan == "" or item.get("maTaiKhoan", "") == ma_tai_khoan:
-                data.append(item)
+            if ma_tai_khoan != "" and item.get("maTaiKhoan", "") != ma_tai_khoan:
+                continue
+
+            hanh_dong = str(item.get("hanhDong", "")).strip().lower()
+
+            if "đăng nhập" in hanh_dong or "dang nhap" in hanh_dong:
+                continue
+
+            if "đăng xuất" in hanh_dong or "dang xuat" in hanh_dong:
+                continue
+
+            data.append(item)
 
         return data
 
@@ -2209,6 +2249,10 @@ class GiaoDienNhanVienKho(GiaoDienCoSo):
 
             tu_ngay = self.kiem_tra_ngay_nhat_ky(tu_ngay, "Từ ngày")
             den_ngay = self.kiem_tra_ngay_nhat_ky(den_ngay, "Đến ngày")
+
+            if tu_ngay != "" and den_ngay != "" and tu_ngay > den_ngay:
+                raise ValueError("Từ ngày không được lớn hơn đến ngày.")
+
             data = self.lay_nhat_ky_cua_tai_khoan()
             ket_qua = []
 

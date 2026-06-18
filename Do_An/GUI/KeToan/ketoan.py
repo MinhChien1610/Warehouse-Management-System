@@ -45,7 +45,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
         self.root.minsize(1120, 640)
         self.root.configure(bg=self.mau_nen)
 
-        self.danh_sach_menu_cha = []
+        self.danh_sach_menu = []
 
         self.cau_hinh_style()
         self.tao_bo_cuc_chinh()
@@ -92,7 +92,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
             bg=self.mau_card,
             width=46,
             height=46,
-            highlightbackground=self.mau_vien,
+            highlightbackground=self.mau_blue_sang,
             highlightthickness=1,
         )
         icon_box.pack(side="left")
@@ -102,8 +102,8 @@ class GiaoDienKeToan(GiaoDienCoSo):
             icon_box,
             text="💰",
             bg=self.mau_card,
-            fg=self.mau_sidebar_dam,
-            font=("Segoe UI", 18),
+            fg=self.mau_menu_chon,
+            font=("Segoe UI", 19),
         ).place(relx=0.5, rely=0.5, anchor="center")
 
         text_logo = tk.Frame(top_logo, bg=self.mau_sidebar)
@@ -113,22 +113,22 @@ class GiaoDienKeToan(GiaoDienCoSo):
             text_logo,
             text="KẾ TOÁN",
             bg=self.mau_sidebar,
-            fg=self.mau_chu_dam,
-            font=("Segoe UI", 16, "bold"),
+            fg="white",
+            font=("Segoe UI", 18, "bold"),
         ).pack(anchor="w")
 
         tk.Label(
             text_logo,
             text="Accounting",
             bg=self.mau_sidebar,
-            fg=self.mau_chu_phu,
+            fg=self.mau_sidebar_nhat,
             font=("Segoe UI", 8, "bold"),
         ).pack(anchor="w")
 
         slogan = tk.Frame(
             logo,
-            bg=self.mau_sidebar_nhat,
-            highlightbackground=self.mau_vien,
+            bg=self.mau_sidebar_dam,
+            highlightbackground=self.mau_blue_sang,
             highlightthickness=1,
         )
         slogan.pack(fill="x", pady=(12, 0))
@@ -136,53 +136,53 @@ class GiaoDienKeToan(GiaoDienCoSo):
         tk.Label(
             slogan,
             text="Chứng từ kho hàng",
-            bg=self.mau_sidebar_nhat,
-            fg=self.mau_chu_dam,
+            bg=self.mau_sidebar_dam,
+            fg="white",
             font=("Segoe UI", 10, "bold"),
         ).pack(anchor="w", padx=10, pady=(7, 1))
 
         tk.Label(
             slogan,
             text="Nhập • Xuất • Doanh thu",
-            bg=self.mau_sidebar_nhat,
-            fg=self.mau_chu_phu,
+            bg=self.mau_sidebar_dam,
+            fg=self.mau_sidebar_nhat,
             font=("Segoe UI", 8),
         ).pack(anchor="w", padx=10, pady=(0, 7))
 
-        vung_cuon = tk.Frame(self.sidebar, bg=self.mau_sidebar)
-        vung_cuon.pack(fill="both", expand=True, padx=10, pady=(0, 6))
+        vung_menu = tk.Frame(self.sidebar, bg=self.mau_sidebar)
+        vung_menu.pack(fill="both", expand=True, padx=10, pady=(0, 6))
 
-        canvas = tk.Canvas(
-            vung_cuon,
+        canvas_menu = tk.Canvas(
+            vung_menu,
             bg=self.mau_sidebar,
             bd=0,
             highlightthickness=0,
         )
-        canvas.pack(side="left", fill="both", expand=True)
+        canvas_menu.pack(side="left", fill="both", expand=True)
 
-        thanh_cuon = ttk.Scrollbar(vung_cuon, orient="vertical", command=canvas.yview)
-        thanh_cuon.pack(side="right", fill="y")
+        thanh_cuon_menu = ttk.Scrollbar(vung_menu, orient="vertical", command=canvas_menu.yview)
+        thanh_cuon_menu.pack(side="right", fill="y")
 
-        canvas.configure(yscrollcommand=thanh_cuon.set)
+        canvas_menu.configure(yscrollcommand=thanh_cuon_menu.set)
 
-        menu = tk.Frame(canvas, bg=self.mau_sidebar)
-        canvas_window = canvas.create_window((0, 0), window=menu, anchor="nw")
+        menu = tk.Frame(canvas_menu, bg=self.mau_sidebar)
+        menu_window = canvas_menu.create_window((0, 0), window=menu, anchor="nw")
 
         def cap_nhat_vung_cuon(event=None):
-            canvas.configure(scrollregion=canvas.bbox("all"))
-            canvas.itemconfigure(canvas_window, width=canvas.winfo_width())
+            canvas_menu.configure(scrollregion=canvas_menu.bbox("all"))
+            canvas_menu.itemconfigure(menu_window, width=canvas_menu.winfo_width())
 
         def cuon_menu(event):
-            canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+            canvas_menu.yview_scroll(int(-1 * (event.delta / 120)), "units")
 
         menu.bind("<Configure>", cap_nhat_vung_cuon)
-        canvas.bind("<Configure>", cap_nhat_vung_cuon)
-        canvas.bind("<Enter>", lambda event: canvas.bind_all("<MouseWheel>", cuon_menu))
-        canvas.bind("<Leave>", lambda event: canvas.unbind_all("<MouseWheel>"))
+        canvas_menu.bind("<Configure>", cap_nhat_vung_cuon)
+        canvas_menu.bind("<Enter>", lambda event: canvas_menu.bind_all("<MouseWheel>", cuon_menu))
+        canvas_menu.bind("<Leave>", lambda event: canvas_menu.unbind_all("<MouseWheel>"))
 
         self.tao_nut_menu(menu, "🏠  Trang chủ", self.hien_trang_chu)
 
-        self.tao_menu_xo(
+        self.tao_menu_xo_sidebar(
             menu,
             "📄  Chứng từ",
             [
@@ -193,7 +193,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
 
         self.tao_nut_menu(menu, "📦  Tồn kho", self.hien_ton_kho)
 
-        self.tao_menu_xo(
+        self.tao_menu_xo_sidebar(
             menu,
             "📊  Thống kê",
             [
@@ -204,7 +204,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
             ],
         )
 
-        self.tao_menu_xo(
+        self.tao_menu_xo_sidebar(
             menu,
             "👤  Tài khoản",
             [
@@ -220,7 +220,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
             bottom,
             "Đăng xuất",
             self.dang_xuat,
-            self.mau_thoat,
+            self.mau_sidebar_dam,
         ).pack(fill="x")
 
 
@@ -228,10 +228,10 @@ class GiaoDienKeToan(GiaoDienCoSo):
         button = tk.Button(
             parent,
             text=text,
-            bg=self.mau_sidebar_nhat,
-            fg=self.mau_chu_dam,
+            bg=self.mau_menu,
+            fg="white",
             activebackground=self.mau_menu_hover,
-            activeforeground=self.mau_chu_dam,
+            activeforeground="white",
             font=("Segoe UI", 9, "bold"),
             bd=0,
             anchor="w",
@@ -244,24 +244,34 @@ class GiaoDienKeToan(GiaoDienCoSo):
         button.config(command=lambda: self.chon_menu(button, command))
         button.pack(fill="x", pady=(0, 10))
 
-        self.danh_sach_menu_cha.append(button)
+        self.danh_sach_menu.append(button)
         return button
 
 
-    def tao_menu_xo(self, parent, title, danh_sach_con):
+    def tao_menu_xo_sidebar(self, parent, title, danh_sach_con):
         khung = tk.Frame(parent, bg=self.mau_sidebar)
         khung.pack(fill="x", pady=(0, 10))
 
-        body = tk.Frame(khung, bg=self.mau_sidebar)
-        trang_thai = {"dang_mo": False}
+        khung_con = tk.Frame(khung, bg=self.mau_sidebar)
+        dang_mo = {"value": False}
 
-        button = tk.Button(
+        def toggle_menu():
+            if dang_mo["value"]:
+                khung_con.pack_forget()
+                dang_mo["value"] = False
+                nut_cha.config(text=title + "   ▾")
+            else:
+                khung_con.pack(fill="x", pady=(3, 0))
+                dang_mo["value"] = True
+                nut_cha.config(text=title + "   ▴")
+
+        nut_cha = tk.Button(
             khung,
             text=title + "   ▾",
-            bg=self.mau_sidebar_nhat,
-            fg=self.mau_chu_dam,
+            bg=self.mau_menu,
+            fg="white",
             activebackground=self.mau_menu_hover,
-            activeforeground=self.mau_chu_dam,
+            activeforeground="white",
             font=("Segoe UI", 10, "bold"),
             bd=0,
             anchor="w",
@@ -269,30 +279,20 @@ class GiaoDienKeToan(GiaoDienCoSo):
             pady=12,
             cursor="hand2",
             relief="flat",
+            command=toggle_menu,
         )
 
-        def toggle():
-            if trang_thai["dang_mo"]:
-                body.pack_forget()
-                button.config(text=title + "   ▾")
-                trang_thai["dang_mo"] = False
-            else:
-                body.pack(fill="x", pady=(3, 0))
-                button.config(text=title + "   ▴")
-                trang_thai["dang_mo"] = True
-
-        button.config(command=toggle)
-        button.pack(fill="x")
-        self.danh_sach_menu_cha.append(button)
+        nut_cha.pack(fill="x")
+        self.danh_sach_menu.append(nut_cha)
 
         for text, command in danh_sach_con:
             nut_con = tk.Button(
-                body,
+                khung_con,
                 text="      " + text,
                 bg=self.mau_sidebar,
                 fg=self.mau_sidebar_nhat,
                 activebackground=self.mau_menu_hover,
-                activeforeground=self.mau_chu_dam,
+                activeforeground="white",
                 font=("Segoe UI", 9),
                 bd=0,
                 anchor="w",
@@ -303,17 +303,17 @@ class GiaoDienKeToan(GiaoDienCoSo):
             )
             nut_con.config(command=lambda btn=nut_con, cmd=command: self.chon_menu(btn, cmd))
             nut_con.pack(fill="x", pady=(2, 2))
-            self.danh_sach_menu_cha.append(nut_con)
+            self.danh_sach_menu.append(nut_con)
 
 
     def chon_menu(self, button, command):
-        for nut in self.danh_sach_menu_cha:
+        for nut in self.danh_sach_menu:
             text = str(nut.cget("text"))
 
             if text.startswith("      "):
                 nut.config(bg=self.mau_sidebar, fg=self.mau_sidebar_nhat)
             else:
-                nut.config(bg=self.mau_sidebar_nhat, fg=self.mau_chu_dam)
+                nut.config(bg=self.mau_menu, fg="white")
 
         button.config(bg=self.mau_menu_chon, fg="white")
         command()
@@ -486,7 +486,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
         bang_luu = {"bang": None}
 
         def load(tu_khoa=""):
-            data = doc_json(ten_file, [])
+            data = self.lay_du_lieu_phieu(ten_file)
             ket_qua = self.loc_du_lieu(data, tu_khoa, keys)
             data_hien_tai["data"] = ket_qua
 
@@ -636,11 +636,12 @@ class GiaoDienKeToan(GiaoDienCoSo):
     def lay_du_lieu_ton_kho(self):
         du_lieu_kho = doc_json("kho_hang.json", {})
         du_lieu_hang = doc_json("hang_hoa.json", {})
+        danh_sach_ma_kho = self.lay_danh_sach_ma_kho_duoc_phan_cong()
 
         return lap_du_lieu_ton_kho(
-            du_lieu_kho.get("tonKho", []),
+            self.loc_theo_kho_duoc_phan_cong(du_lieu_kho.get("tonKho", []), danh_sach_ma_kho),
             du_lieu_hang.get("sanPham", []),
-            du_lieu_kho.get("viTriKho", []),
+            self.loc_theo_kho_duoc_phan_cong(du_lieu_kho.get("viTriKho", []), danh_sach_ma_kho),
         )
 
     def do_du_lieu_ton_kho(self, bang, data):
@@ -880,7 +881,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
             (105, 105, 85, 135, 110),
         )
 
-        data = doc_json(ten_file, [])
+        data = self.lay_du_lieu_phieu(ten_file)
         self.do_du_lieu_thong_ke(bang, data)
 
         self.tao_nut_thoat(body)
@@ -1385,7 +1386,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
             bg=self.mau_card,
         ).pack(anchor="w", padx=14, pady=(12, 8))
 
-        data = doc_json(ten_file, [])
+        data = self.lay_du_lieu_phieu(ten_file)
         data = data[-2:]
 
         if len(data) == 0:
@@ -1708,22 +1709,23 @@ class GiaoDienKeToan(GiaoDienCoSo):
             self.tao_label(row, item.get("thoiGian", "")[:10], size=9, color=self.mau_chu_phu, bg=self.mau_card_nhe).pack(side="right", padx=(0, 10), pady=7)
 
     def lay_du_lieu_bang_thong_ke_tong_quan(self):
-        phieu_nhap = doc_json("phieu_nhap.json", [])
-        phieu_xuat = doc_json("phieu_xuat.json", [])
+        phieu_nhap = self.lay_du_lieu_phieu("phieu_nhap.json")
+        phieu_xuat = self.lay_du_lieu_phieu("phieu_xuat.json")
         du_lieu_kho = doc_json("kho_hang.json", {})
         du_lieu_hang = doc_json("hang_hoa.json", {})
-        kiem_ke = doc_json("kiem_ke.json", [])
+        kiem_ke = self.lay_du_lieu_kiem_ke()
 
         tong_nhap = self.tong_tien("phieu_nhap.json")
         tong_xuat = self.tong_tien("phieu_xuat.json")
         ton_kho = self.lay_du_lieu_ton_kho()
         tong_ton = sum(self.chuyen_so(item.get("soLuongTon", 0)) for item in ton_kho)
         gia_tri_ton = sum(self.chuyen_so(item.get("giaTriTon", 0)) for item in ton_kho)
+        danh_sach_kho = self.loc_theo_kho_duoc_phan_cong(du_lieu_kho.get("kho", []))
 
         return [
             {"noiDung": "Phiếu nhập", "soLuong": len(phieu_nhap), "giaTri": self.dinh_dang_tien(tong_nhap), "ghiChu": "Tổng giá trị nhập kho"},
             {"noiDung": "Phiếu xuất", "soLuong": len(phieu_xuat), "giaTri": self.dinh_dang_tien(tong_xuat), "ghiChu": "Tổng giá trị xuất kho"},
-            {"noiDung": "Kho hàng", "soLuong": len(du_lieu_kho.get("kho", [])), "giaTri": "-", "ghiChu": "Số kho đang quản lý"},
+            {"noiDung": "Kho hàng", "soLuong": len(danh_sach_kho), "giaTri": "-", "ghiChu": "Số kho được phân công"},
             {"noiDung": "Sản phẩm", "soLuong": len(du_lieu_hang.get("sanPham", [])), "giaTri": "-", "ghiChu": "Mặt hàng đang quản lý"},
             {"noiDung": "Tồn kho", "soLuong": self.dinh_dang_so(tong_ton), "giaTri": self.dinh_dang_tien(gia_tri_ton), "ghiChu": "Tổng số lượng và giá trị tồn"},
             {"noiDung": "Kiểm kê", "soLuong": len(kiem_ke), "giaTri": "-", "ghiChu": "Phiếu kiểm kê đã ghi nhận"},
@@ -1732,6 +1734,50 @@ class GiaoDienKeToan(GiaoDienCoSo):
     # =========================
     # DATA HELPER
     # =========================
+    def trang_thai_dang_hoat_dong(self, value):
+        if value is True:
+            return True
+
+        value = str(value).strip().lower()
+        return value in ["true", "1", "hoạt động", "hoat dong", "đang hoạt động", "dang hoat dong", "active"]
+
+    def lay_danh_sach_ma_kho_duoc_phan_cong(self):
+        ma_tai_khoan = self.tai_khoan_dang_nhap.get("maTaiKhoan", "")
+
+        if ma_tai_khoan == "":
+            return []
+
+        nguoi_dung = doc_json("nguoi_dung.json", {})
+        ket_qua = []
+
+        for phan_cong in nguoi_dung.get("phanCongKho", []):
+            dung_tai_khoan = phan_cong.get("maTaiKhoan", "") == ma_tai_khoan
+            dang_hoat_dong = self.trang_thai_dang_hoat_dong(phan_cong.get("trangThai", True))
+            ma_kho = phan_cong.get("maKho", "")
+
+            if dung_tai_khoan and dang_hoat_dong and ma_kho != "" and ma_kho not in ket_qua:
+                ket_qua.append(ma_kho)
+
+        return ket_qua
+
+    def loc_theo_kho_duoc_phan_cong(self, danh_sach, danh_sach_ma_kho=None):
+        if danh_sach_ma_kho is None:
+            danh_sach_ma_kho = self.lay_danh_sach_ma_kho_duoc_phan_cong()
+
+        ket_qua = []
+
+        for item in danh_sach:
+            if item.get("maKho", "") in danh_sach_ma_kho:
+                ket_qua.append(item)
+
+        return ket_qua
+
+    def lay_du_lieu_phieu(self, ten_file):
+        return self.loc_theo_kho_duoc_phan_cong(doc_json(ten_file, []))
+
+    def lay_du_lieu_kiem_ke(self):
+        return self.loc_theo_kho_duoc_phan_cong(doc_json("kiem_ke.json", []))
+
     def do_du_lieu_thong_ke(self, bang, data):
         self.xoa_du_lieu_bang(bang)
 
@@ -1756,7 +1802,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
 
         danh_sach = []
 
-        for item in doc_json("phieu_nhap.json", []):
+        for item in self.lay_du_lieu_phieu("phieu_nhap.json"):
             danh_sach.append({
                 "loai": "Phiếu nhập",
                 "maPhieu": item.get("maPhieuNhap", ""),
@@ -1765,7 +1811,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
                 "trangThai": item.get("trangThai", ""),
             })
 
-        for item in doc_json("phieu_xuat.json", []):
+        for item in self.lay_du_lieu_phieu("phieu_xuat.json"):
             danh_sach.append({
                 "loai": "Phiếu xuất",
                 "maPhieu": item.get("maPhieuXuat", ""),
@@ -1805,7 +1851,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
         return ket_qua
 
     def thong_ke_theo_ngay(self, ten_file):
-        data = doc_json(ten_file, [])
+        data = self.lay_du_lieu_phieu(ten_file)
         truong_ngay = "ngayNhap"
 
         if ten_file == "phieu_xuat.json":
@@ -1820,7 +1866,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
         tong = 0
 
         for ten_file, key_ngay in [("phieu_nhap.json", "ngayNhap"), ("phieu_xuat.json", "ngayXuat")]:
-            data = doc_json(ten_file, [])
+            data = self.lay_du_lieu_phieu(ten_file)
 
             for item in data:
                 if str(item.get(key_ngay, ""))[:10] == hom_nay:
@@ -1829,11 +1875,11 @@ class GiaoDienKeToan(GiaoDienCoSo):
         return tong
 
     def dem_phieu(self, ten_file):
-        data = doc_json(ten_file, [])
+        data = self.lay_du_lieu_phieu(ten_file)
         return len(data)
 
     def tong_tien(self, ten_file):
-        data = doc_json(ten_file, [])
+        data = self.lay_du_lieu_phieu(ten_file)
         tong = 0
 
         for item in data:

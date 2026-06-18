@@ -53,11 +53,6 @@
     {
       "maLoaiHang": "LH0008",
       "tenLoaiHang": "Máy lạnh"
-    },
-    {
-      "tenLoaiHang": "Chuột",
-      "ghiChu": "",
-      "maLoaiHang": "LH0009"
     }
   ],
   "sanPham": [
@@ -67,7 +62,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0001",
       "donGia": 35000000,
-      "mucTonToiThieu": 10
+      "mucTonToiThieu": 10,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0002",
@@ -75,7 +71,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0001",
       "donGia": 25000000,
-      "mucTonToiThieu": 8
+      "mucTonToiThieu": 8,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0003",
@@ -83,7 +80,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0001",
       "donGia": 30000000,
-      "mucTonToiThieu": 7
+      "mucTonToiThieu": 7,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0004",
@@ -91,7 +89,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0001",
       "donGia": 10000000,
-      "mucTonToiThieu": 12
+      "mucTonToiThieu": 12,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0005",
@@ -108,7 +107,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0001",
       "donGia": 9000000,
-      "mucTonToiThieu": 10
+      "mucTonToiThieu": 10,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0007",
@@ -125,7 +125,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0001",
       "donGia": 17000000,
-      "mucTonToiThieu": 5
+      "mucTonToiThieu": 5,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0009",
@@ -133,7 +134,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0001",
       "donGia": 12000000,
-      "mucTonToiThieu": 8
+      "mucTonToiThieu": 8,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0010",
@@ -141,7 +143,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0001",
       "donGia": 5000000,
-      "mucTonToiThieu": 15
+      "mucTonToiThieu": 15,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0011",
@@ -149,7 +152,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0002",
       "donGia": 28000000,
-      "mucTonToiThieu": 5
+      "mucTonToiThieu": 5,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0012",
@@ -157,7 +161,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0002",
       "donGia": 45000000,
-      "mucTonToiThieu": 4
+      "mucTonToiThieu": 4,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0013",
@@ -165,7 +170,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0002",
       "donGia": 32000000,
-      "mucTonToiThieu": 6
+      "mucTonToiThieu": 6,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0014",
@@ -173,7 +179,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0002",
       "donGia": 18000000,
-      "mucTonToiThieu": 10
+      "mucTonToiThieu": 10,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0015",
@@ -181,7 +188,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0002",
       "donGia": 20000000,
-      "mucTonToiThieu": 7
+      "mucTonToiThieu": 7,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0016",
@@ -198,7 +206,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0002",
       "donGia": 35000000,
-      "mucTonToiThieu": 4
+      "mucTonToiThieu": 4,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0018",
@@ -206,7 +215,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0002",
       "donGia": 16000000,
-      "mucTonToiThieu": 8
+      "mucTonToiThieu": 8,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0019",
@@ -214,7 +224,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0002",
       "donGia": 40000000,
-      "mucTonToiThieu": 3
+      "mucTonToiThieu": 3,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0020",
@@ -222,7 +233,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0002",
       "donGia": 17000000,
-      "mucTonToiThieu": 9
+      "mucTonToiThieu": 9,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0021",
@@ -230,7 +242,8 @@
       "maDonViTinh": "DVT003",
       "maLoaiHang": "LH0003",
       "donGia": 5000000,
-      "mucTonToiThieu": 15
+      "mucTonToiThieu": 15,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0022",
@@ -238,7 +251,8 @@
       "maDonViTinh": "DVT003",
       "maLoaiHang": "LH0003",
       "donGia": 800000,
-      "mucTonToiThieu": 20
+      "mucTonToiThieu": 20,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0023",
@@ -246,7 +260,8 @@
       "maDonViTinh": "DVT003",
       "maLoaiHang": "LH0003",
       "donGia": 300000,
-      "mucTonToiThieu": 30
+      "mucTonToiThieu": 30,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0024",
@@ -254,7 +269,8 @@
       "maDonViTinh": "DVT003",
       "maLoaiHang": "LH0003",
       "donGia": 1200000,
-      "mucTonToiThieu": 25
+      "mucTonToiThieu": 25,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0025",
@@ -262,7 +278,8 @@
       "maDonViTinh": "DVT003",
       "maLoaiHang": "LH0003",
       "donGia": 2200000,
-      "mucTonToiThieu": 20
+      "mucTonToiThieu": 20,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0026",
@@ -270,7 +287,8 @@
       "maDonViTinh": "DVT003",
       "maLoaiHang": "LH0003",
       "donGia": 8000000,
-      "mucTonToiThieu": 10
+      "mucTonToiThieu": 10,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0027",
@@ -278,7 +296,8 @@
       "maDonViTinh": "DVT003",
       "maLoaiHang": "LH0003",
       "donGia": 150000,
-      "mucTonToiThieu": 50
+      "mucTonToiThieu": 50,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0028",
@@ -286,7 +305,8 @@
       "maDonViTinh": "DVT003",
       "maLoaiHang": "LH0003",
       "donGia": 600000,
-      "mucTonToiThieu": 18
+      "mucTonToiThieu": 18,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0029",
@@ -294,7 +314,8 @@
       "maDonViTinh": "DVT003",
       "maLoaiHang": "LH0003",
       "donGia": 3000000,
-      "mucTonToiThieu": 12
+      "mucTonToiThieu": 12,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0030",
@@ -302,7 +323,8 @@
       "maDonViTinh": "DVT003",
       "maLoaiHang": "LH0003",
       "donGia": 100000,
-      "mucTonToiThieu": 40
+      "mucTonToiThieu": 40,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0031",
@@ -310,7 +332,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0004",
       "donGia": 25000000,
-      "mucTonToiThieu": 6
+      "mucTonToiThieu": 6,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0032",
@@ -318,7 +341,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0004",
       "donGia": 17000000,
-      "mucTonToiThieu": 7
+      "mucTonToiThieu": 7,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0033",
@@ -326,7 +350,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0004",
       "donGia": 12000000,
-      "mucTonToiThieu": 8
+      "mucTonToiThieu": 8,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0034",
@@ -334,7 +359,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0004",
       "donGia": 21000000,
-      "mucTonToiThieu": 5
+      "mucTonToiThieu": 5,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0035",
@@ -342,7 +368,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0004",
       "donGia": 6000000,
-      "mucTonToiThieu": 10
+      "mucTonToiThieu": 10,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0036",
@@ -350,7 +377,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0004",
       "donGia": 9000000,
-      "mucTonToiThieu": 9
+      "mucTonToiThieu": 9,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0037",
@@ -358,7 +386,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0004",
       "donGia": 10000000,
-      "mucTonToiThieu": 7
+      "mucTonToiThieu": 7,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0038",
@@ -366,7 +395,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0004",
       "donGia": 8000000,
-      "mucTonToiThieu": 8
+      "mucTonToiThieu": 8,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0039",
@@ -374,7 +404,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0004",
       "donGia": 7000000,
-      "mucTonToiThieu": 12
+      "mucTonToiThieu": 12,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0040",
@@ -382,7 +413,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0004",
       "donGia": 6500000,
-      "mucTonToiThieu": 11
+      "mucTonToiThieu": 11,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0041",
@@ -390,7 +422,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0005",
       "donGia": 12000000,
-      "mucTonToiThieu": 8
+      "mucTonToiThieu": 8,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0042",
@@ -398,7 +431,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0005",
       "donGia": 7000000,
-      "mucTonToiThieu": 10
+      "mucTonToiThieu": 10,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0043",
@@ -406,7 +440,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0005",
       "donGia": 9000000,
-      "mucTonToiThieu": 9
+      "mucTonToiThieu": 9,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0044",
@@ -414,7 +449,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0005",
       "donGia": 6000000,
-      "mucTonToiThieu": 12
+      "mucTonToiThieu": 12,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0045",
@@ -431,7 +467,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0005",
       "donGia": 8000000,
-      "mucTonToiThieu": 6
+      "mucTonToiThieu": 6,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0047",
@@ -439,7 +476,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0005",
       "donGia": 3500000,
-      "mucTonToiThieu": 14
+      "mucTonToiThieu": 14,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0048",
@@ -447,7 +485,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0005",
       "donGia": 4000000,
-      "mucTonToiThieu": 13
+      "mucTonToiThieu": 13,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0049",
@@ -455,7 +494,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0005",
       "donGia": 5000000,
-      "mucTonToiThieu": 10
+      "mucTonToiThieu": 10,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0050",
@@ -463,7 +503,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0005",
       "donGia": 2000000,
-      "mucTonToiThieu": 20
+      "mucTonToiThieu": 20,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0051",
@@ -471,7 +512,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0006",
       "donGia": 14000000,
-      "mucTonToiThieu": 5
+      "mucTonToiThieu": 5,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0052",
@@ -479,7 +521,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0006",
       "donGia": 32000000,
-      "mucTonToiThieu": 3
+      "mucTonToiThieu": 3,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0053",
@@ -487,7 +530,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0006",
       "donGia": 16000000,
-      "mucTonToiThieu": 4
+      "mucTonToiThieu": 4,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0054",
@@ -495,7 +539,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0006",
       "donGia": 7000000,
-      "mucTonToiThieu": 6
+      "mucTonToiThieu": 6,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0055",
@@ -503,7 +548,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0006",
       "donGia": 9000000,
-      "mucTonToiThieu": 7
+      "mucTonToiThieu": 7,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0056",
@@ -511,7 +557,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0006",
       "donGia": 15000000,
-      "mucTonToiThieu": 4
+      "mucTonToiThieu": 4,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0057",
@@ -519,7 +566,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0006",
       "donGia": 11000000,
-      "mucTonToiThieu": 5
+      "mucTonToiThieu": 5,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0058",
@@ -527,7 +575,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0006",
       "donGia": 13000000,
-      "mucTonToiThieu": 6
+      "mucTonToiThieu": 6,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0059",
@@ -535,7 +584,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0006",
       "donGia": 8000000,
-      "mucTonToiThieu": 8
+      "mucTonToiThieu": 8,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0060",
@@ -543,7 +593,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0006",
       "donGia": 40000000,
-      "mucTonToiThieu": 2
+      "mucTonToiThieu": 2,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0061",
@@ -551,7 +602,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0007",
       "donGia": 18000000,
-      "mucTonToiThieu": 4
+      "mucTonToiThieu": 4,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0062",
@@ -559,7 +611,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0007",
       "donGia": 12000000,
-      "mucTonToiThieu": 6
+      "mucTonToiThieu": 6,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0063",
@@ -567,7 +620,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0007",
       "donGia": 25000000,
-      "mucTonToiThieu": 3
+      "mucTonToiThieu": 3,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0064",
@@ -575,7 +629,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0007",
       "donGia": 9000000,
-      "mucTonToiThieu": 8
+      "mucTonToiThieu": 8,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0065",
@@ -583,7 +638,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0007",
       "donGia": 7000000,
-      "mucTonToiThieu": 10
+      "mucTonToiThieu": 10,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0066",
@@ -591,7 +647,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0007",
       "donGia": 14000000,
-      "mucTonToiThieu": 5
+      "mucTonToiThieu": 5,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0067",
@@ -599,7 +656,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0007",
       "donGia": 30000000,
-      "mucTonToiThieu": 2
+      "mucTonToiThieu": 2,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0068",
@@ -607,7 +665,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0007",
       "donGia": 11000000,
-      "mucTonToiThieu": 7
+      "mucTonToiThieu": 7,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0069",
@@ -615,7 +674,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0007",
       "donGia": 8000000,
-      "mucTonToiThieu": 9
+      "mucTonToiThieu": 9,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0070",
@@ -623,7 +683,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0007",
       "donGia": 10000000,
-      "mucTonToiThieu": 6
+      "mucTonToiThieu": 6,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0071",
@@ -631,7 +692,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0008",
       "donGia": 11000000,
-      "mucTonToiThieu": 6
+      "mucTonToiThieu": 6,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0072",
@@ -639,7 +701,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0008",
       "donGia": 15000000,
-      "mucTonToiThieu": 4
+      "mucTonToiThieu": 4,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0073",
@@ -647,7 +710,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0008",
       "donGia": 9500000,
-      "mucTonToiThieu": 8
+      "mucTonToiThieu": 8,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0074",
@@ -655,7 +719,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0008",
       "donGia": 12000000,
-      "mucTonToiThieu": 7
+      "mucTonToiThieu": 7,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0075",
@@ -663,7 +728,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0008",
       "donGia": 9000000,
-      "mucTonToiThieu": 9
+      "mucTonToiThieu": 9,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0076",
@@ -680,7 +746,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0008",
       "donGia": 13000000,
-      "mucTonToiThieu": 5
+      "mucTonToiThieu": 5,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0078",
@@ -688,7 +755,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0008",
       "donGia": 8500000,
-      "mucTonToiThieu": 10
+      "mucTonToiThieu": 10,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0079",
@@ -696,7 +764,8 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0008",
       "donGia": 10000000,
-      "mucTonToiThieu": 8
+      "mucTonToiThieu": 8,
+      "trangThai": "Hoạt động"
     },
     {
       "maSanPham": "SP0080",
@@ -704,15 +773,7 @@
       "maDonViTinh": "DVT001",
       "maLoaiHang": "LH0008",
       "donGia": 16000000,
-      "mucTonToiThieu": 3
-    },
-    {
-      "maSanPham": "SP0081",
-      "tenSanPham": "Máy lạnh Samsung Inverter 2HP",
-      "maDonViTinh": "DVT001",
-      "maLoaiHang": "LH0001",
-      "donGia": 80000000,
-      "mucTonToiThieu": 4,
+      "mucTonToiThieu": 3,
       "trangThai": "Hoạt động"
     }
   ]

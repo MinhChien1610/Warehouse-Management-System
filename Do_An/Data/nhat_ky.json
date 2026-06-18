@@ -520,5 +520,23 @@
     "thoiGian": "2026-06-17 16:02:08",
     "trangThai": "Thành công",
     "ghiChu": "Thêm LH0009"
+  },
+  {
+    "maNhatKy": "NK0059",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Khóa/Mở khóa",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-18 10:46:02",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật trạng thái NV004 thành Đã khóa"
+  },
+  {
+    "maNhatKy": "NK0060",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin xóa Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-18 10:46:06",
+    "trangThai": "Thành công",
+    "ghiChu": "Xóa NV004"
   }
 ]

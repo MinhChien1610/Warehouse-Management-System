@@ -388,7 +388,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
             data_hien_tai["data"] = ket_qua
 
             if bang_luu["bang"] is not None:
-                self.do_du_lieu_vao_bang(bang_luu["bang"], ket_qua, keys)
+                self.do_du_lieu_chung_tu(bang_luu["bang"], ket_qua, keys)
 
         def tim_kiem(tu_khoa):
             load(tu_khoa)
@@ -473,6 +473,20 @@ class GiaoDienKeToan(GiaoDienCoSo):
             "Đóng",
             "Hủy",
         )
+
+    def do_du_lieu_chung_tu(self, bang, data, keys):
+        self.xoa_du_lieu_bang(bang)
+
+        for item in data:
+            values = []
+
+            for key in keys:
+                if key == "tongTien":
+                    values.append(self.dinh_dang_tien_khong_don_vi(item.get(key, 0)))
+                else:
+                    values.append(item.get(key, ""))
+
+            bang.insert("", "end", values=values)
 
     # =========================
     # TỒN KHO

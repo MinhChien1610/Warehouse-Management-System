@@ -25,11 +25,11 @@
       "trangThai": "Hoạt động"
     },
     {
-      "tenNhanVien": "Le Minh Chien",
+      "tenNhanVien": "Lê Minh Chiến",
       "ngaySinh": "2006-10-16",
-      "soDienThoai": "0705011417",
+      "soDienThoai": "0705911417",
       "email": "lethiminhchien07@gmail.com",
-      "trangThai": true,
+      "trangThai": "Hoạt động",
       "maNhanVien": "NV004"
     }
   ],
@@ -54,6 +54,13 @@
       "matKhau": "Ketoan@123",
       "maNhanVien": "NV003",
       "trangThai": "Hoạt động"
+    },
+    {
+      "tenTaiKhoan": "mchien06",
+      "matKhau": "123456",
+      "maNhanVien": "NV004",
+      "trangThai": "Đã khóa",
+      "maTaiKhoan": "TK004"
     }
   ],
   "vaiTro": [
@@ -82,6 +89,10 @@
     {
       "maTaiKhoan": "TK003",
       "maVaiTro": "VT03"
+    },
+    {
+      "maTaiKhoan": "TK004",
+      "maVaiTro": "VT03"
     }
   ],
   "phanCongKho": [
@@ -93,6 +104,11 @@
     {
       "maTaiKhoan": "TK003",
       "maKho": "KHO001",
+      "trangThai": true
+    },
+    {
+      "maTaiKhoan": "TK004",
+      "maKho": "KHO004",
       "trangThai": true
     }
   ]

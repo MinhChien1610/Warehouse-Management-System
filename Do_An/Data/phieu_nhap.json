@@ -265,5 +265,25 @@
       }
     ],
     "tongTienHienThi": "420.000.000"
+  },
+  {
+    "maPhieuNhap": "PN0014",
+    "maNhaSanXuat": "NSX001",
+    "maKho": "KHO001",
+    "maTaiKhoan": "TK002",
+    "ngayNhap": "2026-06-19",
+    "tongTien": 1085000000,
+    "trangThai": "Lưu tạm",
+    "chiTiet": [
+      {
+        "maSanPham": "SP0001",
+        "soLuong": 31,
+        "donGia": 35000000,
+        "donGiaHienThi": "35.000.000",
+        "thanhTienHienThi": "1.085.000.000",
+        "maViTri": "KHO001-A"
+      }
+    ],
+    "tongTienHienThi": "1.085.000.000"
   }
 ]

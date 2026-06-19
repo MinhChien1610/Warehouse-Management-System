@@ -442,7 +442,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
 
         self.tao_dong_thong_tin(body, "Mã phiếu", ma_phieu)
         self.tao_dong_thong_tin(body, "Kho", phieu.get("maKho", ""))
-        self.tao_dong_thong_tin(body, "Tổng tiền", self.dinh_dang_tien(phieu.get("tongTien", 0)))
+        self.tao_dong_thong_tin(body, "Tổng tiền", self.dinh_dang_tien_khong_don_vi(phieu.get("tongTien", 0)))
         self.tao_dong_thong_tin(body, "Trạng thái", phieu.get("trangThai", ""))
 
         self.tao_label(
@@ -553,8 +553,8 @@ class GiaoDienKeToan(GiaoDienCoSo):
                     item.get("tenSanPham", ""),
                     item.get("maKho", ""),
                     self.dinh_dang_so(item.get("soLuongTon", 0)),
-                    self.dinh_dang_tien(item.get("donGia", 0)),
-                    self.dinh_dang_tien(item.get("giaTriTon", 0)),
+                    self.dinh_dang_tien_khong_don_vi(item.get("donGia", 0)),
+                    self.dinh_dang_tien_khong_don_vi(item.get("giaTriTon", 0)),
                     item.get("canhBao", ""),
                 ),
             )
@@ -741,7 +741,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
         row.pack(fill="x", pady=(0, 12))
         self.tao_the_tong_quan(row, ten_loai, tong_phieu, "Tổng số phiếu")
         self.tao_the_tong_quan(row, "Tổng tiền", self.dinh_dang_tien_the(tong_tien), "Tổng giá trị")
-        self.tao_the_tong_quan(row, "Trung bình", self.dinh_dang_tien(round(trung_binh)), "Giá trị/phiếu")
+        self.tao_the_tong_quan(row, "Trung bình", self.dinh_dang_tien_khong_don_vi(round(trung_binh)), "Giá trị/phiếu")
 
         main = tk.Frame(body, bg=self.mau_card)
         main.pack(fill="both", expand=True)
@@ -1620,11 +1620,11 @@ class GiaoDienKeToan(GiaoDienCoSo):
         danh_sach_kho = self.loc_theo_kho_duoc_phan_cong(du_lieu_kho.get("kho", []))
 
         return [
-            {"noiDung": "Phiếu nhập", "soLuong": len(phieu_nhap), "giaTri": self.dinh_dang_tien(tong_nhap), "ghiChu": "Tổng giá trị nhập kho"},
-            {"noiDung": "Phiếu xuất", "soLuong": len(phieu_xuat), "giaTri": self.dinh_dang_tien(tong_xuat), "ghiChu": "Tổng giá trị xuất kho"},
+            {"noiDung": "Phiếu nhập", "soLuong": len(phieu_nhap), "giaTri": self.dinh_dang_tien_khong_don_vi(tong_nhap), "ghiChu": "Tổng giá trị nhập kho"},
+            {"noiDung": "Phiếu xuất", "soLuong": len(phieu_xuat), "giaTri": self.dinh_dang_tien_khong_don_vi(tong_xuat), "ghiChu": "Tổng giá trị xuất kho"},
             {"noiDung": "Kho hàng", "soLuong": len(danh_sach_kho), "giaTri": "-", "ghiChu": "Số kho được phân công"},
             {"noiDung": "Sản phẩm", "soLuong": len(du_lieu_hang.get("sanPham", [])), "giaTri": "-", "ghiChu": "Mặt hàng đang quản lý"},
-            {"noiDung": "Tồn kho", "soLuong": self.dinh_dang_so(tong_ton), "giaTri": self.dinh_dang_tien(gia_tri_ton), "ghiChu": "Tổng số lượng và giá trị tồn"},
+            {"noiDung": "Tồn kho", "soLuong": self.dinh_dang_so(tong_ton), "giaTri": self.dinh_dang_tien_khong_don_vi(gia_tri_ton), "ghiChu": "Tổng số lượng và giá trị tồn"},
             {"noiDung": "Kiểm kê", "soLuong": len(kiem_ke), "giaTri": "-", "ghiChu": "Phiếu kiểm kê đã ghi nhận"},
         ]
 
@@ -1708,7 +1708,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
                     ma_phieu,
                     ngay,
                     item.get("maKho", ""),
-                    self.dinh_dang_tien(item.get("tongTien", 0)),
+                    self.dinh_dang_tien_khong_don_vi(item.get("tongTien", 0)),
                     item.get("trangThai", ""),
                 ),
             )
@@ -1746,7 +1746,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
                     item.get("loai", ""),
                     item.get("maPhieu", ""),
                     item.get("ngay", ""),
-                    self.dinh_dang_tien(item.get("tongTien", 0)),
+                    self.dinh_dang_tien_khong_don_vi(item.get("tongTien", 0)),
                     item.get("trangThai", ""),
                 ),
             )
@@ -1808,6 +1808,9 @@ class GiaoDienKeToan(GiaoDienCoSo):
             return 0
 
         return tong / so_luong
+
+    def dinh_dang_tien_khong_don_vi(self, value):
+        return "{:,}".format(int(self.chuyen_so(value))).replace(",", ".")
 
     def dinh_dang_tien_the(self, value):
         so = self.chuyen_so(value)

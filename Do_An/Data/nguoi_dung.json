@@ -29,7 +29,7 @@
       "ngaySinh": "2006-10-16",
       "soDienThoai": "0705911417",
       "email": "lethiminhchien07@gmail.com",
-      "trangThai": "Không hoạt động",
+      "trangThai": "Đã khóa",
       "maNhanVien": "NV004"
     }
   ],
@@ -59,7 +59,7 @@
       "tenTaiKhoan": "mchien06",
       "matKhau": "123456",
       "maNhanVien": "NV004",
-      "trangThai": "Không hoạt động",
+      "trangThai": "Đã khóa",
       "maTaiKhoan": "TK004"
     }
   ],
@@ -102,13 +102,13 @@
       "trangThai": true
     },
     {
-      "maTaiKhoan": "TK004",
-      "maKho": "KHO003",
-      "trangThai": false
-    },
-    {
       "maTaiKhoan": "TK003",
       "maKho": "KHO001",
+      "trangThai": true
+    },
+    {
+      "maTaiKhoan": "TK004",
+      "maKho": "KHO002",
       "trangThai": true
     }
   ]

@@ -2520,7 +2520,25 @@ class GiaoDienAdmin(GiaoDienCoSo):
 
     def lay_vai_tro_duoc_cap(self, ma_vai_tro_hien_tai=""):
         nguoi_dung = doc_json("nguoi_dung.json", {})
-        return nguoi_dung.get("vaiTro", [])
+        ket_qua = []
+
+        for vai_tro in nguoi_dung.get("vaiTro", []):
+            ma_vai_tro = str(vai_tro.get("maVaiTro", "")).strip()
+            ten_vai_tro = str(vai_tro.get("tenVaiTro", "")).strip().lower()
+
+            if ma_vai_tro == ma_vai_tro_hien_tai:
+                ket_qua.append(vai_tro)
+            elif ten_vai_tro in [
+                "nhân viên kho",
+                "nhan vien kho",
+                "nhanvienkho",
+                "kế toán",
+                "ke toan",
+                "ketoan",
+            ]:
+                ket_qua.append(vai_tro)
+
+        return ket_qua
 
     def lay_kho_phan_cong_tai_khoan(self, ma_tai_khoan):
         nguoi_dung = doc_json("nguoi_dung.json", {})
@@ -2672,7 +2690,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
         values["maVaiTro"] = ma_vai_tro_hien_tai
         values["maKho"] = self.lay_kho_phan_cong_tai_khoan(ma_tai_khoan)
         values["trangThai"] = self.lay_gia_tri_trang_thai_nguoi_dung(item.get("trangThai", ""))
-        danh_sach_vai_tro = self.lay_vai_tro_duoc_cap()
+        danh_sach_vai_tro = self.lay_vai_tro_duoc_cap(ma_vai_tro_hien_tai)
 
         if self.la_tai_khoan_admin_hien_tai(ma_tai_khoan=ma_tai_khoan):
             danh_sach_vai_tro = [

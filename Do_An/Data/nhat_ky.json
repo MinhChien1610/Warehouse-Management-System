@@ -835,5 +835,41 @@
     "thoiGian": "2026-06-21 18:28:19",
     "trangThai": "Thành công",
     "ghiChu": "Khôi phục TK003"
+  },
+  {
+    "maNhatKy": "NK0094",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin khôi phục Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 18:58:58",
+    "trangThai": "Thành công",
+    "ghiChu": "Khôi phục NV004"
+  },
+  {
+    "maNhatKy": "NK0095",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin khôi phục Tài khoản",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 18:59:06",
+    "trangThai": "Thành công",
+    "ghiChu": "Khôi phục TK004"
+  },
+  {
+    "maNhatKy": "NK0096",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Reset mật khẩu",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 19:04:42",
+    "trangThai": "Thành công",
+    "ghiChu": "Reset mật khẩu TK004"
+  },
+  {
+    "maNhatKy": "NK0097",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Khóa/Mở khóa",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 19:04:51",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật trạng thái NV004 thành Đã khóa"
   }
 ]

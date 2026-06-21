@@ -1,4 +1,5 @@
 ﻿import ctypes
+from datetime import datetime
 import tkinter as tk
 from tkinter import messagebox
 
@@ -299,6 +300,67 @@ class GiaoDienLogin(GiaoDienCoSo):
 
         return noi_dung
 
+    def tao_ma_nhat_ky_moi(self, danh_sach):
+        so_lon_nhat = 0
+
+        for item in danh_sach:
+            ma = str(item.get("maNhatKy", "")).replace("NK", "")
+
+            if ma.isdigit():
+                so_lon_nhat = max(so_lon_nhat, int(ma))
+
+        return "NK" + str(so_lon_nhat + 1).zfill(4)
+
+    def ghi_nhat_ky_login(self, ma_tai_khoan, hanh_dong, trang_thai, ghi_chu):
+        data = self.doc_json("nhat_ky.json", [])
+
+        data.append({
+            "maNhatKy": self.tao_ma_nhat_ky_moi(data),
+            "maTaiKhoan": ma_tai_khoan,
+            "hanhDong": hanh_dong,
+            "doiTuong": "Tài khoản",
+            "thoiGian": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "trangThai": trang_thai,
+            "ghiChu": ghi_chu,
+        })
+
+        self.ghi_json("nhat_ky.json", data)
+
+    def trang_thai_hoat_dong(self, trang_thai):
+        if trang_thai is True:
+            return True
+
+        if trang_thai is False:
+            return False
+
+        trang_thai = str(trang_thai).strip().lower()
+
+        return trang_thai in [
+            "true",
+            "1",
+            "hoạt động",
+            "hoat dong",
+            "hoatdong",
+            "đang hoạt động",
+            "dang hoat dong",
+            "danghoatdong",
+            "active",
+            "mở",
+            "mo",
+        ]
+
+    def tai_khoan_dang_hoat_dong(self, tai_khoan):
+        return self.trang_thai_hoat_dong(tai_khoan.get("trangThai", ""))
+
+    def lay_nhan_vien_cua_tai_khoan(self, data, tai_khoan):
+        ma_nhan_vien = tai_khoan.get("maNhanVien", "")
+
+        for nhan_vien in data.get("nhanVien", []):
+            if nhan_vien.get("maNhanVien", "") == ma_nhan_vien:
+                return nhan_vien
+
+        return None
+
     def xu_ly_dang_nhap(self):
         username = self.lay_noi_dung_entry(
             self.entry_username,
@@ -324,46 +386,71 @@ class GiaoDienLogin(GiaoDienCoSo):
                 self.kiem_tra_va_mo_giao_dien(data, tai_khoan)
                 return
 
+        self.ghi_nhat_ky_login(
+            "",
+            "Đăng nhập",
+            "Thất bại",
+            "Sai tên đăng nhập hoặc mật khẩu: " + username,
+        )
         messagebox.showerror("Lỗi", "Tên đăng nhập hoặc mật khẩu không đúng.")
 
     def kiem_tra_va_mo_giao_dien(self, data, tai_khoan):
+        ma_tai_khoan = tai_khoan.get("maTaiKhoan", "")
+
         if not self.tai_khoan_dang_hoat_dong(tai_khoan):
-            messagebox.showwarning("Thông báo", "Tài khoản đã bị khóa.")
+            self.ghi_nhat_ky_login(
+                ma_tai_khoan,
+                "Đăng nhập",
+                "Thất bại",
+                "Tài khoản đã khóa hoặc không hoạt động",
+            )
+            messagebox.showwarning("Thông báo", "Tài khoản đã khóa hoặc không hoạt động.")
+            return
+
+        nhan_vien = self.lay_nhan_vien_cua_tai_khoan(data, tai_khoan)
+
+        if nhan_vien is None:
+            self.ghi_nhat_ky_login(
+                ma_tai_khoan,
+                "Đăng nhập",
+                "Thất bại",
+                "Không tìm thấy nhân viên liên kết",
+            )
+            messagebox.showerror("Lỗi", "Không tìm thấy nhân viên liên kết với tài khoản.")
+            return
+
+        if not self.trang_thai_hoat_dong(nhan_vien.get("trangThai", "")):
+            self.ghi_nhat_ky_login(
+                ma_tai_khoan,
+                "Đăng nhập",
+                "Thất bại",
+                "Nhân viên chưa hoạt động",
+            )
+            messagebox.showwarning("Thông báo", "Nhân viên chưa hoạt động nên không thể đăng nhập.")
             return
 
         vai_tro = self.lay_vai_tro_tai_khoan(
             data,
-            tai_khoan.get("maTaiKhoan", ""),
+            ma_tai_khoan,
         )
 
         if len(vai_tro) == 0:
+            self.ghi_nhat_ky_login(
+                ma_tai_khoan,
+                "Đăng nhập",
+                "Thất bại",
+                "Tài khoản chưa được phân quyền",
+            )
             messagebox.showerror("Lỗi", "Tài khoản chưa được phân quyền.")
             return
 
+        self.ghi_nhat_ky_login(
+            ma_tai_khoan,
+            "Đăng nhập",
+            "Thành công",
+            "Đăng nhập hệ thống",
+        )
         self.dang_nhap_vao_giao_dien(tai_khoan, vai_tro[0])
-
-    def tai_khoan_dang_hoat_dong(self, tai_khoan):
-        trang_thai = str(tai_khoan.get("trangThai", "")).strip().lower()
-
-        if tai_khoan.get("trangThai", "") is True:
-            return True
-
-        if tai_khoan.get("trangThai", "") is False:
-            return False
-
-        return trang_thai in [
-            "true",
-            "1",
-            "hoạt động",
-            "hoat dong",
-            "hoatdong",
-            "đang hoạt động",
-            "dang hoat dong",
-            "danghoatdong",
-            "active",
-            "mở",
-            "mo",
-        ]
 
     def lay_vai_tro_tai_khoan(self, data, ma_tai_khoan):
         vai_tro_map = {}
@@ -392,12 +479,12 @@ class GiaoDienLogin(GiaoDienCoSo):
             hien_thi_admin(tai_khoan)
             return
 
-        if ten_vai_tro in ["nhanvienkho", "nhân viên kho"]:
+        if ten_vai_tro in ["nhanvienkho", "nhân viên kho", "nhan vien kho"]:
             from GUI.NhanVienKho.nhanvienkho import hien_thi_nhan_vien_kho
             hien_thi_nhan_vien_kho(tai_khoan)
             return
 
-        if ten_vai_tro in ["ketoan", "kế toán"]:
+        if ten_vai_tro in ["ketoan", "kế toán", "ke toan"]:
             from GUI.KeToan.ketoan import hien_thi_ke_toan
             hien_thi_ke_toan(tai_khoan)
             return

@@ -1,6 +1,7 @@
 ﻿import json
 import os
 import tkinter as tk
+from datetime import datetime
 from tkinter import ttk, messagebox
 
 import matplotlib
@@ -63,7 +64,33 @@ class GiaoDienAdmin(GiaoDienCoSo):
 
 
 
+    def tao_ma_nhat_ky_moi(self, danh_sach):
+        so_lon_nhat = 0
 
+        for item in danh_sach:
+            ma = str(item.get("maNhatKy", "")).replace("NK", "")
+
+            if ma.isdigit():
+                so_lon_nhat = max(so_lon_nhat, int(ma))
+
+        return "NK" + str(so_lon_nhat + 1).zfill(4)
+
+
+    def ghi_nhat_ky_dang_xuat(self):
+        data = doc_json("nhat_ky.json", [])
+        ma_tai_khoan = self.tai_khoan_dang_nhap.get("maTaiKhoan", "")
+
+        data.append({
+            "maNhatKy": self.tao_ma_nhat_ky_moi(data),
+            "maTaiKhoan": ma_tai_khoan,
+            "hanhDong": "Đăng xuất",
+            "doiTuong": "Tài khoản",
+            "thoiGian": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "trangThai": "Thành công",
+            "ghiChu": "Đăng xuất hệ thống",
+        })
+
+        ghi_json("nhat_ky.json", data)
 
 
 
@@ -2601,7 +2628,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             {"key": "ngaySinh", "label": "Ngày sinh", "required": False, "validate": "date"},
             {"key": "soDienThoai", "label": "Số điện thoại", "required": False, "validate": "phone"},
             {"key": "email", "label": "Email", "required": False, "validate": "email"},
-            {"key": "trangThai", "label": "Trạng thái", "type": "combo", "values": ["Hoạt động", "Đã khóa"]},
+            {"key": "trangThai", "label": "Trạng thái", "type": "combo", "values": ["Hoạt động", "Đã khóa", "Không hoạt động"]},
         ]
 
         def save(data):
@@ -2731,7 +2758,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
                     "tenKho",
                 ),
             },
-            {"key": "trangThai", "label": "Trạng thái", "type": "combo", "values": ["Hoạt động", "Đã khóa"]},
+            {"key": "trangThai", "label": "Trạng thái", "type": "combo", "values": ["Hoạt động", "Đã khóa", "Không hoạt động"]},
         ]
 
         def save(data):
@@ -4295,6 +4322,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
         hoi = messagebox.askyesno("Xác nhận", "Bạn có muốn đăng xuất không?")
 
         if hoi:
+            self.ghi_nhat_ky_dang_xuat()
             self.root.destroy()
 
             from GUI.Login.login import hien_thi_login

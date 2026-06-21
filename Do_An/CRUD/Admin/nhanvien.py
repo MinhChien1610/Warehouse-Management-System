@@ -8,6 +8,37 @@ class NhanVien:
     def ghi_nguoi_dung(self, data):
         self.ghi_json("nguoi_dung.json", data)
 
+    def la_hoat_dong(self, trang_thai):
+        trang_thai = str(trang_thai).strip().lower()
+        return trang_thai in [
+            "true", "1",
+            "hoạt động", "hoat dong",
+            "đang hoạt động", "dang hoat dong",
+            "active", "mở", "mo"
+        ]
+
+    def la_khong_hoat_dong(self, trang_thai):
+        trang_thai = str(trang_thai).strip().lower()
+        return trang_thai in ["không hoạt động", "khong hoat dong"]
+
+    def la_trang_thai_khoa(self, trang_thai):
+        trang_thai = str(trang_thai).strip().lower()
+        return trang_thai in [
+            "false", "0",
+            "đã khóa", "da khoa",
+            "khóa", "khoa",
+            "inactive"
+        ]
+
+    def lay_trang_thai_moi(self, trang_thai_hien_tai):
+        if self.la_khong_hoat_dong(trang_thai_hien_tai):
+            raise ValueError("Dữ liệu đang không hoạt động, vui lòng dùng chức năng sửa để kích hoạt lại.")
+
+        if self.la_hoat_dong(trang_thai_hien_tai):
+            return "Đã khóa"
+
+        return "Hoạt động"
+
     def kiem_tra_sdt(self, value, label="Số điện thoại", bat_buoc=False):
         value = str(value).strip()
 
@@ -28,7 +59,7 @@ class NhanVien:
         return value
 
     def kiem_tra_email(self, value, label="Email", bat_buoc=False):
-        value = str(value).strip()
+        value = str(value).strip().lower()
 
         if value == "":
             if bat_buoc:
@@ -86,18 +117,6 @@ class NhanVien:
 
         return ngay_sinh.strftime("%Y-%m-%d")
 
-    def lay_trang_thai_moi(self, trang_thai_hien_tai):
-        trang_thai = str(trang_thai_hien_tai).strip().lower()
-
-        if trang_thai in ["true", "1", "hoạt động", "hoat dong", "đang hoạt động", "dang hoat dong", "active", "mở", "mo"]:
-            return "Đã khóa"
-
-        return "Hoạt động"
-
-    def la_trang_thai_khoa(self, trang_thai):
-        trang_thai = str(trang_thai).strip().lower()
-        return trang_thai in ["false", "0", "đã khóa", "da khoa", "khóa", "khoa", "inactive"]
-
     def kiem_tra_thong_tin_nhan_vien(self, data, du_lieu, ma_bo_qua=""):
         ten = str(du_lieu.get("tenNhanVien", "")).strip()
 
@@ -119,23 +138,25 @@ class NhanVien:
         du_lieu["soDienThoai"] = self.kiem_tra_sdt(du_lieu.get("soDienThoai", ""), "Số điện thoại", False)
         du_lieu["email"] = self.kiem_tra_email(du_lieu.get("email", ""), "Email", False)
 
-        self.kiem_tra_trung_gia_tri(
-            data.get("nhanVien", []),
-            "soDienThoai",
-            du_lieu.get("soDienThoai", ""),
-            "Số điện thoại nhân viên",
-            "maNhanVien",
-            ma_bo_qua,
-        )
+        if du_lieu.get("soDienThoai", "") != "":
+            self.kiem_tra_trung_gia_tri(
+                data.get("nhanVien", []),
+                "soDienThoai",
+                du_lieu.get("soDienThoai", ""),
+                "Số điện thoại nhân viên",
+                "maNhanVien",
+                ma_bo_qua,
+            )
 
-        self.kiem_tra_trung_gia_tri(
-            data.get("nhanVien", []),
-            "email",
-            du_lieu.get("email", ""),
-            "Email nhân viên",
-            "maNhanVien",
-            ma_bo_qua,
-        )
+        if du_lieu.get("email", "") != "":
+            self.kiem_tra_trung_gia_tri(
+                data.get("nhanVien", []),
+                "email",
+                du_lieu.get("email", ""),
+                "Email nhân viên",
+                "maNhanVien",
+                ma_bo_qua,
+            )
 
     def tao_nhan_vien(self, du_lieu):
         data = self.doc_nguoi_dung()
@@ -147,7 +168,7 @@ class NhanVien:
         dong = dict(du_lieu)
         dong["maNhanVien"] = ma_nhan_vien
 
-        if dong.get("trangThai", "") == "":
+        if str(dong.get("trangThai", "")).strip() == "":
             dong["trangThai"] = "Hoạt động"
 
         danh_sach.append(dong)
@@ -166,16 +187,23 @@ class NhanVien:
 
         self.kiem_tra_thong_tin_nhan_vien(data, du_lieu, ma_nhan_vien)
 
+        trang_thai_cu = str(nhan_vien.get("trangThai", "")).strip()
+        trang_thai_moi = str(du_lieu.get("trangThai", trang_thai_cu)).strip()
+
         nhan_vien.update(du_lieu)
         nhan_vien["maNhanVien"] = ma_nhan_vien
 
-        if du_lieu.get("trangThai", "") == "Đã khóa":
+        if trang_thai_moi in ["Đã khóa", "Không hoạt động"]:
             for tai_khoan in data.get("taiKhoan", []):
                 if tai_khoan.get("maNhanVien", "") == ma_nhan_vien:
-                    tai_khoan["trangThai"] = "Đã khóa"
+                    tai_khoan["trangThai"] = trang_thai_moi
 
         self.ghi_nguoi_dung(data)
-        self.ghi_nhat_ky("Admin sửa Nhân viên", "Nhân viên", "Sửa " + ma_nhan_vien)
+
+        if self.la_khong_hoat_dong(trang_thai_cu) and self.la_hoat_dong(trang_thai_moi):
+            self.ghi_nhat_ky("Admin khôi phục Nhân viên", "Nhân viên", "Khôi phục " + ma_nhan_vien)
+        else:
+            self.ghi_nhat_ky("Admin sửa Nhân viên", "Nhân viên", "Sửa " + ma_nhan_vien)
 
         return nhan_vien
 
@@ -198,7 +226,11 @@ class NhanVien:
                     tai_khoan["trangThai"] = "Đã khóa"
 
         self.ghi_nguoi_dung(data)
-        self.ghi_nhat_ky("Khóa/Mở khóa", "Nhân viên", "Cập nhật trạng thái " + ma_nhan_vien + " thành " + trang_thai_moi)
+        self.ghi_nhat_ky(
+            "Khóa/Mở khóa",
+            "Nhân viên",
+            "Cập nhật trạng thái " + ma_nhan_vien + " thành " + trang_thai_moi,
+        )
 
         return trang_thai_moi
 
@@ -212,36 +244,20 @@ class NhanVien:
         if nhan_vien is None:
             raise ValueError("Không tìm thấy nhân viên cần xóa.")
 
-        if not self.la_trang_thai_khoa(nhan_vien.get("trangThai", "")):
-            raise ValueError("Chỉ được xóa nhân viên đang ở trạng thái Đã khóa.")
+        if self.la_khong_hoat_dong(nhan_vien.get("trangThai", "")):
+            raise ValueError("Nhân viên này đã không hoạt động.")
 
-        danh_sach_ma_tai_khoan = []
+        nhan_vien["trangThai"] = "Không hoạt động"
 
         for tai_khoan in data.get("taiKhoan", []):
             if tai_khoan.get("maNhanVien", "") == ma_nhan_vien:
-                danh_sach_ma_tai_khoan.append(tai_khoan.get("maTaiKhoan", ""))
-
-        data["nhanVien"] = [
-            item for item in data.get("nhanVien", [])
-            if item.get("maNhanVien", "") != ma_nhan_vien
-        ]
-
-        data["taiKhoan"] = [
-            item for item in data.get("taiKhoan", [])
-            if item.get("maNhanVien", "") != ma_nhan_vien
-        ]
-
-        data["phanQuyen"] = [
-            item for item in data.get("phanQuyen", [])
-            if item.get("maTaiKhoan", "") not in danh_sach_ma_tai_khoan
-        ]
-
-        data["phanCongKho"] = [
-            item for item in data.get("phanCongKho", [])
-            if item.get("maTaiKhoan", "") not in danh_sach_ma_tai_khoan
-        ]
+                tai_khoan["trangThai"] = "Không hoạt động"
 
         self.ghi_nguoi_dung(data)
-        self.ghi_nhat_ky("Admin xóa Nhân viên", "Nhân viên", "Xóa " + ma_nhan_vien)
+        self.ghi_nhat_ky(
+            "Admin xóa mềm Nhân viên",
+            "Nhân viên",
+            "Chuyển " + ma_nhan_vien + " sang Không hoạt động",
+        )
 
         return nhan_vien

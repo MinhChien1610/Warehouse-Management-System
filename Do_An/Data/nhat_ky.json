@@ -646,5 +646,194 @@
     "thoiGian": "2026-06-19 23:50:24",
     "trangThai": "Thành công",
     "ghiChu": "Cập nhật trạng thái TK004 thành Đã khóa"
+  },
+  {
+    "maNhatKy": "NK0073",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Khóa/Mở khóa",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 15:25:32",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật trạng thái NV004 thành Đã khóa"
+  },
+  {
+    "maNhatKy": "NK0074",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin xóa mềm Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 15:25:37",
+    "trangThai": "Thành công",
+    "ghiChu": "Chuyển NV004 sang Không hoạt động"
+  },
+  {
+    "maNhatKy": "NK0075",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Khóa/Mở khóa",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 15:26:03",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật trạng thái TK004 thành Hoạt động"
+  },
+  {
+    "maNhatKy": "NK0076",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Khóa/Mở khóa",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 15:27:21",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật trạng thái NV004 thành Hoạt động"
+  },
+  {
+    "maNhatKy": "NK0077",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Khóa/Mở khóa",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 15:27:52",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật trạng thái NV004 thành Đã khóa"
+  },
+  {
+    "maNhatKy": "NK0078",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin xóa mềm Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 15:27:58",
+    "trangThai": "Thành công",
+    "ghiChu": "Chuyển NV004 sang Không hoạt động"
+  },
+  {
+    "maNhatKy": "NK0079",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Khóa/Mở khóa",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 15:28:40",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật trạng thái TK004 thành Hoạt động"
+  },
+  {
+    "maNhatKy": "NK0080",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Khóa/Mở khóa",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 18:21:31",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật trạng thái TK004 thành Đã khóa"
+  },
+  {
+    "maNhatKy": "NK0081",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin xóa mềm Tài khoản",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 18:21:41",
+    "trangThai": "Thành công",
+    "ghiChu": "Chuyển TK004 sang Không hoạt động"
+  },
+  {
+    "maNhatKy": "NK0082",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin xóa mềm Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 18:21:48",
+    "trangThai": "Thành công",
+    "ghiChu": "Chuyển NV003 sang Không hoạt động"
+  },
+  {
+    "maNhatKy": "NK0083",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin khôi phục Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 18:21:57",
+    "trangThai": "Thành công",
+    "ghiChu": "Khôi phục NV003"
+  },
+  {
+    "maNhatKy": "NK0084",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin khôi phục Tài khoản",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 18:22:06",
+    "trangThai": "Thành công",
+    "ghiChu": "Khôi phục TK003"
+  },
+  {
+    "maNhatKy": "NK0085",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin khôi phục Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 18:22:20",
+    "trangThai": "Thành công",
+    "ghiChu": "Khôi phục NV004"
+  },
+  {
+    "maNhatKy": "NK0086",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin khôi phục Tài khoản",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 18:22:35",
+    "trangThai": "Thành công",
+    "ghiChu": "Khôi phục TK004"
+  },
+  {
+    "maNhatKy": "NK0087",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Khóa/Mở khóa",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 18:22:50",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật trạng thái NV004 thành Đã khóa"
+  },
+  {
+    "maNhatKy": "NK0088",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Khóa/Mở khóa",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 18:22:55",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật trạng thái NV004 thành Hoạt động"
+  },
+  {
+    "maNhatKy": "NK0089",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Khóa/Mở khóa",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 18:23:00",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật trạng thái TK004 thành Hoạt động"
+  },
+  {
+    "maNhatKy": "NK0090",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Khóa/Mở khóa",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 18:23:03",
+    "trangThai": "Thành công",
+    "ghiChu": "Cập nhật trạng thái TK004 thành Đã khóa"
+  },
+  {
+    "maNhatKy": "NK0091",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin xóa mềm Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 18:24:47",
+    "trangThai": "Thành công",
+    "ghiChu": "Chuyển NV004 sang Không hoạt động"
+  },
+  {
+    "maNhatKy": "NK0092",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin xóa mềm Tài khoản",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 18:24:55",
+    "trangThai": "Thành công",
+    "ghiChu": "Chuyển TK003 sang Không hoạt động"
+  },
+  {
+    "maNhatKy": "NK0093",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin khôi phục Tài khoản",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 18:28:19",
+    "trangThai": "Thành công",
+    "ghiChu": "Khôi phục TK003"
   }
 ]

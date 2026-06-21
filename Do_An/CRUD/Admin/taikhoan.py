@@ -90,8 +90,8 @@ class TaiKhoan:
         if nhan_vien is None:
             raise ValueError("Nhân viên không tồn tại.")
 
-        if self.la_trang_thai_khoa(nhan_vien.get("trangThai", "")):
-            raise ValueError("Nhân viên đang bị khóa nên không thể tạo tài khoản.")
+        if not self.la_hoat_dong(nhan_vien.get("trangThai", "")):
+            raise ValueError("Nhân viên chưa hoạt động nên không thể tạo tài khoản.")
 
     def kiem_tra_nhan_vien_duoc_mo_tai_khoan(self, data, ma_tai_khoan):
         nhan_vien = self.lay_nhan_vien_cua_tai_khoan(data, ma_tai_khoan)
@@ -99,17 +99,8 @@ class TaiKhoan:
         if nhan_vien is None:
             raise ValueError("Không tìm thấy nhân viên liên kết với tài khoản.")
 
-        if self.la_trang_thai_khoa(nhan_vien.get("trangThai", "")):
-            raise ValueError("Nhân viên đang bị khóa nên không thể mở tài khoản.")
-
-    def la_vai_tro_admin(self, data, ma_vai_tro):
-        vai_tro = self.tim_item(data.get("vaiTro", []), "maVaiTro", ma_vai_tro)
-
-        if vai_tro is None:
-            return False
-
-        ten_vai_tro = str(vai_tro.get("tenVaiTro", "")).strip().lower()
-        return ten_vai_tro in ["admin", "quản trị", "quan tri", "quản trị viên", "quan tri vien"]
+        if not self.la_hoat_dong(nhan_vien.get("trangThai", "")):
+            raise ValueError("Không thể kích hoạt tài khoản khi nhân viên chưa hoạt động.")
 
     def lay_vai_tro_cua_tai_khoan(self, data, ma_tai_khoan):
         for phan_quyen in data.get("phanQuyen", []):
@@ -117,10 +108,31 @@ class TaiKhoan:
                 return phan_quyen.get("maVaiTro", "")
         return ""
 
-    def kiem_tra_vai_tro_duoc_cap(self, data, ma_vai_tro, ma_tai_khoan=""):
-        return self.kiem_tra_vai_tro_ton_tai(data, ma_vai_tro)
+    def kiem_tra_vai_tro_ton_tai(self, data, ma_vai_tro):
+        ma_vai_tro = str(ma_vai_tro).strip()
 
-    def kiem_tra_thong_tin_tai_khoan(self, data, du_lieu, ma_bo_qua=""):
+        if ma_vai_tro == "":
+            raise ValueError("Vui lòng chọn vai trò.")
+
+        if self.tim_item(data.get("vaiTro", []), "maVaiTro", ma_vai_tro) is None:
+            raise ValueError("Vai trò không tồn tại.")
+
+        return ma_vai_tro
+
+    def kiem_tra_vai_tro_duoc_cap(self, data, ma_vai_tro, ma_tai_khoan=""):
+        ma_vai_tro = self.kiem_tra_vai_tro_ton_tai(data, ma_vai_tro)
+        vai_tro = self.tim_item(data.get("vaiTro", []), "maVaiTro", ma_vai_tro)
+        ten_vai_tro = str(vai_tro.get("tenVaiTro", "")).strip().lower()
+
+        if ten_vai_tro in ["admin", "quản trị", "quan tri", "quản trị viên", "quan tri vien"]:
+            raise ValueError("Không được cấp vai trò Admin từ màn hình này.")
+
+        if ten_vai_tro not in ["nhân viên kho", "nhan vien kho", "nhanvienkho", "kế toán", "ke toan", "ketoan"]:
+            raise ValueError("Chỉ được cấp vai trò Nhân viên kho hoặc Kế toán.")
+
+        return ma_vai_tro
+
+    def kiem_tra_thong_tin_tai_khoan(self, data, du_lieu, ma_bo_qua="", bat_buoc_nhan_vien_hoat_dong=True):
         ten_tai_khoan = self.kiem_tra_ten_tai_khoan(du_lieu.get("tenTaiKhoan", ""))
         mat_khau = self.kiem_tra_mat_khau(du_lieu.get("matKhau", ""))
         ma_nhan_vien = str(du_lieu.get("maNhanVien", "")).strip()
@@ -128,7 +140,13 @@ class TaiKhoan:
         if ma_nhan_vien == "":
             raise ValueError("Vui lòng chọn nhân viên.")
 
-        self.kiem_tra_nhan_vien_duoc_tao_tai_khoan(data, ma_nhan_vien)
+        nhan_vien = self.lay_nhan_vien_theo_ma(data, ma_nhan_vien)
+
+        if nhan_vien is None:
+            raise ValueError("Nhân viên không tồn tại.")
+
+        if bat_buoc_nhan_vien_hoat_dong and not self.la_hoat_dong(nhan_vien.get("trangThai", "")):
+            raise ValueError("Nhân viên chưa hoạt động nên không thể kích hoạt tài khoản.")
 
         self.kiem_tra_trung_gia_tri(
             data.get("taiKhoan", []),
@@ -147,17 +165,6 @@ class TaiKhoan:
         du_lieu["matKhau"] = mat_khau
         du_lieu["maNhanVien"] = ma_nhan_vien
 
-    def kiem_tra_vai_tro_ton_tai(self, data, ma_vai_tro):
-        ma_vai_tro = str(ma_vai_tro).strip()
-
-        if ma_vai_tro == "":
-            raise ValueError("Vui lòng chọn vai trò.")
-
-        if self.tim_item(data.get("vaiTro", []), "maVaiTro", ma_vai_tro) is None:
-            raise ValueError("Vai trò không tồn tại.")
-
-        return ma_vai_tro
-
     def vai_tro_can_phan_cong_kho(self, data, ma_vai_tro):
         vai_tro = self.tim_item(data.get("vaiTro", []), "maVaiTro", ma_vai_tro)
 
@@ -175,11 +182,8 @@ class TaiKhoan:
                 raise ValueError("Vui lòng chọn kho phụ trách.")
             return ""
 
-        for kho in data.get("kho", []):
-            if kho.get("maKho", "") == ma_kho:
-                return ma_kho
-
         kho_data = self.doc_json("kho_hang.json", {})
+
         for kho in kho_data.get("kho", []):
             if kho.get("maKho", "") == ma_kho:
                 return ma_kho
@@ -199,9 +203,14 @@ class TaiKhoan:
                 "trangThai": True,
             })
 
+    def khoa_phan_cong_kho(self, data, ma_tai_khoan):
+        for phan_cong in data.get("phanCongKho", []):
+            if phan_cong.get("maTaiKhoan", "") == ma_tai_khoan:
+                phan_cong["trangThai"] = False
+
     def tao_tai_khoan(self, du_lieu, ma_vai_tro, ma_kho=""):
         data = self.doc_nguoi_dung()
-        self.kiem_tra_thong_tin_tai_khoan(data, du_lieu)
+        self.kiem_tra_thong_tin_tai_khoan(data, du_lieu, "", True)
         ma_vai_tro = self.kiem_tra_vai_tro_duoc_cap(data, ma_vai_tro)
         ma_kho = self.kiem_tra_kho_phan_cong(
             data,
@@ -215,7 +224,7 @@ class TaiKhoan:
         dong = dict(du_lieu)
         dong["maTaiKhoan"] = ma_tai_khoan
 
-        if dong.get("trangThai", "") == "":
+        if str(dong.get("trangThai", "")).strip() == "":
             dong["trangThai"] = "Hoạt động"
 
         danh_sach.append(dong)
@@ -234,13 +243,24 @@ class TaiKhoan:
         if tai_khoan is None:
             raise ValueError("Không tìm thấy tài khoản cần sửa.")
 
-        self.kiem_tra_thong_tin_tai_khoan(data, du_lieu, ma_tai_khoan)
+        trang_thai_cu = str(tai_khoan.get("trangThai", "")).strip()
+        trang_thai_moi = str(du_lieu.get("trangThai", trang_thai_cu)).strip()
+        bat_buoc_nhan_vien_hoat_dong = self.la_hoat_dong(trang_thai_moi)
+
+        self.kiem_tra_thong_tin_tai_khoan(
+            data,
+            du_lieu,
+            ma_tai_khoan,
+            bat_buoc_nhan_vien_hoat_dong,
+        )
+
         ma_vai_tro = self.kiem_tra_vai_tro_duoc_cap(data, ma_vai_tro, ma_tai_khoan)
         ma_kho = self.kiem_tra_kho_phan_cong(
             data,
             ma_kho,
             self.vai_tro_can_phan_cong_kho(data, ma_vai_tro),
         )
+
         ma_vai_tro_hien_tai = self.lay_vai_tro_cua_tai_khoan(data, ma_tai_khoan)
 
         if self.la_tai_khoan_dang_dung(ma_tai_khoan=ma_tai_khoan) and ma_vai_tro != ma_vai_tro_hien_tai:
@@ -250,7 +270,6 @@ class TaiKhoan:
         tai_khoan["maTaiKhoan"] = ma_tai_khoan
 
         da_cap_nhat = False
-
         for phan_quyen in data.get("phanQuyen", []):
             if phan_quyen.get("maTaiKhoan", "") == ma_tai_khoan:
                 phan_quyen["maVaiTro"] = ma_vai_tro
@@ -260,9 +279,17 @@ class TaiKhoan:
         if not da_cap_nhat:
             data.setdefault("phanQuyen", []).append({"maTaiKhoan": ma_tai_khoan, "maVaiTro": ma_vai_tro})
 
-        self.cap_nhat_phan_cong_kho(data, ma_tai_khoan, ma_kho)
+        if trang_thai_moi == "Không hoạt động":
+            self.khoa_phan_cong_kho(data, ma_tai_khoan)
+        else:
+            self.cap_nhat_phan_cong_kho(data, ma_tai_khoan, ma_kho)
+
         self.ghi_nguoi_dung(data)
-        self.ghi_nhat_ky("Admin sửa Tài khoản", "Tài khoản", "Sửa " + ma_tai_khoan)
+
+        if self.la_khong_hoat_dong(trang_thai_cu) and self.la_hoat_dong(trang_thai_moi):
+            self.ghi_nhat_ky("Admin khôi phục Tài khoản", "Tài khoản", "Khôi phục " + ma_tai_khoan)
+        else:
+            self.ghi_nhat_ky("Admin sửa Tài khoản", "Tài khoản", "Sửa " + ma_tai_khoan)
 
         return tai_khoan
 
@@ -283,8 +310,15 @@ class TaiKhoan:
 
         tai_khoan["trangThai"] = trang_thai_moi
 
+        if trang_thai_moi == "Đã khóa":
+            self.khoa_phan_cong_kho(data, ma_tai_khoan)
+
         self.ghi_nguoi_dung(data)
-        self.ghi_nhat_ky("Khóa/Mở khóa", "Tài khoản", "Cập nhật trạng thái " + ma_tai_khoan + " thành " + trang_thai_moi)
+        self.ghi_nhat_ky(
+            "Khóa/Mở khóa",
+            "Tài khoản",
+            "Cập nhật trạng thái " + ma_tai_khoan + " thành " + trang_thai_moi,
+        )
 
         return trang_thai_moi
 
@@ -315,14 +349,17 @@ class TaiKhoan:
         if tai_khoan is None:
             raise ValueError("Không tìm thấy tài khoản cần xóa.")
 
-        if not self.la_trang_thai_khoa(tai_khoan.get("trangThai", "")):
-            raise ValueError("Chỉ được xóa tài khoản đang ở trạng thái Đã khóa.")
+        if self.la_khong_hoat_dong(tai_khoan.get("trangThai", "")):
+            raise ValueError("Tài khoản này đã không hoạt động.")
 
-        data["taiKhoan"] = [item for item in data.get("taiKhoan", []) if item.get("maTaiKhoan", "") != ma_tai_khoan]
-        data["phanQuyen"] = [item for item in data.get("phanQuyen", []) if item.get("maTaiKhoan", "") != ma_tai_khoan]
-        data["phanCongKho"] = [item for item in data.get("phanCongKho", []) if item.get("maTaiKhoan", "") != ma_tai_khoan]
+        tai_khoan["trangThai"] = "Không hoạt động"
+        self.khoa_phan_cong_kho(data, ma_tai_khoan)
 
         self.ghi_nguoi_dung(data)
-        self.ghi_nhat_ky("Admin xóa Tài khoản", "Tài khoản", "Xóa " + ma_tai_khoan)
+        self.ghi_nhat_ky(
+            "Admin xóa mềm Tài khoản",
+            "Tài khoản",
+            "Chuyển " + ma_tai_khoan + " sang Không hoạt động",
+        )
 
         return tai_khoan

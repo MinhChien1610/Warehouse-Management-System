@@ -1,7 +1,8 @@
 ﻿import json
 import os
+import re
+from datetime import date, datetime
 import tkinter as tk
-from datetime import datetime
 from tkinter import ttk, messagebox
 
 import matplotlib
@@ -64,33 +65,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
 
 
 
-    def tao_ma_nhat_ky_moi(self, danh_sach):
-        so_lon_nhat = 0
 
-        for item in danh_sach:
-            ma = str(item.get("maNhatKy", "")).replace("NK", "")
-
-            if ma.isdigit():
-                so_lon_nhat = max(so_lon_nhat, int(ma))
-
-        return "NK" + str(so_lon_nhat + 1).zfill(4)
-
-
-    def ghi_nhat_ky_dang_xuat(self):
-        data = doc_json("nhat_ky.json", [])
-        ma_tai_khoan = self.tai_khoan_dang_nhap.get("maTaiKhoan", "")
-
-        data.append({
-            "maNhatKy": self.tao_ma_nhat_ky_moi(data),
-            "maTaiKhoan": ma_tai_khoan,
-            "hanhDong": "Đăng xuất",
-            "doiTuong": "Tài khoản",
-            "thoiGian": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "trangThai": "Thành công",
-            "ghiChu": "Đăng xuất hệ thống",
-        })
-
-        ghi_json("nhat_ky.json", data)
 
 
 
@@ -2018,8 +1993,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             width=18,
         )
         self.entry_tu_ngay_dang_nhap.pack(side="left", padx=(0, 2), ipady=7)
-        self.dat_placeholder_entry(self.entry_tu_ngay_dang_nhap, "Từ ngày yyyy-mm-dd")
-        self.gan_rang_buoc_ngay(self.entry_tu_ngay_dang_nhap, "Từ ngày", "Từ ngày yyyy-mm-dd")
+        self.dat_placeholder_entry(self.entry_tu_ngay_dang_nhap, "DD/MM/YYYY hoặc YYYY-MM-DD")
 
         tk.Button(
             filter_bar,
@@ -2047,8 +2021,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             width=18,
         )
         self.entry_den_ngay_dang_nhap.pack(side="left", padx=(0, 2), ipady=7)
-        self.dat_placeholder_entry(self.entry_den_ngay_dang_nhap, "Đến ngày yyyy-mm-dd")
-        self.gan_rang_buoc_ngay(self.entry_den_ngay_dang_nhap, "Đến ngày", "Đến ngày yyyy-mm-dd")
+        self.dat_placeholder_entry(self.entry_den_ngay_dang_nhap, "DD/MM/YYYY hoặc YYYY-MM-DD")
 
         tk.Button(
             filter_bar,
@@ -2138,8 +2111,8 @@ class GiaoDienAdmin(GiaoDienCoSo):
     def loc_nhat_ky_dang_nhap_admin(self):
         try:
             loai = self.cbo_loai_nhat_ky_dang_nhap.get()
-            tu_ngay = self.lay_noi_dung_entry(self.entry_tu_ngay_dang_nhap, "Từ ngày yyyy-mm-dd")
-            den_ngay = self.lay_noi_dung_entry(self.entry_den_ngay_dang_nhap, "Đến ngày yyyy-mm-dd")
+            tu_ngay = self.lay_noi_dung_entry(self.entry_tu_ngay_dang_nhap, "DD/MM/YYYY hoặc YYYY-MM-DD")
+            den_ngay = self.lay_noi_dung_entry(self.entry_den_ngay_dang_nhap, "DD/MM/YYYY hoặc YYYY-MM-DD")
             tu_khoa = self.lay_noi_dung_entry(self.entry_tim_nhat_ky_dang_nhap, "Tìm kiếm nhật ký...")
 
             tu_ngay, den_ngay = self.kiem_tra_khoang_ngay_loc(tu_ngay, den_ngay)
@@ -2200,8 +2173,8 @@ class GiaoDienAdmin(GiaoDienCoSo):
 
     def lam_moi_nhat_ky_dang_nhap_admin(self):
         self.cbo_loai_nhat_ky_dang_nhap.set("Tất cả")
-        self.dat_placeholder_entry(self.entry_tu_ngay_dang_nhap, "Từ ngày yyyy-mm-dd")
-        self.dat_placeholder_entry(self.entry_den_ngay_dang_nhap, "Đến ngày yyyy-mm-dd")
+        self.dat_placeholder_entry(self.entry_tu_ngay_dang_nhap, "DD/MM/YYYY hoặc YYYY-MM-DD")
+        self.dat_placeholder_entry(self.entry_den_ngay_dang_nhap, "DD/MM/YYYY hoặc YYYY-MM-DD")
         self.dat_placeholder_entry(self.entry_tim_nhat_ky_dang_nhap, "Tìm kiếm nhật ký...")
         self.loc_nhat_ky_dang_nhap_admin()
 
@@ -2262,8 +2235,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             width=18,
         )
         entry_tu_ngay.pack(side="left", padx=(0, 2), ipady=7)
-        self.dat_placeholder_entry(entry_tu_ngay, "Từ ngày yyyy-mm-dd")
-        self.gan_rang_buoc_ngay(entry_tu_ngay, "Từ ngày", "Từ ngày yyyy-mm-dd")
+        self.dat_placeholder_entry(entry_tu_ngay, "DD/MM/YYYY hoặc YYYY-MM-DD")
 
         tk.Button(
             filter_bar,
@@ -2291,8 +2263,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             width=18,
         )
         entry_den_ngay.pack(side="left", padx=(0, 2), ipady=7)
-        self.dat_placeholder_entry(entry_den_ngay, "Đến ngày yyyy-mm-dd")
-        self.gan_rang_buoc_ngay(entry_den_ngay, "Đến ngày", "Đến ngày yyyy-mm-dd")
+        self.dat_placeholder_entry(entry_den_ngay, "DD/MM/YYYY hoặc YYYY-MM-DD")
 
         tk.Button(
             filter_bar,
@@ -2349,8 +2320,8 @@ class GiaoDienAdmin(GiaoDienCoSo):
         
         def loc_nhat_ky(event=None):
             loai = cbo_loai.get()
-            tu_ngay = self.lay_noi_dung_entry(entry_tu_ngay, "Từ ngày yyyy-mm-dd")
-            den_ngay = self.lay_noi_dung_entry(entry_den_ngay, "Đến ngày yyyy-mm-dd")
+            tu_ngay = self.lay_noi_dung_entry(entry_tu_ngay, "DD/MM/YYYY hoặc YYYY-MM-DD")
+            den_ngay = self.lay_noi_dung_entry(entry_den_ngay, "DD/MM/YYYY hoặc YYYY-MM-DD")
             tu_khoa = self.lay_noi_dung_entry(entry_tim, "Tìm kiếm nhật ký...")
 
             try:
@@ -2444,8 +2415,8 @@ class GiaoDienAdmin(GiaoDienCoSo):
                 widget = self.tao_entry_form(form["body"], label)
                 widget.insert(0, str(values.get(key, field.get("default", ""))))
 
-                if field.get("validate", "") == "date":
-                    self.gan_rang_buoc_ngay(widget, label)
+                # if field.get("validate", "") == "date":
+                #     self.gan_rang_buoc_ngay(widget, label)
 
             entries[key] = widget
 
@@ -2475,7 +2446,7 @@ class GiaoDienAdmin(GiaoDienCoSo):
             elif validate == "email":
                 value = self.kiem_tra_email_gmail(value, field.get("label", key), field.get("required", True))
             elif validate == "date":
-                value = self.kiem_tra_ngay(value, field.get("label", key), field.get("required", True))
+                pass
             elif validate == "number" or field.get("number", False):
                 value = self.kiem_tra_chi_so(value, field.get("label", key), field.get("required", True), field.get("min", None))
 
@@ -2517,6 +2488,12 @@ class GiaoDienAdmin(GiaoDienCoSo):
         return None
 
     def lay_gia_tri_trang_thai_nguoi_dung(self, value):
+        if value is True:
+            return "Hoạt động"
+
+        if value is False:
+            return "Đã khóa"
+
         trang_thai = str(value).strip().lower()
 
         if trang_thai in ["true", "1", "hoạt động", "hoat dong", "đang hoạt động", "dang hoat dong", "active"]:
@@ -2525,7 +2502,29 @@ class GiaoDienAdmin(GiaoDienCoSo):
         if trang_thai in ["false", "0", "đã khóa", "da khoa", "khóa", "khoa", "inactive"]:
             return "Đã khóa"
 
+        if trang_thai in ["không hoạt động", "khong hoat dong", "khonghoatdong"]:
+            return "Không hoạt động"
+
         return str(value).strip() or "Hoạt động"
+
+    def la_trang_thai_hoat_dong_nguoi_dung(self, trang_thai):
+        if trang_thai is True:
+            return True
+
+        if trang_thai is False:
+            return False
+
+        trang_thai = str(trang_thai).strip().lower()
+
+        return trang_thai in [
+            "true",
+            "1",
+            "hoạt động",
+            "hoat dong",
+            "đang hoạt động",
+            "dang hoat dong",
+            "active",
+        ]
 
     def lay_nhan_vien_chua_co_tai_khoan(self, ma_tai_khoan_bo_qua=""):
         nguoi_dung = doc_json("nguoi_dung.json", {})
@@ -2540,8 +2539,13 @@ class GiaoDienAdmin(GiaoDienCoSo):
         for nhan_vien in nguoi_dung.get("nhanVien", []):
             ma_nhan_vien = nhan_vien.get("maNhanVien", "")
 
-            if ma_nhan_vien not in danh_sach_ma_nhan_vien_da_co_tai_khoan:
-                ket_qua.append(nhan_vien)
+            if ma_nhan_vien in danh_sach_ma_nhan_vien_da_co_tai_khoan:
+                continue
+
+            if not self.la_trang_thai_hoat_dong_nguoi_dung(nhan_vien.get("trangThai", "")):
+                continue
+
+            ket_qua.append(nhan_vien)
 
         return ket_qua
 
@@ -2550,12 +2554,9 @@ class GiaoDienAdmin(GiaoDienCoSo):
         ket_qua = []
 
         for vai_tro in nguoi_dung.get("vaiTro", []):
-            ma_vai_tro = str(vai_tro.get("maVaiTro", "")).strip()
             ten_vai_tro = str(vai_tro.get("tenVaiTro", "")).strip().lower()
 
-            if ma_vai_tro == ma_vai_tro_hien_tai:
-                ket_qua.append(vai_tro)
-            elif ten_vai_tro in [
+            if ten_vai_tro in [
                 "nhân viên kho",
                 "nhan vien kho",
                 "nhanvienkho",
@@ -2718,12 +2719,6 @@ class GiaoDienAdmin(GiaoDienCoSo):
         values["maKho"] = self.lay_kho_phan_cong_tai_khoan(ma_tai_khoan)
         values["trangThai"] = self.lay_gia_tri_trang_thai_nguoi_dung(item.get("trangThai", ""))
         danh_sach_vai_tro = self.lay_vai_tro_duoc_cap(ma_vai_tro_hien_tai)
-
-        if self.la_tai_khoan_admin_hien_tai(ma_tai_khoan=ma_tai_khoan):
-            danh_sach_vai_tro = [
-                vai_tro for vai_tro in danh_sach_vai_tro
-                if vai_tro.get("maVaiTro", "") == ma_vai_tro_hien_tai
-            ]
 
         fields = [
             {"key": "tenTaiKhoan", "label": "Tên tài khoản"},
@@ -3950,25 +3945,86 @@ class GiaoDienAdmin(GiaoDienCoSo):
 
         return ket_qua
 
+    def kiem_tra_ngay_log(self, value, ten_truong, bat_buoc=False):
+        value = str(value).strip()
+
+        if value == "":
+            if bat_buoc:
+                raise ValueError("Vui lòng nhập " + ten_truong.lower() + ".")
+            return ""
+
+        if any(ky_tu.isalpha() for ky_tu in value):
+            raise ValueError(ten_truong + " chỉ được nhập số và ký tự / hoặc -.")
+
+        if value.startswith("-") or "/-" in value or "--" in value:
+            raise ValueError(ten_truong + " không được nhập ngày âm.")
+
+        if "/" in value and "-" in value:
+            raise ValueError(ten_truong + " chỉ được nhập theo dạng DD/MM/YYYY hoặc YYYY-MM-DD.")
+
+        if "/" in value:
+            if not re.match(r"^\d{2}/\d{2}/\d{4}$", value):
+                raise ValueError(ten_truong + " phải có dạng DD/MM/YYYY.")
+
+            phan_ngay = value.split("/")
+            ngay = int(phan_ngay[0])
+            thang = int(phan_ngay[1])
+            nam = int(phan_ngay[2])
+
+        elif "-" in value:
+            if not re.match(r"^\d{4}-\d{2}-\d{2}$", value):
+                raise ValueError(ten_truong + " phải có dạng YYYY-MM-DD.")
+
+            phan_ngay = value.split("-")
+            nam = int(phan_ngay[0])
+            thang = int(phan_ngay[1])
+            ngay = int(phan_ngay[2])
+
+        else:
+            raise ValueError(ten_truong + " chỉ nhận dạng DD/MM/YYYY hoặc YYYY-MM-DD.")
+
+        if nam <= 0:
+            raise ValueError(ten_truong + " có năm không hợp lệ.")
+
+        if thang < 1 or thang > 12:
+            raise ValueError(ten_truong + " có tháng phải từ 1 đến 12.")
+
+        if ngay < 1 or ngay > 31:
+            raise ValueError(ten_truong + " có ngày phải từ 1 đến 31.")
+
+        try:
+            ngay_hop_le = date(nam, thang, ngay)
+        except ValueError:
+            raise ValueError(ten_truong + " không tồn tại trong lịch.")
+
+        if ngay_hop_le > date.today():
+            raise ValueError(ten_truong + " không được lớn hơn ngày hiện tại.")
+
+        return ngay_hop_le.strftime("%Y-%m-%d")
+
     def kiem_tra_khoang_ngay_loc(self, tu_ngay, den_ngay):
-        tu_ngay = self.kiem_tra_ngay(tu_ngay, "Từ ngày", False)
-        den_ngay = self.kiem_tra_ngay(den_ngay, "Đến ngày", False)
+        tu_ngay = self.kiem_tra_ngay_log(tu_ngay, "Ngày bắt đầu", False)
+        den_ngay = self.kiem_tra_ngay_log(den_ngay, "Ngày kết thúc", False)
 
         if tu_ngay != "" and den_ngay != "" and tu_ngay > den_ngay:
-            raise ValueError("Từ ngày không được lớn hơn đến ngày.")
+            raise ValueError("Ngày bắt đầu không được lớn hơn ngày kết thúc.")
 
         return tu_ngay, den_ngay
 
     def chuan_hoa_ngay_loc(self, thoi_gian):
-        thoi_gian = str(thoi_gian)
+        thoi_gian = str(thoi_gian).strip()
 
-        if len(thoi_gian) >= 10 and "/" in thoi_gian:
-            ngay = thoi_gian[:10].split("/")
-            if len(ngay) == 3:
-                return ngay[2] + "-" + ngay[1] + "-" + ngay[0]
+        if thoi_gian == "":
+            return ""
 
-        if len(thoi_gian) >= 10 and "-" in thoi_gian:
-            return thoi_gian[:10]
+        ngay_text = thoi_gian[:10]
+
+        for dinh_dang in ["%Y-%m-%d", "%d/%m/%Y"]:
+            try:
+                ngay = datetime.strptime(ngay_text, dinh_dang).date()
+                return ngay.strftime("%Y-%m-%d")
+            except ValueError:
+                pass
 
         return ""
 
@@ -4177,10 +4233,12 @@ class GiaoDienAdmin(GiaoDienCoSo):
 
             trang_thai_text = str(trang_thai).strip().lower()
 
-            if trang_thai_text in ["true", "1", "active", "đang hoạt động"]:
+            if trang_thai is True or trang_thai_text in ["true", "1", "active", "đang hoạt động", "hoạt động", "hoat dong"]:
                 trang_thai = "Hoạt động"
-            elif trang_thai_text in ["false", "0", "inactive", "ngừng hoạt động", "đã khóa"]:
+            elif trang_thai is False or trang_thai_text in ["false", "0", "inactive", "đã khóa", "da khoa", "khóa", "khoa"]:
                 trang_thai = "Đã khóa"
+            elif trang_thai_text in ["không hoạt động", "khong hoat dong", "khonghoatdong", "ngừng hoạt động"]:
+                trang_thai = "Không hoạt động"
 
             dong["trangThai"] = trang_thai
             ket_qua.append(dong)
@@ -4322,7 +4380,12 @@ class GiaoDienAdmin(GiaoDienCoSo):
         hoi = messagebox.askyesno("Xác nhận", "Bạn có muốn đăng xuất không?")
 
         if hoi:
-            self.ghi_nhat_ky_dang_xuat()
+            self.ghi_nhat_ky(
+                "Đăng xuất",
+                "Tài khoản",
+                "Đăng xuất hệ thống",
+            )
+
             self.root.destroy()
 
             from GUI.Login.login import hien_thi_login

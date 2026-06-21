@@ -82,13 +82,75 @@ class NhanVien:
     def chuan_hoa_ngay_sinh(self, value):
         value = str(value).strip()
 
-        for dinh_dang in ["%Y-%m-%d", "%d/%m/%Y", "%d-%m-%Y"]:
-            try:
-                return datetime.strptime(value, dinh_dang).date()
-            except ValueError:
-                pass
+        if value == "":
+            raise ValueError("Vui lòng nhập ngày sinh.")
 
-        raise ValueError("Ngày sinh phải có dạng yyyy-mm-dd hoặc dd/mm/yyyy.")
+        if "/" in value:
+            phan = value.split("/")
+
+            if len(phan) != 3:
+                raise ValueError("Ngày sinh phải có dạng DD/MM/YYYY hoặc YYYY-MM-DD.")
+
+            ngay, thang, nam = phan
+
+            if len(ngay) != 2 or len(thang) != 2 or len(nam) != 4:
+                raise ValueError("Ngày sinh phải có dạng DD/MM/YYYY hoặc YYYY-MM-DD.")
+
+            if not ngay.isdigit() or not thang.isdigit() or not nam.isdigit():
+                raise ValueError("Ngày sinh chỉ được nhập số và dấu / hoặc dấu -.")
+
+            ngay = int(ngay)
+            thang = int(thang)
+            nam = int(nam)
+
+            if ngay <= 0:
+                raise ValueError("Ngày sinh phải lớn hơn 0.")
+
+            if thang <= 0:
+                raise ValueError("Tháng sinh phải lớn hơn 0.")
+
+            if thang > 12:
+                raise ValueError("Tháng sinh phải nằm trong khoảng từ 1 đến 12.")
+
+            try:
+                return date(nam, thang, ngay)
+            except ValueError:
+                raise ValueError("Ngày sinh không tồn tại.")
+
+        if "-" in value:
+            phan = value.split("-")
+
+            if len(phan) != 3:
+                raise ValueError("Ngày sinh phải có dạng DD/MM/YYYY hoặc YYYY-MM-DD.")
+
+            nam, thang, ngay = phan
+
+            if len(nam) != 4 or len(thang) != 2 or len(ngay) != 2:
+                raise ValueError("Ngày sinh phải có dạng DD/MM/YYYY hoặc YYYY-MM-DD.")
+
+            if not ngay.isdigit() or not thang.isdigit() or not nam.isdigit():
+                raise ValueError("Ngày sinh chỉ được nhập số và dấu / hoặc dấu -.")
+
+            ngay = int(ngay)
+            thang = int(thang)
+            nam = int(nam)
+
+            if ngay <= 0:
+                raise ValueError("Ngày sinh phải lớn hơn 0.")
+
+            if thang <= 0:
+                raise ValueError("Tháng sinh phải lớn hơn 0.")
+
+            if thang > 12:
+                raise ValueError("Tháng sinh phải nằm trong khoảng từ 1 đến 12.")
+
+            try:
+                return date(nam, thang, ngay)
+            except ValueError:
+                raise ValueError("Ngày sinh không tồn tại.")
+
+        raise ValueError("Ngày sinh phải có dạng DD/MM/YYYY hoặc YYYY-MM-DD.")
+
 
     def kiem_tra_ngay_sinh(self, value, bat_buoc=True):
         value = str(value).strip()

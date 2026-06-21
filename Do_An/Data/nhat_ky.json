@@ -889,5 +889,50 @@
     "thoiGian": "2026-06-21 19:13:48",
     "trangThai": "Thành công",
     "ghiChu": "Đăng nhập hệ thống"
+  },
+  {
+    "maNhatKy": "NK0100",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Đăng nhập",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 23:36:52",
+    "trangThai": "Thành công",
+    "ghiChu": "Đăng nhập hệ thống"
+  },
+  {
+    "maNhatKy": "NK0101",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin thêm Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 23:37:29",
+    "trangThai": "Thành công",
+    "ghiChu": "Thêm NV005"
+  },
+  {
+    "maNhatKy": "NK0102",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin thêm Tài khoản",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 23:37:44",
+    "trangThai": "Thành công",
+    "ghiChu": "Thêm TK005"
+  },
+  {
+    "maNhatKy": "NK0103",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin sửa Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 23:38:08",
+    "trangThai": "Thành công",
+    "ghiChu": "Sửa NV005"
+  },
+  {
+    "maNhatKy": "NK0104",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Đăng xuất",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 23:38:16",
+    "trangThai": "Thành công",
+    "ghiChu": "Đăng xuất hệ thống"
   }
 ]

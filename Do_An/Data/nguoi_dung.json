@@ -31,6 +31,14 @@
       "email": "lethiminhchien07@gmail.com",
       "trangThai": "Đã khóa",
       "maNhanVien": "NV004"
+    },
+    {
+      "tenNhanVien": "nguyenvana",
+      "ngaySinh": "1988-12-22",
+      "soDienThoai": "0222222222",
+      "email": "t@gmail.com",
+      "trangThai": "Hoạt động",
+      "maNhanVien": "NV005"
     }
   ],
   "taiKhoan": [
@@ -61,6 +69,13 @@
       "maNhanVien": "NV004",
       "trangThai": "Đã khóa",
       "maTaiKhoan": "TK004"
+    },
+    {
+      "tenTaiKhoan": "kho123",
+      "matKhau": "123456",
+      "maNhanVien": "NV005",
+      "trangThai": "Hoạt động",
+      "maTaiKhoan": "TK005"
     }
   ],
   "vaiTro": [
@@ -93,6 +108,10 @@
     {
       "maTaiKhoan": "TK004",
       "maVaiTro": "VT03"
+    },
+    {
+      "maTaiKhoan": "TK005",
+      "maVaiTro": "VT02"
     }
   ],
   "phanCongKho": [
@@ -109,6 +128,11 @@
     {
       "maTaiKhoan": "TK004",
       "maKho": "KHO002",
+      "trangThai": true
+    },
+    {
+      "maTaiKhoan": "TK005",
+      "maKho": "KHO004",
       "trangThai": true
     }
   ]

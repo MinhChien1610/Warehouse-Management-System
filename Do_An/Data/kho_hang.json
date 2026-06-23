@@ -187,7 +187,7 @@
     {
       "maKho": "KHO001",
       "maSanPham": "SP0001",
-      "soLuongTon": 21,
+      "soLuongTon": 25,
       "maViTri": "KHO001-A"
     },
     {
@@ -663,6 +663,18 @@
       "maSanPham": "SP0080",
       "soLuongTon": 23,
       "maViTri": "KHO006-D"
+    },
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0076",
+      "soLuongTon": 2,
+      "maViTri": "KHO001-A"
+    },
+    {
+      "maKho": "KHO001",
+      "maSanPham": "SP0075",
+      "soLuongTon": 2,
+      "maViTri": "KHO001-A"
     }
   ]
 }

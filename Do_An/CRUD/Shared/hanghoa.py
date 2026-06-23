@@ -66,7 +66,7 @@ class HangHoa:
     def them_hien_thi_tien_vao_san_pham(self, san_pham):
         dong = dict(san_pham)
         dong["donGiaHienThi"] = self.dinh_dang_tien_hang_hoa(dong.get("donGia", 0))
-        dong["mucTonToiThieuHienThi"] = self.dinh_dang_tien_hang_hoa(dong.get("mucTonToiThieu", 0))
+        dong["mucTonToiThieuHienThi"] = str(self.chuyen_so_nguyen_an_toan(dong.get("mucTonToiThieu", 0)))
         return dong
 
     def them_thong_tin_san_pham_vao_ton(self, ton, san_pham):
@@ -155,6 +155,12 @@ class HangHoa:
         if ten_san_pham == "":
             raise ValueError("Vui lòng nhập tên sản phẩm.")
 
+        if len(ten_san_pham) > 150:
+            raise ValueError("Tên sản phẩm không được quá 150 ký tự.")
+
+        if ten_san_pham.isdigit():
+            raise ValueError("Tên sản phẩm không hợp lệ.")
+
         if str(ma_loai_hang).strip() == "":
             raise ValueError("Vui lòng chọn loại hàng.")
 
@@ -201,7 +207,7 @@ class HangHoa:
 
         self.kiem_tra_trung_ten_san_pham(data, ten_san_pham)
 
-        ma_san_pham = self.tao_ma_tu_dong(danh_sach, "maSanPham", "SP")
+        ma_san_pham = self.tao_ma_tu_dong_do_dai(danh_sach, "maSanPham", "SP", 4)
 
         san_pham = SanPham(
             ma_san_pham,

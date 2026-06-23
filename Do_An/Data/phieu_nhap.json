@@ -285,5 +285,41 @@
       }
     ],
     "tongTienHienThi": "1.085.000.000"
+  },
+  {
+    "maPhieuNhap": "PN0015",
+    "maNhaSanXuat": "NSX001",
+    "maKho": "KHO001",
+    "maTaiKhoan": "TK001",
+    "ngayNhap": "2026-06-21",
+    "tongTien": 179000000,
+    "trangThai": "Đã nhập",
+    "chiTiet": [
+      {
+        "maSanPham": "SP0001",
+        "soLuong": 4,
+        "donGia": 35000000,
+        "donGiaHienThi": "35.000.000",
+        "thanhTienHienThi": "140.000.000",
+        "maViTri": "KHO001-A"
+      },
+      {
+        "maSanPham": "SP0076",
+        "soLuong": 2,
+        "donGia": 10500000,
+        "donGiaHienThi": "10.500.000",
+        "thanhTienHienThi": "21.000.000",
+        "maViTri": "KHO001-A"
+      },
+      {
+        "maSanPham": "SP0075",
+        "soLuong": 2,
+        "donGia": 9000000,
+        "donGiaHienThi": "9.000.000",
+        "thanhTienHienThi": "18.000.000",
+        "maViTri": "KHO001-A"
+      }
+    ],
+    "tongTienHienThi": "179.000.000"
   }
 ]

@@ -2,7 +2,7 @@
   {
     "maPhieuXuat": "PX0001",
     "maKho": "KHO001",
-    "maKhachHang": "KH001",
+    "maKhoNhan": "KHO002",
     "maTaiKhoan": "TK001",
     "ngayXuat": "2026-01-08",
     "tongTien": 45000000,
@@ -23,7 +23,7 @@
   {
     "maPhieuXuat": "PX0002",
     "maKho": "KHO002",
-    "maKhachHang": "KH002",
+    "maKhoNhan": "KHO003",
     "maTaiKhoan": "TK001",
     "ngayXuat": "2026-01-27",
     "tongTien": 65000000,
@@ -44,7 +44,7 @@
   {
     "maPhieuXuat": "PX0003",
     "maKho": "KHO003",
-    "maKhachHang": "KH003",
+    "maKhoNhan": "KHO004",
     "maTaiKhoan": "TK001",
     "ngayXuat": "2026-02-11",
     "tongTien": 28200000,
@@ -65,7 +65,7 @@
   {
     "maPhieuXuat": "PX0004",
     "maKho": "KHO004",
-    "maKhachHang": "KH004",
+    "maKhoNhan": "KHO005",
     "maTaiKhoan": "TK001",
     "ngayXuat": "2026-02-24",
     "tongTien": 12000000,
@@ -86,7 +86,7 @@
   {
     "maPhieuXuat": "PX0005",
     "maKho": "KHO005",
-    "maKhachHang": "KH005",
+    "maKhoNhan": "KHO006",
     "maTaiKhoan": "TK001",
     "ngayXuat": "2026-03-12",
     "tongTien": 18000000,
@@ -107,7 +107,7 @@
   {
     "maPhieuXuat": "PX0006",
     "maKho": "KHO006",
-    "maKhachHang": "KH001",
+    "maKhoNhan": "KHO001",
     "maTaiKhoan": "TK001",
     "ngayXuat": "2026-03-30",
     "tongTien": 20400000,
@@ -128,7 +128,7 @@
   {
     "maPhieuXuat": "PX0007",
     "maKho": "KHO001",
-    "maKhachHang": "KH002",
+    "maKhoNhan": "KHO002",
     "maTaiKhoan": "TK002",
     "ngayXuat": "2026-04-05",
     "tongTien": 25000000,
@@ -144,7 +144,7 @@
   {
     "maPhieuXuat": "PX0008",
     "maKho": "KHO002",
-    "maKhachHang": "KH003",
+    "maKhoNhan": "KHO003",
     "maTaiKhoan": "TK001",
     "ngayXuat": "2026-04-21",
     "tongTien": 27600000,
@@ -165,7 +165,7 @@
   {
     "maPhieuXuat": "PX0009",
     "maKho": "KHO003",
-    "maKhachHang": "KH004",
+    "maKhoNhan": "KHO004",
     "maTaiKhoan": "TK001",
     "ngayXuat": "2026-05-13",
     "tongTien": 29000000,
@@ -186,7 +186,7 @@
   {
     "maPhieuXuat": "PX0010",
     "maKho": "KHO004",
-    "maKhachHang": "KH005",
+    "maKhoNhan": "KHO005",
     "maTaiKhoan": "TK001",
     "ngayXuat": "2026-05-31",
     "tongTien": 13000000,
@@ -202,7 +202,7 @@
   {
     "maPhieuXuat": "PX0011",
     "maKho": "KHO005",
-    "maKhachHang": "KH001",
+    "maKhoNhan": "KHO006",
     "maTaiKhoan": "TK001",
     "ngayXuat": "2026-06-10",
     "tongTien": 26000000,
@@ -223,7 +223,7 @@
   {
     "maPhieuXuat": "PX0012",
     "maKho": "KHO006",
-    "maKhachHang": "KH002",
+    "maKhoNhan": "KHO001",
     "maTaiKhoan": "TK001",
     "ngayXuat": "2026-06-18",
     "tongTien": 37000000,
@@ -244,7 +244,7 @@
   {
     "maPhieuXuat": "PX0013",
     "maKho": "KHO001",
-    "maKhachHang": "KH001",
+    "maKhoNhan": "KHO002",
     "maTaiKhoan": "TK001",
     "ngayXuat": "2026-06-18",
     "tongTien": 72000000,

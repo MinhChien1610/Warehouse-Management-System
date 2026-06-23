@@ -934,5 +934,59 @@
     "thoiGian": "2026-06-21 23:38:16",
     "trangThai": "Thành công",
     "ghiChu": "Đăng xuất hệ thống"
+  },
+  {
+    "maNhatKy": "NK0105",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Đăng nhập",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 23:43:42",
+    "trangThai": "Thành công",
+    "ghiChu": "Đăng nhập hệ thống"
+  },
+  {
+    "maNhatKy": "NK0106",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin xóa mềm Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 23:43:59",
+    "trangThai": "Thành công",
+    "ghiChu": "Chuyển NV005 sang Không hoạt động"
+  },
+  {
+    "maNhatKy": "NK0107",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Admin khôi phục Nhân viên",
+    "doiTuong": "Nhân viên",
+    "thoiGian": "2026-06-21 23:44:06",
+    "trangThai": "Thành công",
+    "ghiChu": "Khôi phục NV005"
+  },
+  {
+    "maNhatKy": "NK0108",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Thêm phiếu nhập",
+    "doiTuong": "Phiếu nhập",
+    "thoiGian": "2026-06-21 23:44:46",
+    "trangThai": "Thành công",
+    "ghiChu": "Thêm phiếu nhập PN0015"
+  },
+  {
+    "maNhatKy": "NK0109",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Đăng xuất",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 23:48:17",
+    "trangThai": "Thành công",
+    "ghiChu": "Đăng xuất hệ thống"
+  },
+  {
+    "maNhatKy": "NK0110",
+    "maTaiKhoan": "TK001",
+    "hanhDong": "Đăng nhập",
+    "doiTuong": "Tài khoản",
+    "thoiGian": "2026-06-21 23:49:20",
+    "trangThai": "Thành công",
+    "ghiChu": "Đăng nhập hệ thống"
   }
 ]

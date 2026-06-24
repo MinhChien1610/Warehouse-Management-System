@@ -543,6 +543,11 @@ class GiaoDienKeToan(GiaoDienCoSo):
             (110, 230, 110, 90, 130, 150, 120),
         )
 
+        bang.tag_configure("ton_thap", foreground=self.mau_nguy_hiem)
+        bang.tag_configure("sap_het", foreground=self.mau_nguy_hiem)
+        bang.tag_configure("het_hang", foreground=self.mau_nguy_hiem)
+        bang.tag_configure("binh_thuong", foreground=self.mau_chu_dam)
+
         self.do_du_lieu_ton_kho(bang, data_ton)
 
     def lay_du_lieu_ton_kho(self):
@@ -560,6 +565,18 @@ class GiaoDienKeToan(GiaoDienCoSo):
         self.xoa_du_lieu_bang(bang)
 
         for item in data:
+            canh_bao = str(item.get("canhBao", "")).strip().lower()
+            so_luong_ton = self.chuyen_so(item.get("soLuongTon", 0))
+
+            if so_luong_ton <= 0 or "hết" in canh_bao or "het" in canh_bao:
+                tag = "het_hang"
+            elif "sắp" in canh_bao or "sap" in canh_bao:
+                tag = "sap_het"
+            elif "thấp" in canh_bao or "thap" in canh_bao:
+                tag = "ton_thap"
+            else:
+                tag = "binh_thuong"
+
             bang.insert(
                 "",
                 "end",
@@ -572,6 +589,7 @@ class GiaoDienKeToan(GiaoDienCoSo):
                     self.dinh_dang_tien_khong_don_vi(item.get("giaTriTon", 0)),
                     item.get("canhBao", ""),
                 ),
+                tags=(tag,),
             )
 
     def tinh_gia_tri_ton_kho(self):

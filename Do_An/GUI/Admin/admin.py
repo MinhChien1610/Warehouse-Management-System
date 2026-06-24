@@ -2954,10 +2954,10 @@ class GiaoDienAdmin(GiaoDienCoSo):
             doi_tac_ten = "tenNhaSanXuat"
         else:
             title = "Sửa phiếu xuất kho" if la_sua else "Tạo phiếu xuất kho"
-            doi_tac_label = "Khách hàng"
-            doi_tac_list = self.lay_danh_sach_khach_hang_admin()
-            doi_tac_ma = "maKhachHang"
-            doi_tac_ten = "tenKhachHang"
+            doi_tac_label = "Kho nhận"
+            doi_tac_list = self.lay_danh_sach_kho_admin()
+            doi_tac_ma = "maKho"
+            doi_tac_ten = "tenKho"
 
         danh_sach_kho = self.lay_danh_sach_kho_admin()
         danh_sach_san_pham_data = self.lay_danh_sach_san_pham_admin()
@@ -3164,7 +3164,11 @@ class GiaoDienAdmin(GiaoDienCoSo):
         self.tao_nut(khung_nut_dong, "Tạo dòng sản phẩm", tao_cac_dong_chi_tiet, self.mau_sua).pack(side="left")
 
         if la_sua:
-            self.chon_combobox_theo_ma(doi_tac_cb, phieu.get("maNhaSanXuat", phieu.get("maKhachHang", "")))
+            if la_nhap:
+                self.chon_combobox_theo_ma(doi_tac_cb, phieu.get("maNhaSanXuat", ""))
+            else:
+                self.chon_combobox_theo_ma(doi_tac_cb, phieu.get("maKhoNhan", ""))
+
             self.chon_combobox_theo_ma(kho_cb, phieu.get("maKho", ""))
             chi_tiet_cu = phieu.get("chiTiet", [])
             so_dong_entry.insert(0, str(len(chi_tiet_cu)))
@@ -3181,9 +3185,17 @@ class GiaoDienAdmin(GiaoDienCoSo):
             ma_kho = self.lay_ma_tu_combobox(kho_cb.get())
 
             if ma_doi_tac == "":
-                raise ValueError("Vui lòng chọn đối tác.")
+                if la_nhap:
+                    raise ValueError("Vui lòng chọn nhà sản xuất.")
+                else:
+                    raise ValueError("Vui lòng chọn kho nhận.")
+
             if ma_kho == "":
                 raise ValueError("Vui lòng chọn kho.")
+
+            if not la_nhap and ma_doi_tac == ma_kho:
+                raise ValueError("Kho nhận không được trùng với kho xuất.")
+
             if len(danh_sach_dong) == 0:
                 raise ValueError("Vui lòng tạo ít nhất 1 dòng sản phẩm.")
 
